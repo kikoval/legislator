@@ -1,0 +1,20 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ document.name }}{% endblock %}
+
+{% block body %}
+<h1>{{ document.name }}</h1>
+
+<p><a href="{{ path('legislator_edit', {'id': document.id })}}">edit</a></p>
+
+<h2>Description</h2>
+<p class="description">{{ document.description }}</p>
+
+<h2>Meta data</h2>
+<dl>
+	<dt>Status</dt><dd>{{ document.status }}</dd>
+	<dt>Version</dt><dd>{{ document.version }}</dd>
+	<dt>Created on</dt><dd>{{ document.createdOn|date('d.m.Y H:i:s') }}</dd>
+	<dt>Modified on</dt><dd>{{ document.modifiedOn|date('d.m.Y H:i:s') }}</dd>
+</dl>
+{% endblock %}

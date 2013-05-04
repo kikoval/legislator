@@ -1,0 +1,4 @@
+legislator:
+    resource: "@LegislatorBundle/Resources/config/routing.yml"
+    prefix:   /
+

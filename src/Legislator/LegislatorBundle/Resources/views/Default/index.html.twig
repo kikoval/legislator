@@ -1,0 +1,38 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Legislator{% endblock %}
+
+{% block body %}
+<h1>Legislator</h1>
+<p>Vitajte</p>
+
+<h2>{% trans %}document.listing{% endtrans %}</h2>
+<table>
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Nazov</th>
+			<th>Popis</th>
+			<th>Verzia</th>
+			<th>Cas vytvorenia</th>
+			<th>Cas poslednej zmeny</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for d in documents %}
+		<tr>
+			<td>1.</td>
+			<td><a href="{{ path('legislator_view', {'id': d.id}) }}">{{ d.name }}</a></td>
+			<td>{{ d.description|trim(100) }}</td>
+			<td>{{ d.version }}</td>
+			<td>{{ d.createdOn|date('d.m.Y H:i:s') }}</td>
+			<td>{{ d.modifiedOn|date('d.m.Y H:i:s') }}</td>
+			<td><a href="{{ path('legislator_delete', {'id': d.id}) }}" class="btn">delete</a></td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+
+<a href="{{ path('legislator_new') }}">Pridat dokument</a>
+{% endblock %}

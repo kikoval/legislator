@@ -1,0 +1,9 @@
+{% extends "::base.html.twig" %}
+{% block body %}
+<h1>Create new document</h1>
+
+<form action="{{ path('legislator_new') }}" method="post" {{ form_enctype(form) }}>
+{{ form_widget(form) }}
+<input type="submit" value="Create document"/>
+</form>
+{% endblock %}

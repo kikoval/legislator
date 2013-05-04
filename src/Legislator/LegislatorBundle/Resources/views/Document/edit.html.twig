@@ -1,0 +1,10 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+<h1>Edit document</h1>
+
+<form action="{{ path('legislator_edit', {'id': 1}) }}" method="post" {{ form_enctype(form) }}>
+{{ form_widget(form) }}
+<input type="submit" value="Save document"/>
+</form>
+{% endblock %}

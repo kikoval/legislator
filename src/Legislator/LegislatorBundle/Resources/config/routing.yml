@@ -1,0 +1,31 @@
+legislator_homepage:
+    pattern:  /
+    defaults: { _controller: LegislatorBundle:Default:index }
+
+legislator_view:
+    pattern: /document/{id}
+    defaults: { _controller: LegislatorBundle:Document:view }
+    requirements:
+        id: \d+
+
+legislator_new:
+    pattern: /document/new
+    defaults: { _controller: LegislatorBundle:Document:new }
+
+legislator_edit:
+    pattern: /document/{id}/edit
+    defaults: { _controller: LegislatorBundle:Document:edit }
+    requirements:
+        id: \d+
+
+legislator_delete:
+    pattern: /document/{id}/delete
+    defaults: { _controller: LegislatorBundle:Document:delete }
+    requirements:
+        id: \d+
+
+legislator_comment:
+    pattern: /document/{id}/comment
+    defaults: { _controller: LegislatorBundle:Document:comment }
+    requirements:
+        id: \d+
