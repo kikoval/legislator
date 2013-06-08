@@ -2,6 +2,8 @@ parameters:
 #    legislator.example.class: Legislator\LegislatorBundle\Example
 
 services:
-#    legislator.example:
-#        class: %legislator.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    legislator_user.registration.form.type:
+        class: Legislator\LegislatorBundle\Form\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: legislator_user_registration }

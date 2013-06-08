@@ -5,6 +5,7 @@ legislator_homepage:
 legislator_view:
     pattern: /document/{id}
     defaults: { _controller: LegislatorBundle:Document:view }
+    methods: [GET]
     requirements:
         id: \d+
 
@@ -24,8 +25,17 @@ legislator_delete:
     requirements:
         id: \d+
 
-legislator_comment:
+# comments
+legislator_comment_new:
     pattern: /document/{id}/comment
-    defaults: { _controller: LegislatorBundle:Document:comment }
+    defaults: { _controller: LegislatorBundle:Comment:new }
+    methods: [POST]
+    requirements:
+        id: \d+
+
+legislator_comment_delete:
+    pattern: /comment/{id}/delete
+    defaults: { _controller: LegislatorBundle:Comment:delete }
+    methods: [POST]
     requirements:
         id: \d+

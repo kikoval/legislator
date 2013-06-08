@@ -16,7 +16,7 @@
 			<th>Verzia</th>
 			<th>Cas vytvorenia</th>
 			<th>Cas poslednej zmeny</th>
-			<th>Action</th>
+			<th>Action</th> {# TODO check privileges #}
 		</tr>
 	</thead>
 	<tbody>
@@ -28,11 +28,12 @@
 			<td>{{ d.version }}</td>
 			<td>{{ d.createdOn|date('d.m.Y H:i:s') }}</td>
 			<td>{{ d.modifiedOn|date('d.m.Y H:i:s') }}</td>
+			{# TODO check privileges #}
 			<td><a href="{{ path('legislator_delete', {'id': d.id}) }}" class="btn">delete</a></td>
 		</tr>
 	{% endfor %}
 	</tbody>
 </table>
 
-<a href="{{ path('legislator_new') }}">Pridat dokument</a>
+<a href="{{ path('legislator_new') }}">{% trans %}button.document.add{% endtrans %}</a>
 {% endblock %}

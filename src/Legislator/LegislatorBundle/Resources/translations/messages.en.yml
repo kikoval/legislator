@@ -1,1 +1,8 @@
 document.listing: Document listing
+button:
+  document:
+    add: Add document
+    save: Save document
+form:
+  firstname: First name:
+  surname: Surname:

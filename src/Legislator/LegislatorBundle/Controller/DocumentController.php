@@ -4,9 +4,13 @@ namespace Legislator\LegislatorBundle\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 use Legislator\LegislatorBundle\Entity\Document;
+use Legislator\LegislatorBundle\Entity\Comment;
 use Legislator\LegislatorBundle\Form\DocumentType;
+use Legislator\LegislatorBundle\Form\CommentType;
+use Legislator\LegislatorBundle\Form\ContentSectionType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DocumentController extends Controller {
 	
@@ -17,11 +21,25 @@ class DocumentController extends Controller {
 		if (!$document)
 			throw $this->createNotFoundException('No document found for id!');
 
-		return $this
-				->render('LegislatorBundle:Document:view.html.twig',
-						array('document' => $document));
+		// TODO limit comments
+		$comments = $this->getDoctrine()
+				->getRepository('LegislatorBundle:Comment')
+				->findBy(array('document' => $document));
+		
+		// add form to add comment
+		$comment = new Comment();
+		$comment->setDocument($document);
+		$form = $this->createForm(new CommentType(), $comment, array(
+				'method' => 'post',
+				'action' => $this->generateUrl('legislator_comment_new',
+						array('id' => $id))));
+		
+		return $this->render('LegislatorBundle:Document:view.html.twig',
+				array('document' => $document,
+					  'comments' => $comments,
+					  'form' => $form->createView()));
 	}
-
+	
 	public function deleteAction($id)
 	{
 		$document = $this->getDoctrine()
@@ -35,10 +53,6 @@ class DocumentController extends Controller {
 		return $this->redirect($this->generateUrl('legislator_homepage'));
 	}
 	
-	public function commentAction($id) {
-		// TODO
-	}
-
 	public function newAction(Request $request)
 	{
 		// create form

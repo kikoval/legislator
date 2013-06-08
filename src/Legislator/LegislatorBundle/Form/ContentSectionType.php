@@ -2,35 +2,34 @@
 
 namespace Legislator\LegislatorBundle\Form;
 
-use Legislator\LegislatorBundle\Form\ContentSectionType;
+use Legislator\LegislatorBundle\Form\DocumentType;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class DocumentType extends AbstractType
+class ContentSectionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('description', 'textarea')
-//             ->add('version')
-        	->add('status')
-//             ->add('createdOn', null, array('label' => 'Created on', 'disabled' => 1))
-//             ->add('modifiedOn')
+            ->add('level')
+            ->add('text')
+            ->add('createdOn')
+            ->add('modifiedOn')
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Legislator\LegislatorBundle\Entity\Document'
+            'data_class' => 'Legislator\LegislatorBundle\Entity\ContentSection',
+        	'cascade_validation' => true,
         ));
     }
 
     public function getName()
     {
-        return 'legislator_document';
+        return 'legislator_contentsection';
     }
 }

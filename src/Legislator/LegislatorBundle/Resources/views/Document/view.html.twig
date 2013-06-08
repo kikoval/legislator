@@ -5,16 +5,55 @@
 {% block body %}
 <h1>{{ document.name }}</h1>
 
-<p><a href="{{ path('legislator_edit', {'id': document.id })}}">edit</a></p>
+{# TODO check privileges #}
+<h2>Actions</h2>
+<ul>
+	<li><a href="{{ path('legislator_edit', {'id': document.id })}}">edit</a></li>
+	<li>enable/disable commenting</li>
+</ul>
 
 <h2>Description</h2>
 <p class="description">{{ document.description }}</p>
 
 <h2>Meta data</h2>
-<dl>
+<dl class="document-data">
 	<dt>Status</dt><dd>{{ document.status }}</dd>
 	<dt>Version</dt><dd>{{ document.version }}</dd>
 	<dt>Created on</dt><dd>{{ document.createdOn|date('d.m.Y H:i:s') }}</dd>
 	<dt>Modified on</dt><dd>{{ document.modifiedOn|date('d.m.Y H:i:s') }}</dd>
 </dl>
+
+<h2>Comments</h2>
+{% if comments %}
+<table class="comments">
+	<thead>
+		<tr>
+			<th>Content</th>
+			<th>Substantiation</th>
+			<th>Date</th>
+			<th>Actions</th>  {# TODO check privileges #}
+		</tr>
+	</thead>
+	<tbody>
+	{% for comment in comments %}
+	<tr class="comment{% if comment.isprincipal %} comment-principal{% endif %}">
+		<td>{{ comment.content }}</td>
+		<td>{{ comment.substantiation }}</td>
+		<td>{{ comment.createdOn|date('d.m.Y H:i') }}</td>
+		{# TODO check privileges #}
+		<td><form method="post" action="{{ path('legislator_comment_delete', {'id': comment.id })}}"><input type="submit" name="delete" value="Delete" /></form></td>
+	</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% else %}
+	<p>There are no comments, be first!</p>
+{% endif %}
+
+<h3>Add a comment</h3>
+{% if app.user %}
+{{ form(form) }}
+{% else %}
+<p>To add a comment you need to <a href="{{ path('fos_user_security_login') }}">log in</a> first.</p>
+{% endif %}
 {% endblock %}
