@@ -38,5 +38,11 @@
 </table>
 {% endif %}
 
-<p><a href="{{ path('legislator_new') }}" class="button">{% trans %}button.document.add{% endtrans %}</a></p>
+<p>
+{% if can_add_document %}
+<a href="{{ path('legislator_new') }}" class="button">{% trans %}button.document.add{% endtrans %}</a>
+{% else %}
+To add a document you need to <a href="{{ path('fos_user_security_login') }}">log in</a> first.
+{% endif %}
+</p>
 {% endblock %}

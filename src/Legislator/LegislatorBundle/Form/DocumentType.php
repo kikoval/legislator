@@ -15,8 +15,8 @@ class DocumentType extends AbstractType
         $builder
             ->add('name')
             ->add('description', 'textarea')
-//             ->add('version')
                 ->add('file')
+                ->add('file_substantiation')
 //                ->add('Add document', 'submit', array('attr' => array('class' => 'btn')))
         ;
     }

@@ -23,7 +23,7 @@ class Comment
 
     /**
      * @var Document
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="Document")
      * @ORM\JoinColumn(name="document_id", referencedColumnName="id", nullable=false)
      */
@@ -54,7 +54,6 @@ class Comment
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\Column(name="createdBy", type="integer")
      */
     private $createdBy;
 
@@ -72,11 +71,40 @@ class Comment
      */
     private $isPrincipal;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isTechnical", type="boolean")
+     */
+    private $isTechnical;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isAccepted", type="boolean", nullable=true)
+     */
+    private $isAccepted = null;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="reply", type="text", nullable=true)
+     */
+    private $reply;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\Column(nullable=true)
+     */
+    private $repliedBy;
+
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -92,14 +120,14 @@ class Comment
     public function setDocument(Document $document)
     {
         $this->document = $document;
-    
+
         return $this;
     }
 
     /**
      * Get document
      *
-     * @return Document 
+     * @return Document
      */
     public function getDocument()
     {
@@ -115,14 +143,14 @@ class Comment
     public function setContent($content)
     {
         $this->content = $content;
-    
+
         return $this;
     }
 
     /**
      * Get content
      *
-     * @return string 
+     * @return string
      */
     public function getContent()
     {
@@ -138,14 +166,14 @@ class Comment
     public function setSubstantiation($substantiation)
     {
         $this->substantiation = $substantiation;
-    
+
         return $this;
     }
 
     /**
      * Get substantiation
      *
-     * @return string 
+     * @return string
      */
     public function getSubstantiation()
     {
@@ -161,14 +189,14 @@ class Comment
     public function setCreatedOn($createdOn)
     {
         $this->createdOn = $createdOn;
-    
+
         return $this;
     }
 
     /**
      * Get createdOn
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedOn()
     {
@@ -184,14 +212,14 @@ class Comment
     public function setCreatedBy($createdBy)
     {
         $this->createdBy = $createdBy;
-    
+
         return $this;
     }
 
     /**
      * Get createdBy
      *
-     * @return User 
+     * @return User
      */
     public function getCreatedBy()
     {
@@ -207,14 +235,14 @@ class Comment
     public function setModifiedOn($modifiedOn)
     {
         $this->modifiedOn = $modifiedOn;
-    
+
         return $this;
     }
 
     /**
      * Get modifiedOn
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getModifiedOn()
     {
@@ -230,17 +258,109 @@ class Comment
     public function setIsPrincipal($isPrincipal)
     {
         $this->isPrincipal = $isPrincipal;
-    
+
         return $this;
     }
 
     /**
      * Get isPrincipal
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsPrincipal()
     {
         return $this->isPrincipal;
+    }
+
+    /**
+     * Set isTechnical
+     *
+     * @param boolean $isTechnical
+     * @return Comment
+     */
+    public function setIsTechnical($isTechnical)
+    {
+        $this->isTechnical = $isTechnical;
+
+        return $this;
+    }
+
+    /**
+     * Get isTechnical
+     *
+     * @return boolean
+     */
+    public function getIsTechnical()
+    {
+        return $this->isTechnical;
+    }
+
+    /**
+     * Get isAccepted
+     *
+     * @return boolean
+     */
+    public function getIsAccepted()
+    {
+        return $this->isAccepted;
+    }
+
+    /**
+     * Set isAccepted
+     *
+     * @param boolean $isAccepted
+     * @return Comment
+     */
+    public function setIsAccepted($isAccepted)
+    {
+        $this->isAccepted = $isAccepted;
+
+        return $this;
+    }
+
+    /**
+     * Get reply
+     *
+     * @return string
+     */
+    public function getReply()
+    {
+        return $this->reply;
+    }
+
+    /**
+     * Set reply
+     *
+     * @param string $reply
+     * @return Comment
+     */
+    public function setReply($reply)
+    {
+        $this->reply = $reply;
+
+        return $this;
+    }
+
+    /**
+     * Get repliedBy
+     *
+     * @return User
+     */
+    public function getRepliedBy()
+    {
+        return $this->repliedBy;
+    }
+
+    /**
+     * Set repliedBy
+     *
+     * @param User $repliedBy
+     * @return Comment
+     */
+    public function setRepliedBy($repliedBy)
+    {
+        $this->repliedBy = $repliedBy;
+
+        return $this;
     }
 }

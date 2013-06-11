@@ -10,8 +10,9 @@ class DefaultController extends Controller
     {
     	$documents = $this->getDoctrine()
     		->getRepository('LegislatorBundle:Document')->findAll();
-    	
+
         return $this->render('LegislatorBundle:Default:index.html.twig',
-        		array('documents' => $documents));
+        		array('documents' => $documents,
+        		      'can_add_document' => $this->get('security.context')->isGranted('ROLE_USER')));
     }
 }

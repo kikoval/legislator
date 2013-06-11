@@ -48,6 +48,10 @@ assetic:
             input:
                 - %kernel.root_dir%/../src/Legislator/LegislatorBundle/Resources/public/css/normalize.css
             output: css/normlalize.css
+        app_css:
+            input:
+                - %kernel.root_dir%/../src/Legislator/LegislatorBundle/Resources/public/css/app.css
+            output: css/app.css
 
 # Doctrine Configuration
 doctrine:

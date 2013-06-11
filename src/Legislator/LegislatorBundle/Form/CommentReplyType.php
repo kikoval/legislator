@@ -6,15 +6,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class CommentType extends AbstractType
+class CommentReplyType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content')
-            ->add('substantiation')
-            ->add('isPrincipal', 'checkbox', array('required' => false))
-            ->add('isTechnical', 'checkbox', array('required' => false))
+            ->add('isAccepted')
+            ->add('reply')
 //             ->add('Add comment', 'submit')
         ;
     }
@@ -28,6 +26,6 @@ class CommentType extends AbstractType
 
     public function getName()
     {
-        return 'legislator_comment';
+        return 'legislator_comment_reply';
     }
 }

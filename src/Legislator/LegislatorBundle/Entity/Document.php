@@ -11,12 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks 
+ * @ORM\HasLifecycleCallbacks
  */
 class Document
 {
     const STATUS_NEW = 1;
-	
+
     /**
      * @var integer
      *
@@ -92,13 +92,33 @@ class Document
      * @Assert\File(maxSize="3000000")
      */
     private $file;
-    private $temp;
+    private $temp_path;
 
+    /**
+     * @Assert\File(maxSize="3000000")
+     */
+    private $file_substantiation;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pathSubstantiation", type="string", length=255,
+     *             nullable=true)
+     */
+    private $path_substantiation;
+    private $temp_path_substantiation;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="canBeCommented", type="boolean")
+     */
+    private $can_be_commented;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -114,14 +134,14 @@ class Document
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -137,14 +157,14 @@ class Document
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -160,14 +180,14 @@ class Document
     public function setVersion($version)
     {
         $this->version = $version;
-    
+
         return $this;
     }
 
     /**
      * Get version
      *
-     * @return integer 
+     * @return integer
      */
     public function getVersion()
     {
@@ -183,14 +203,14 @@ class Document
     public function setCreatedOn($createdOn)
     {
         $this->createdOn = $createdOn;
-    
+
         return $this;
     }
 
     /**
      * Get createdOn
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedOn()
     {
@@ -206,7 +226,7 @@ class Document
     public function setCreatedBy($createdBy)
     {
         $this->createdBy = $createdBy;
-    
+
         return $this;
     }
 
@@ -229,14 +249,14 @@ class Document
     public function setModifiedOn($modifiedOn)
     {
         $this->modifiedOn = $modifiedOn;
-    
+
         return $this;
     }
 
     /**
      * Get modifiedOn
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getModifiedOn()
     {
@@ -252,20 +272,25 @@ class Document
     public function setStatus($status)
     {
         $this->status = $status;
-    
+
         return $this;
     }
 
     /**
      * Get status
      *
-     * @return integer 
+     * @return integer
      */
     public function getStatus()
     {
         return $this->status;
     }
 
+    /**
+     * Get absolute path to the main file.
+     *
+     * @return string
+     */
     public function getAbsolutePath()
     {
         return null === $this->path
@@ -273,6 +298,11 @@ class Document
             : $this->getUploadRootDir().'/'.$this->path;
     }
 
+    /**
+     * Get web path to the main file.
+     *
+     * @return string
+     */
     public function getWebPath()
     {
         return null === $this->path
@@ -280,6 +310,35 @@ class Document
             : $this->getUploadDir().'/'.$this->path;
     }
 
+    /**
+     * Get absolute path to the substantiation file.
+     *
+     * @return string
+     */
+    public function getAbsolutePathSubstantiation()
+    {
+        return null === $this->path_substantiation
+        ? null
+        : $this->getUploadRootDir().'/'.$this->path_substantiation;
+    }
+
+    /**
+     * Get web path to the substantiation file.
+     *
+     * @return string
+     */
+    public function getWebPathSubstantiation()
+    {
+        return null === $this->path_substantiation
+        ? null
+        : $this->getUploadDir().'/'.$this->path_substantiation;
+    }
+
+    /**
+     * Get upload root directory.
+     *
+     * @return string
+     */
     protected function getUploadRootDir()
     {
         // the absolute directory path where uploaded
@@ -287,6 +346,11 @@ class Document
         return __DIR__.'/../../../../web/'.$this->getUploadDir();
     }
 
+    /**
+     * Get upload directory.
+     *
+     * @return string
+     */
     protected function getUploadDir()
     {
         // get rid of the __DIR__ so it doesn't screw up
@@ -305,7 +369,7 @@ class Document
         // check if we have an old image path
         if (isset($this->path)) {
             // store the old name to delete after the update
-            $this->temp = $this->path;
+            $this->temp_path = $this->path;
             $this->path = null;
         } else {
             $this->path = 'initial';
@@ -313,13 +377,42 @@ class Document
     }
 
     /**
-     * Get file.
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFileSubstantiation(UploadedFile $file = null)
+    {
+        $this->file_substantiation = $file;
+        // check if we have an old image path
+        if (isset($this->path_substantiation)) {
+            // store the old name to delete after the update
+            $this->temp_path_substantiation = $this->path_substantiation;
+            $this->path_substantiation = null;
+        } else {
+            $this->path_substantiation = 'initial';
+        }
+    }
+
+
+    /**
+     * Get main file.
      *
      * @return UploadedFile
      */
     public function getFile()
     {
         return $this->file;
+    }
+
+    /**
+     * Get substantiation file.
+     *
+     * @return UploadedFile
+     */
+    public function getFileSubstantiation()
+    {
+        return $this->file_substantiation;
     }
 
     /**
@@ -333,6 +426,12 @@ class Document
             $filename = sha1(uniqid(mt_rand(), true));
             $this->path = $filename.'.'.$this->getFile()->guessExtension();
         }
+
+        if (null !== $this->getFileSubstantiation()) {
+            // do whatever you want to generate a unique name
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->path_substantiation = $filename.'.'.$this->getFileSubstantiation()->guessExtension();
+        }
     }
 
     /**
@@ -342,7 +441,7 @@ class Document
     public function upload()
     {
         // the file property can be empty if the field is not required
-        if (null === $this->getFile()) {
+        if (null === $this->getFile() || null == $this->getFileSubstantiation()) {
             return;
         }
 
@@ -350,15 +449,24 @@ class Document
         // be automatically thrown by move(). This will properly prevent
         // the entity from being persisted to the database on error
         $this->getFile()->move($this->getUploadRootDir(), $this->path);
+        $this->getFileSubstantiation()->move($this->getUploadRootDir(), $this->path_substantiation);
 
-        // check if we have an old image
-        if (isset($this->temp)) {
+        // check if we have an old file
+        if (isset($this->temp_path)) {
             // delete the old image
-            unlink($this->getUploadRootDir().'/'.$this->temp);
+            unlink($this->getUploadRootDir().'/'.$this->temp_path);
             // clear the temp image path
-            $this->temp = null;
+            $this->temp_path = null;
+        }
+        // check if we have an old file
+        if (isset($this->temp_path_substantiation)) {
+            // delete the old image
+            unlink($this->getUploadRootDir().'/'.$this->temp_path_substantiation);
+            // clear the temp image path
+            $this->temp_path_substantiation = null;
         }
         $this->file = null;
+        $this->file_substantiation = null;
     }
 
     /**
@@ -366,8 +474,36 @@ class Document
      */
     public function removeUpload()
     {
+        // removing main file
         if ($file = $this->getAbsolutePath()) {
             unlink($file);
         }
+        // removing substrantiation ifle
+        if ($file = $this->getAbsolutePathSubstantiation()) {
+            unlink($file);
+        }
+    }
+
+    /**
+     * Get canBeCommented
+     *
+     * @return boolean
+     */
+    public function getCanBeCommented()
+    {
+        return $this->can_be_commented;
+    }
+
+    /**
+     * Set canBeCommented
+     *
+     * @param unknown $value
+     * @return Document
+     */
+    public function setCanBeCommented($value)
+    {
+        $this->can_be_commented = $value;
+
+        return $this;
     }
 }

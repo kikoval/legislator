@@ -40,7 +40,7 @@ class User extends BaseUser
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -56,14 +56,14 @@ class User extends BaseUser
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
-    
+
         return $this;
     }
 
     /**
      * Get firstName
      *
-     * @return string 
+     * @return string
      */
     public function getFirstName()
     {
@@ -79,17 +79,22 @@ class User extends BaseUser
     public function setSurname($surname)
     {
         $this->surname = $surname;
-    
+
         return $this;
     }
 
     /**
      * Get surname
      *
-     * @return string 
+     * @return string
      */
     public function getSurname()
     {
         return $this->surname;
+    }
+
+    public function __toString()
+    {
+        return $this->firstName.' '.$this->surname;
     }
 }

@@ -25,17 +25,45 @@ legislator_delete:
     requirements:
         id: \d+
 
-# comments
-legislator_comment_new:
-    pattern: /document/{id}/comment
-    defaults: { _controller: LegislatorBundle:Comment:new }
-    methods: [POST]
+legislator_enable_commenting:
+    pattern: /document/{id}/enable-commenting
+    defaults: { _controller: LegislatorBundle:Document:enablecommenting}
     requirements:
         id: \d+
 
+legislator_disable_commenting:
+    pattern: /document/{id}/disable-commenting
+    defaults: { _controller: LegislatorBundle:Document:disablecommenting}
+    requirements:
+        id: \d+
+
+# comments
+legislator_comment_new:
+    pattern: /document/{document_id}/comment
+    defaults: { _controller: LegislatorBundle:Comment:new }
+    methods: [POST]
+    requirements:
+        document_id: \d+
+        
+legislator_comment_edit:
+    pattern: /document/{document_id}/comment/{id}
+    defaults: { _controller: LegislatorBundle:Comment:edit }
+    methods: [POST]
+    requirements:
+        document_id: \d+
+        id: \d+
+
 legislator_comment_delete:
-    pattern: /comment/{id}/delete
+    pattern: /document/{document_id}/comment/{id}/delete
     defaults: { _controller: LegislatorBundle:Comment:delete }
     methods: [POST]
     requirements:
+        document_id: \d+
+        id: \d+
+        
+legislator_comment_reply:
+    pattern: /document/{document_id}/comment/{id}/reply
+    defaults: { _controller: LegislatorBundle:Comment:reply }
+    requirements:
+        document_id: \d+
         id: \d+

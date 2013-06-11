@@ -3,48 +3,80 @@
 {% block title %}{{ document.name }}{% endblock %}
 
 {% block body %}
-<h1>{{ document.name }}</h1>
+<div class="row">
+    <div class="large-12 columns">
+        <h1 class="header">{{ document.name }}</h1>
+    </div>
+</div>
 
 {# TODO check privileges #}
-<h2>Actions</h2>
-<ul>
-	<li><a href="{{ path('legislator_edit', {'id': document.id })}}">edit</a></li>
-	<li>enable/disable commenting</li>
-</ul>
-
+<div class="row">
+<div class="large-8 columns">
 <h2>Description</h2>
 <p class="description">{{ document.description }}</p>
 
-<h2>File</h2>
-<p><a href="/{{ document.webpath }}">document</a></p>
+<h2>Files</h2>
+<ul>
+    {% if document.webpath  %}<li><a href="/{{ document.webpath }}">main document</a></li>{% endif %}
+    {% if document.webpathsubstantiation  %}<li><a href="/{{ document.webpathsubstantiation }}">substantiation</a></li>{% endif %}
+</ul>
+</div>
+
+<div class="large-4 columns panel">
+<h2>Actions</h2>
+<ul class="button-group">
+	<li><a href="{{ path('legislator_edit', {'id': document.id })}}" class="small button edit">edit</a></li>
+	<li><a href="{{ path('legislator_delete', {'id': document.id })}}" class="small button delete">delete</a></li>
+	<li>
+	    {% if document.canbecommented %}
+	    <a href="{{ path('legislator_disable_commenting', {'id': document.id })}}" class="small button">disable
+	    {% else %}
+	        <a href="{{ path('legislator_enable_commenting', {'id': document.id })}}" class="small button">enable
+	    {% endif %}
+	    commenting</a>
+	</li>
+</ul>
 
 <h2>Meta data</h2>
 <dl class="document-data">
 	<dt>Status</dt><dd>{{ document.status }}</dd>
-	<dt>Version</dt><dd>{{ document.version }}</dd>
+	<dt>Created by</dt><dd>{{ document.createdBy }}</dd>
 	<dt>Created on</dt><dd>{{ document.createdOn|date('d.m.Y H:i:s') }}</dd>
 	<dt>Modified on</dt><dd>{{ document.modifiedOn|date('d.m.Y H:i:s') }}</dd>
 </dl>
 
+</div>
+</div>
+
+<div class="row">
+<div class="large-12 columns">
 <h2>Comments</h2>
 {% if comments %}
-<table class="comments">
+<table id="comments">
 	<thead>
 		<tr>
-			<th>Content</th>
+			<th width="40%">Content</th>
 			<th>Substantiation</th>
+			<th>Added by</th>
 			<th>Date</th>
 			<th>Actions</th>  {# TODO check privileges #}
 		</tr>
 	</thead>
 	<tbody>
 	{% for comment in comments %}
-	<tr class="comment{% if comment.isprincipal %} comment-principal{% endif %}">
+	<tr class="comment{% if comment.isprincipal %} comment-principal{% endif %}{% if comment.istechnical %} comment-technical{% endif %}{% if comment.isAccepted %} comment-accepted{% endif %}">
 		<td>{{ comment.content }}</td>
 		<td>{{ comment.substantiation }}</td>
+		<td>{{ comment.createdBy }}</td>
 		<td>{{ comment.createdOn|date('d.m.Y H:i') }}</td>
 		{# TODO check privileges #}
-		<td><form method="post" action="{{ path('legislator_comment_delete', {'id': comment.id })}}"><input type="submit" name="delete" value="Delete" /></form></td>
+		<td>
+		<ul class="button-group">
+    		<li><form method="get" action="{{ path('legislator_view', {'id': document.id })}}"><input type="hidden" name="comment_id" value="{{ comment.id }}"/><input type="submit" name="edit" value="Edit" class="small edit button" /></form></li>
+    		<li><form method="post" action="{{ path('legislator_comment_delete', {'document_id': document.id,'id': comment.id })}}"><input type="submit" name="delete" value="Delete" class="small delete button" /></form></li>
+    		<li><form method="get" action="{{ path('legislator_comment_reply', {'document_id': document.id,'id': comment.id })}}"><input type="submit" name="reply" value="Reply" class="small reply button" /></form></li>
+		</ul>
+		</td>
 	</tr>
 	{% endfor %}
 	</tbody>
@@ -55,8 +87,22 @@
 
 <h3>Add a comment</h3>
 {% if app.user %}
-{{ form(form) }}
+    {% if document.canbecommented %}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {% if app.request.get('comment_id') %}
+        <input type="submit" name="add" value="Edit comment" class="button"/>
+        {% else %}
+        <input type="submit" name="add" value="Add comment" class="button"/>
+        {% endif %}
+        {{ form_end(form) }}
+    {% else %}
+        <p>Commenting has been disabled.</p>
+    {% endif %}
 {% else %}
 <p>To add a comment you need to <a href="{{ path('fos_user_security_login') }}">log in</a> first.</p>
 {% endif %}
+</div>
+</div>
 {% endblock %}
+
