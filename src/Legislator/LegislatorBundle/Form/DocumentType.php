@@ -16,9 +16,8 @@ class DocumentType extends AbstractType
             ->add('name')
             ->add('description', 'textarea')
 //             ->add('version')
-        	->add('status')
-//             ->add('createdOn', null, array('label' => 'Created on', 'disabled' => 1))
-//             ->add('modifiedOn')
+                ->add('file')
+//                ->add('Add document', 'submit', array('attr' => array('class' => 'btn')))
         ;
     }
 

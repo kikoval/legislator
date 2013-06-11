@@ -1,7 +1,7 @@
 document.listing: Document listing
 button:
   document:
-    add: Add document
+    add: Add a document
     save: Save document
 form:
   firstname: First name:

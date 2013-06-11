@@ -3,17 +3,18 @@
 {% block title %}Legislator{% endblock %}
 
 {% block body %}
-<h1>Legislator</h1>
-<p>Vitajte</p>
+<p>Vitajte v aplikacii Legislator.</p>
 
 <h2>{% trans %}document.listing{% endtrans %}</h2>
+{% if documents %}
 <table>
 	<thead>
 		<tr>
 			<th>#</th>
 			<th>Nazov</th>
 			<th>Popis</th>
-			<th>Verzia</th>
+			<th>Status</th>
+			<th>Vlozil</th>
 			<th>Cas vytvorenia</th>
 			<th>Cas poslednej zmeny</th>
 			<th>Action</th> {# TODO check privileges #}
@@ -25,7 +26,8 @@
 			<td>1.</td>
 			<td><a href="{{ path('legislator_view', {'id': d.id}) }}">{{ d.name }}</a></td>
 			<td>{{ d.description|trim(100) }}</td>
-			<td>{{ d.version }}</td>
+			<td>{{ d.status }}</td>
+			<td>{{ d.createdBy.surname }}</td>
 			<td>{{ d.createdOn|date('d.m.Y H:i:s') }}</td>
 			<td>{{ d.modifiedOn|date('d.m.Y H:i:s') }}</td>
 			{# TODO check privileges #}
@@ -34,6 +36,7 @@
 	{% endfor %}
 	</tbody>
 </table>
+{% endif %}
 
-<a href="{{ path('legislator_new') }}">{% trans %}button.document.add{% endtrans %}</a>
+<p><a href="{{ path('legislator_new') }}" class="button">{% trans %}button.document.add{% endtrans %}</a></p>
 {% endblock %}
