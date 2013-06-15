@@ -3,11 +3,14 @@
 {% block title %}Legislator{% endblock %}
 
 {% block body %}
+<div class="row">
+<div class="large-12 columns">
+
 <p>Vitajte v aplikacii Legislator.</p>
 
-<h2>{% trans %}document.listing{% endtrans %}</h2>
-{% if documents %}
-<table>
+{% if documents|length > 0 %}
+    <h2>{% trans %}document.listing{% endtrans %}</h2>
+    <table>
 	<thead>
 		<tr>
 			<th>#</th>
@@ -31,11 +34,19 @@
 			<td>{{ d.createdOn|date('d.m.Y H:i:s') }}</td>
 			<td>{{ d.modifiedOn|date('d.m.Y H:i:s') }}</td>
 			{# TODO check privileges #}
-			<td><a href="{{ path('legislator_delete', {'id': d.id}) }}" class="btn">delete</a></td>
+			<td>
+			{% if app.user and d.createdBy.id == app.user.id %}
+			    <form method="post" action="{{ path('legislator_delete', {'id': d.id}) }}" class="action">
+			        <input type="submit" value="delete" class="small delete button"/>
+			    </form>
+			{% endif %}
+			</td>
 		</tr>
 	{% endfor %}
 	</tbody>
-</table>
+    </table>
+{% else %}
+    <p>There is no document yet.</p>
 {% endif %}
 
 <p>
@@ -45,4 +56,7 @@
 To add a document you need to <a href="{{ path('fos_user_security_login') }}">log in</a> first.
 {% endif %}
 </p>
+
+</div>
+</div>
 {% endblock %}

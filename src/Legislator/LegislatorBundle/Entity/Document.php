@@ -15,7 +15,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Document
 {
-    const STATUS_NEW = 1;
+    const STATUS_NEW = 0;
+    const STATUS_COMMENTING = 1;
+    const STATUS_PROCESSING_COMMENTS = 2;
+    const STATUS_FINISHED = 3;
 
     /**
      * @var integer
@@ -74,7 +77,7 @@ class Document
      *
      * @ORM\Column(name="status", type="smallint")
      */
-    private $status;
+    private $status = self::STATUS_NEW;
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="document", cascade={"remove"})
@@ -108,12 +111,6 @@ class Document
     private $path_substantiation;
     private $temp_path_substantiation;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="canBeCommented", type="boolean")
-     */
-    private $can_be_commented;
 
     /**
      * Get id
@@ -491,7 +488,7 @@ class Document
      */
     public function getCanBeCommented()
     {
-        return $this->can_be_commented;
+        return $this->getStatus() == self::STATUS_COMMENTING;
     }
 
     /**
@@ -500,10 +497,16 @@ class Document
      * @param unknown $value
      * @return Document
      */
-    public function setCanBeCommented($value)
+    public function setCanBeCommented($value = self::STATUS_COMMENTING)
     {
-        $this->can_be_commented = $value;
+        $value = $value == self::STATUS_COMMENTING;
+        $this->setStatus($value);
 
         return $this;
+    }
+
+    public function isProcessingCommentsStatus()
+    {
+        return $this->getStatus() == self::STATUS_PROCESSING_COMMENTS;
     }
 }

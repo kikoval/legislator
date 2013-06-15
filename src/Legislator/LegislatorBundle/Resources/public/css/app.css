@@ -1,5 +1,6 @@
 @CHARSET "UTF-8";
 
+h1.header {font-size: 230%;}
 h2 {font-size: 160%;}
 h3 {font-size: 140%;}
 
@@ -17,3 +18,5 @@ textarea {min-height: 5em;}
 table tr.comment-principal td:first-child {border-left: solid red medium ;}
 table tr.comment-technical td:first-child {border-left: solid blue medium ;}
 table tr.comment-accepted {background-color: lightgreen}
+
+.button-group form, form.action, form.action input {margin: 0}

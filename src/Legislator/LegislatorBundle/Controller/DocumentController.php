@@ -14,6 +14,13 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DocumentController extends Controller {
 
+    /**
+     * View a document
+     *
+     * @param int $id Document ID
+     * @param Request $request
+     * @return Response
+     */
     public function viewAction($id, Request $request)
     {
         $document = $this->getDoctrine()
@@ -48,16 +55,23 @@ class DocumentController extends Controller {
                 'method' => 'post',
                 'action' => $action));
 
+        // check privileges
+        $user = $this->get('security.context')->getToken()->getUser();
+        $is_document_owner = $user->getID() == $document->getCreatedBy()->getID();
+        $can_take_comment_actions = $is_document_owner && !$document->isProcessingCommentsStatus();
+
         return $this->render('LegislatorBundle:Document:view.html.twig',
                 array('document' => $document,
                       'comments' => $comments,
-                      'form' => $form->createView()));
+                      'form' => $form->createView(),
+                      'is_document_owner' => $is_document_owner,
+                      'can_take_comment_actions' => $can_take_comment_actions));
     }
 
     /**
      * Process delete action.
      *
-     * @param int $id
+     * @param int $id Document ID
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction($id)
@@ -115,17 +129,16 @@ class DocumentController extends Controller {
             return $this->redirect($this->generateUrl('legislator_homepage'));
         }
 
-
         // display form
         return $this->render('LegislatorBundle:Document:new.html.twig',
-                        array('form' => $form->createView()));
+                array('form' => $form->createView()));
     }
 
     /**
      * Process edit action.
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
     public function editAction(Request $request)
     {
@@ -155,16 +168,35 @@ class DocumentController extends Controller {
 
     }
 
+    /**
+     * Enable commenting
+     *
+     * @param int $id Document ID
+     * @return @see setCommenting()
+     */
     public function enableCommentingAction($id)
     {
         return $this->setCommenting($id, 1);
     }
 
+    /**
+     * Disable commenting
+     *
+     * @param int $id Document ID
+     * @return @see setCommenting()
+     */
     public function disableCommentingAction($id)
     {
         return $this->setCommenting($id, 0);
     }
 
+    /**
+     *
+     * @param int $id
+     * @param bool $value
+     * @throws AccessDeniedException
+     * @return RedirectResponse
+     */
     private function setCommenting($id, $value)
     {
         // TODO make special role
@@ -183,6 +215,57 @@ class DocumentController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $em->persist($document);
         $em->flush();
+
+        return $this->redirect($this->generateUrl('legislator_view', array('id' => $id)));
+    }
+
+    /**
+     * Start the phase of processing of comments.
+     *
+     * @param int $id Document ID
+     * @return RedirectResponse
+     */
+    public function processCommentsAction($id)
+    {
+        $document = $this->getDoctrine()
+            ->getRepository('LegislatorBundle:Document')->find($id);
+
+        if (!$document) {
+            throw $this->createNotFoundException('No document found for id!');
+        }
+
+        $document->setStatus(Document::STATUS_PROCESSING_COMMENTS);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($document);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('legislator_view', array('id' => $id)));
+    }
+
+    /**
+     * Start the phase of processing of comments.
+     *
+     * @param int $id Document ID
+     * @return RedirectResponse
+     */
+    public function finishcommentingAction($id)
+    {
+        $document = $this->getDoctrine()
+                ->getRepository('LegislatorBundle:Document')->find($id);
+
+        if (!$document) {
+            throw $this->createNotFoundException('No document found for id!');
+        }
+
+        $document->setStatus(Document::STATUS_FINISHED);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($document);
+        $em->flush();
+
+        // TODO notify users that commented that the commenting the document
+        // is finished
 
         return $this->redirect($this->generateUrl('legislator_view', array('id' => $id)));
     }

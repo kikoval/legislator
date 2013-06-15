@@ -36,6 +36,18 @@ legislator_disable_commenting:
     defaults: { _controller: LegislatorBundle:Document:disablecommenting}
     requirements:
         id: \d+
+        
+legislator_process_comments:
+    pattern: /document/{id}/process-comments
+    defaults: { _controller: LegislatorBundle:Document:processcomments}
+    requirements:
+        id: \d+
+        
+legislator_finish_commenting:
+    pattern: /document/{id}/finish-commenting
+    defaults: { _controller: LegislatorBundle:Document:finishcommenting}
+    requirements:
+        id: \d+
 
 # comments
 legislator_comment_new:

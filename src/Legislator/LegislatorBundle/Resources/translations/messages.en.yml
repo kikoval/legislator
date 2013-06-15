@@ -1,4 +1,10 @@
-document.listing: Document listing
+document:
+  listing: Document listing
+  view:
+    actions:
+      enable: enable
+      disable: disable
+      commenting: commenting
 button:
   document:
     add: Add a document
