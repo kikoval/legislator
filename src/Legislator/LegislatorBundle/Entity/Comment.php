@@ -305,6 +305,11 @@ class Comment
         return $this->isAccepted;
     }
 
+    public function isRejected()
+    {
+        return !is_null($this->isAccepted) && $this->isAccepted == 0;
+    }
+
     /**
      * Set isAccepted
      *

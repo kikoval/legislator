@@ -78,7 +78,7 @@
 	</thead>
 	<tbody>
 	{% for comment in comments %}
-	<tr class="comment{% if comment.isprincipal %} comment-principal{% endif %}{% if comment.istechnical %} comment-technical{% endif %}{% if comment.isAccepted %} comment-accepted{% endif %}">
+	<tr class="comment{% if comment.isprincipal %} principal{% endif %}{% if comment.istechnical %} technical{% endif %}{% if comment.isAccepted %} accepted{% endif %}{% if comment.isRejected %} rejected{% endif %}">
 		<td>{{ comment.content }}</td>
 		<td>{{ comment.substantiation }}</td>
 		<td>{{ comment.createdBy }}</td>

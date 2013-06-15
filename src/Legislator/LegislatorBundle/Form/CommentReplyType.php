@@ -11,9 +11,12 @@ class CommentReplyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('isAccepted')
+            ->add('isAccepted', 'choice',
+                    array('choices' =>
+                            array(1 => 'Accept', 0 => 'Reject'),
+                          'expanded' => true,
+                          'label' => 'Acceptance'))
             ->add('reply')
-//             ->add('Add comment', 'submit')
         ;
     }
 

@@ -15,8 +15,9 @@ textarea {min-height: 5em;}
 #comments .button {margin-right: 1em;}
 #comments th:last-child, #comments td:last-child {width: 17%; text-align: center;}
 
-table tr.comment-principal td:first-child {border-left: solid red medium ;}
-table tr.comment-technical td:first-child {border-left: solid blue medium ;}
-table tr.comment-accepted {background-color: lightgreen}
+table tr.comment.principal td:first-child {border-left: solid red medium ;}
+table tr.comment.technical td:first-child {border-left: solid blue medium ;}
+table tr.comment.accepted {background-color: lightgreen}
+table tr.comment.rejected {background-color: rgb(255, 219, 219);}
 
 .button-group form, form.action, form.action input {margin: 0}

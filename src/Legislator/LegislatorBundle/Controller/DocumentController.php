@@ -249,6 +249,7 @@ class DocumentController extends Controller {
      * @param int $id Document ID
      * @return RedirectResponse
      */
+    // TODO check if all comments have a reply
     public function finishcommentingAction($id)
     {
         $document = $this->getDoctrine()

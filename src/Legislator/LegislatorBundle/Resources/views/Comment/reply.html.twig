@@ -4,9 +4,11 @@
 <div class="row">
     <h2>Comment</h2>
     <div class="large-6 columns">
+        <h3>Content</h3>
         <p>{{ comment.content }}</p>
     </div>
     <div class="large-6 columns">
+        <h3>Substantiation</h3>
         <p>{{ comment.substantiation }}</p>
     </div>
 </div>
@@ -16,7 +18,7 @@
     <h2>Reply</h2>
     {{ form_start(form) }}
     {{ form_widget(form) }}
-    <input type="submit" name="Add reply" />
+    <input type="submit" name="add_reply" value="Save" class="save button"/>
     {{ form_end(form) }}
     </div>
 </div>
