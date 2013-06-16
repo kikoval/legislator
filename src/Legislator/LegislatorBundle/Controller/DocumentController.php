@@ -1,16 +1,18 @@
 <?php
 
 namespace Legislator\LegislatorBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Response;
 
 use Legislator\LegislatorBundle\Entity\Document;
 use Legislator\LegislatorBundle\Entity\Comment;
 use Legislator\LegislatorBundle\Form\DocumentType;
+use Legislator\LegislatorBundle\Form\DocumentStatusType;
 use Legislator\LegislatorBundle\Form\CommentType;
 use Legislator\LegislatorBundle\Form\ContentSectionType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DocumentController extends Controller {
 
@@ -51,19 +53,24 @@ class DocumentController extends Controller {
                         array('document_id' => $id));
         }
 
-        $form = $this->createForm(new CommentType(), $comment, array(
+        $comment_form = $this->createForm(new CommentType(), $comment, array(
                 'method' => 'post',
                 'action' => $action));
+
+        $document_form = $this->createForm(new DocumentStatusType(), $document, array(
+                'method' => 'post'));
 
         // check privileges
         $user = $this->get('security.context')->getToken()->getUser();
         $is_document_owner = $user->getID() == $document->getCreatedBy()->getID();
-        $can_take_comment_actions = $is_document_owner && !$document->isProcessingCommentsStatus();
+        $can_take_comment_actions = $is_document_owner &&
+                $document->isStatusCommenting();
 
         return $this->render('LegislatorBundle:Document:view.html.twig',
                 array('document' => $document,
                       'comments' => $comments,
-                      'form' => $form->createView(),
+                      'form' => $comment_form->createView(),
+                      'document_form' => $document_form->createView(),
                       'is_document_owner' => $is_document_owner,
                       'can_take_comment_actions' => $can_take_comment_actions));
     }
@@ -85,6 +92,13 @@ class DocumentController extends Controller {
                 ->getRepository('LegislatorBundle:Document')->find($id);
         if (!$document) {
             throw $this->createNotFoundException('No document found for id!');
+        }
+
+        // check ownership
+        $user = $this->get('security.context')->getToken()->getUser();
+        $is_document_owner = $user->getID() == $document->getCreatedBy()->getID();
+        if (!$is_document_owner) {
+            throw new AccessDeniedException();
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -142,6 +156,11 @@ class DocumentController extends Controller {
      */
     public function editAction(Request $request)
     {
+        // TODO make special role
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
+
         $id = $request->get('id');
         $document = $this->getDoctrine()
                     ->getRepository('LegislatorBundle:Document')->find($id);
@@ -169,52 +188,38 @@ class DocumentController extends Controller {
     }
 
     /**
-     * Enable commenting
-     *
-     * @param int $id Document ID
-     * @return @see setCommenting()
-     */
-    public function enableCommentingAction($id)
-    {
-        return $this->setCommenting($id, 1);
-    }
-
-    /**
-     * Disable commenting
-     *
-     * @param int $id Document ID
-     * @return @see setCommenting()
-     */
-    public function disableCommentingAction($id)
-    {
-        return $this->setCommenting($id, 0);
-    }
-
-    /**
+     * Process actions' form.
      *
      * @param int $id
-     * @param bool $value
-     * @throws AccessDeniedException
+     * @param Request $request
      * @return RedirectResponse
      */
-    private function setCommenting($id, $value)
+    public function processFormAction($id, Request $request)
     {
-        // TODO make special role
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException();
-        }
-
         $document = $this->getDoctrine()
                 ->getRepository('LegislatorBundle:Document')->find($id);
 
-        if (!$document)
+        if ($document == null) {
             throw $this->createNotFoundException('No document found for id!');
+        }
 
-        $document->setCanBeCommented($value);
+        // check ownership
+        $user = $this->get('security.context')->getToken()->getUser();
+        $is_document_owner = $user->getID() == $document->getCreatedBy()->getID();
+        if (!$is_document_owner) {
+            throw new AccessDeniedException();
+        }
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($document);
-        $em->flush();
+        $form = $this->createForm(new DocumentStatusType(), $document);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $document->setModifiedOn(new \DateTime());
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($document);
+            $em->flush();
+        }
 
         return $this->redirect($this->generateUrl('legislator_view', array('id' => $id)));
     }

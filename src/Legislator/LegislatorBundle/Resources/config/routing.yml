@@ -9,6 +9,13 @@ legislator_view:
     requirements:
         id: \d+
 
+legislator_view_form:
+    pattern: /document/{id}
+    defaults: { _controller: LegislatorBundle:Document:processForm }
+    methods: [POST]
+    requirements:
+        id: \d+
+
 legislator_new:
     pattern: /document/new
     defaults: { _controller: LegislatorBundle:Document:new }

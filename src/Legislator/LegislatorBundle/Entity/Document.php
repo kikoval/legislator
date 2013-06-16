@@ -505,8 +505,24 @@ class Document
         return $this;
     }
 
-    public function isProcessingCommentsStatus()
+    public function isStatusCommenting()
+    {
+        return $this->getStatus() == self::STATUS_COMMENTING;
+    }
+
+    public function isStatusProcessingComments()
     {
         return $this->getStatus() == self::STATUS_PROCESSING_COMMENTS;
+    }
+
+    public function isStatusFinishedProcessingComments()
+    {
+        return $this->getStatus() == self::STATUS_FINISHED;
+    }
+
+
+    public function isStatusNew()
+    {
+        return $this->getStatus() == self::STATUS_NEW;
     }
 }

@@ -8,18 +8,12 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class DocumentType extends AbstractType
+class DocumentStatusType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('description', 'textarea')
-            ->add('status', 'choice',
-                    array('choices' =>
-                            array(0 => 'New', 'Commenting', 'Reviewing', 'Finished')))
-            ->add('file')
-            ->add('file_substantiation')
+            ->add('status', 'hidden')
         ;
     }
 

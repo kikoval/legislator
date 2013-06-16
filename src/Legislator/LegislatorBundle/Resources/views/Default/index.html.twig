@@ -35,11 +35,20 @@
 			<td>{{ d.modifiedOn|date('d.m.Y H:i:s') }}</td>
 			{# TODO check privileges #}
 			<td>
-			{% if app.user and d.createdBy.id == app.user.id %}
-			    <form method="post" action="{{ path('legislator_delete', {'id': d.id}) }}" class="action">
-			        <input type="submit" value="delete" class="small delete button"/>
-			    </form>
+			<ul class="button-group">
+			{% if d.isStatusCommenting %}
+			    <li><a href="{{ path('legislator_view', {'id': d.id}) }}" class="small button">Pripomienkovať</a></li>
 			{% endif %}
+			{% if app.user and d.createdBy.id == app.user.id %}
+			    <li><form method="get" action="{{ path('legislator_edit', {'id': d.id}) }}" class="action">
+			        <input type="submit" value="Edit" class="small edit button"/>
+			    </form></li>
+			    <li><form method="post" action="{{ path('legislator_delete', {'id': d.id}) }}" class="action">
+			        <input type="submit" value="Delete" class="small delete button"/>
+			    </form></li>
+
+			{% endif %}
+			</ul>
 			</td>
 		</tr>
 	{% endfor %}

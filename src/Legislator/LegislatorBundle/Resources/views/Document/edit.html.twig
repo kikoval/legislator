@@ -1,10 +1,14 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
-<h1>Edit document</h1>
+<div class="row">
+    <div class="large-12 columns">
+    <h1>Edit document</h1>
 
-<form action="{{ path('legislator_edit', {'id': id}) }}" method="post" {{ form_enctype(form) }}>
-{{ form_widget(form) }}
-<input type="submit" value="Save document" class="button"/>
-</form>
+    <form action="{{ path('legislator_edit', {'id': id}) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <input type="submit" value="Save document" class="button"/>
+    </form>
+    </div>
+</div>
 {% endblock %}

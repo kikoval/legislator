@@ -29,26 +29,26 @@
 <ul class="button-group">
 	<li><a href="{{ path('legislator_edit', {'id': document.id })}}" class="small button edit">edit</a></li>
 	<li><a href="{{ path('legislator_delete', {'id': document.id })}}" class="small button delete">delete</a></li>
-	{% if not document.isProcessingCommentsStatus  %}
-	<li>
-	    {% if document.canBeCommented %}
-	    <a href="{{ path('legislator_disable_commenting', {'id': document.id })}}" class="small button">{% trans %}document.view.actions.disable{% endtrans %}
-	    {% else %}
-	        <a href="{{ path('legislator_enable_commenting', {'id': document.id })}}" class="small button">{% trans %}document.view.actions.enable{% endtrans %}
-	    {% endif %}
-	    {% trans %}document.view.actions.commenting{% endtrans %}</a>
-	</li>
-	{% endif %}
 </ul>
-{% if not document.isProcessingCommentsStatus %}
-    <form action="{{ path('legislator_process_comments', {'id': document.id })}}" method="post">
-        <input type="submit" value="Vyhodnotiť pripomienky" class="button"/>
-    </form>
-{% else %}
-    <form action="{{ path('legislator_finish_commenting', {'id': document.id })}}" method="post">
-        <input type="submit" value="Ukončiť pripomienkovanie" class="button"/>
-    </form>
+{% if document.isStatusNew %}
+    {{ form_start(document_form) }}
+    {{ form_widget(document_form.status, {'attr': {'value': constant('Legislator\\LegislatorBundle\\Entity\\Document::STATUS_COMMENTING')}}) }}
+    <input type="submit" value="Začať pripomienkovanie" class="button"/>
+    {{ form_end(document_form) }}
 {% endif %}
+{% if document.isStatusCommenting %}
+    {{ form_start(document_form) }}
+    {{ form_widget(document_form.status, {'attr': {'value': constant('Legislator\\LegislatorBundle\\Entity\\Document::STATUS_PROCESSING_COMMENTS')}}) }}
+    <input type="submit" value="Vyhodnotiť pripomienky" class="button"/>
+    {{ form_end(document_form) }}
+{% endif %}
+{% if document.isStatusProcessingComments %}
+    {{ form_start(document_form) }}
+    {{ form_widget(document_form.status, {'attr': {'value': constant('Legislator\\LegislatorBundle\\Entity\\Document::STATUS_FINISHED')}}) }}
+    <input type="submit" value="Ukončiť pripomienkovanie" class="button"/>
+    {{ form_end(document_form) }}
+{% endif %}
+
 {% endif %}
 
 <h2>Meta data</h2>
@@ -90,7 +90,7 @@
     		<li><form method="get" action="{{ path('legislator_view', {'id': document.id })}}" class="action"><input type="hidden" name="comment_id" value="{{ comment.id }}"/><input type="submit" name="edit" value="Edit" class="small edit button" /></form></li>
     		<li><form method="post" action="{{ path('legislator_comment_delete', {'document_id': document.id,'id': comment.id })}}" class="action"><input type="submit" name="delete" value="Delete" class="small delete button" /></form></li>
     		{% endif %}
-    		{% if document.isProcessingCommentsStatus %}
+    		{% if document.isStatusProcessingComments %}
     		<li><form method="get" action="{{ path('legislator_comment_reply', {'document_id': document.id,'id': comment.id })}}" class="action"><input type="submit" name="reply" value="Reply" class="small reply button" /></form></li>
     		{% endif %}
 		</ul>

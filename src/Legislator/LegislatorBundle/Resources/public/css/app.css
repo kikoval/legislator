@@ -21,3 +21,4 @@ table tr.comment.accepted {background-color: lightgreen}
 table tr.comment.rejected {background-color: rgb(255, 219, 219);}
 
 .button-group form, form.action, form.action input {margin: 0}
+select {width: inherit;}
