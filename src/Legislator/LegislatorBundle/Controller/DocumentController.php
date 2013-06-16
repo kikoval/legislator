@@ -11,6 +11,7 @@ use Legislator\LegislatorBundle\Entity\Document;
 use Legislator\LegislatorBundle\Entity\Comment;
 use Legislator\LegislatorBundle\Form\DocumentType;
 use Legislator\LegislatorBundle\Form\DocumentStatusType;
+use Legislator\LegislatorBundle\Form\DocumentNewType;
 use Legislator\LegislatorBundle\Form\CommentType;
 use Legislator\LegislatorBundle\Form\ContentSectionType;
 
@@ -125,7 +126,7 @@ class DocumentController extends Controller {
         $document = new Document();
         $document->setVersion(1); // default value
 
-        $form = $this->createForm(new DocumentType(), $document);
+        $form = $this->createForm(new DocumentNewType(), $document);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
