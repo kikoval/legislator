@@ -13,11 +13,14 @@
     <body>
     <nav class="top-bar">
         <ul class="title-area">
-            <li class="name"><h1><a href="{{ path('legislator_homepage') }}">Legislator</a></h1></li>
+            <li class="name">
+                <h1><a href="{{ path('legislator_homepage') }}">Legislator</a></h1>
+            </li>
         </ul>
         <section class="top-bar-section">
     	<ul class="right">
     		{% if app.user %}
+    		<li><a href="{{ path('fos_user_profile_edit') }}">Edit profile</a></li>
     		<li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
     		{% else %}
     		<li><a href="{{ path('fos_user_security_login') }}">Login</a></li>
