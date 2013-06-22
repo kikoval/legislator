@@ -1,0 +1,32 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+<div class="row">
+<div class="large-12 columns">
+
+<table id="comments">
+	<thead>
+		<tr>
+		    <th>Document</th>
+			<th width="40%">Content</th>
+			<th>Substantiation</th>
+			<th>Reply</th>
+			<th>Date</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for comment in comments %}
+	<tr class="comment{% if comment.isprincipal %} principal{% endif %}{% if comment.istechnical %} technical{% endif %}{% if comment.isAccepted %} accepted{% endif %}{% if comment.isRejected %} rejected{% endif %}">
+        <td><a href="{{ path('legislator_view', {'id': comment.document.id}) }}">{{ comment.document.name }}</a></td>
+	    <td>{{ comment.content }}</td>
+		<td>{{ comment.substantiation }}</td>
+		<td>{{ comment.reply }}</td>
+		<td>{{ comment.createdOn|date('d.m.Y H:i') }}</td>
+	</tr>
+	{% endfor %}
+	</tbody>
+</table>
+
+</div>
+</div>
+{% endblock %}

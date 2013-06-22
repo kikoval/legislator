@@ -19,6 +19,38 @@ class CommentController extends Controller {
         }
     }
 
+    /**
+     * View comments by a user.
+     *
+     * @param int $user_id if null the current user will be used
+     */
+    public function viewByUserAction($user_id=null)
+    {
+        $view_mine = true;
+        if ($user_id !== null) {
+            $user = $this->getDoctrine()
+                ->getRepository('LegislatorBundle:User')->find($user_id);
+
+            if ($user == null) {
+                throw $this->createNotFoundException('No user found for id!');
+            }
+            $view_mine = false;
+        } else {
+            $user = $this->get('security.context')->getToken()->getUser();
+        }
+        $comments = $this->getDoctrine()
+                ->getRepository('LegislatorBundle:Comment')->findBy(
+                        array('createdBy' => $user));
+
+        if ($view_mine) {
+	        return $this->render('LegislatorBundle:Comment:view_mine.html.twig',
+	                array('comments' => $comments));
+        } else {
+            return $this->render('LegislatorBundle:Comment:view_by_user.html.twig',
+                    array('comments' => $comments));
+        }
+    }
+
 	/**
 	 * Processes submitted form for adding new comment.
 	 *

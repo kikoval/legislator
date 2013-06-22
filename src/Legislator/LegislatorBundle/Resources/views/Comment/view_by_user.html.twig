@@ -1,0 +1,32 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+<div class="row">
+<div class="large-12 columns">
+
+<table id="comments">
+	<thead>
+		<tr>
+			<th width="40%">Content</th>
+			<th>Substantiation</th>
+			<th>Added by</th>
+			<th>Date</th>
+			<th>Reply</th>  {# TODO check privileges #}
+		</tr>
+	</thead>
+	<tbody>
+	{% for comment in comments %}
+	<tr class="comment{% if comment.isprincipal %} principal{% endif %}{% if comment.istechnical %} technical{% endif %}{% if comment.isAccepted %} accepted{% endif %}{% if comment.isRejected %} rejected{% endif %}">
+		<td>{{ comment.content }}</td>
+		<td>{{ comment.substantiation }}</td>
+		<td>{{ comment.createdBy }}</td>
+		<td>{{ comment.createdOn|date('d.m.Y H:i') }}</td>
+		<td>{{ comment.reply }}</td>
+	</tr>
+	{% endfor %}
+	</tbody>
+</table>
+
+</div>
+</div>
+{% endblock %}

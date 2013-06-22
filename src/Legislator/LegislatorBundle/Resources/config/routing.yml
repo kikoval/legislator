@@ -86,3 +86,16 @@ legislator_comment_reply:
     requirements:
         document_id: \d+
         id: \d+
+
+# user        
+legislator_user_comments:
+    pattern: /user/{user_id}/comments/
+    defaults: { _controller: LegislatorBundle:Comment:viewByUser }
+    requirements:
+        user_id: \d+
+        
+legislator_user_my_comments:
+    pattern: /user/comments/
+    defaults: { _controller: LegislatorBundle:Comment:viewByUser }
+        
+        
