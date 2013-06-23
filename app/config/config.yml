@@ -87,3 +87,7 @@ fos_user:
     registration:
         form:
             type: legislator_user_registration
+    profile:
+        form:
+            type: legislator_user_profile
+
