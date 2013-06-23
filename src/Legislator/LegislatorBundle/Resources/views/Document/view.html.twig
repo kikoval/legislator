@@ -50,10 +50,10 @@
 {% if document.isStatusProcessingComments %}
     {{ form_start(document_form) }}
     {{ form_widget(document_form.status, {'attr': {'value': constant('Legislator\\LegislatorBundle\\Entity\\Document::STATUS_FINISHED')}}) }}
-    <input type="submit" value="Ukončiť pripomienkovanie" class="button"/>
+    <input type="submit" value="Ukončiť spracovanie pripomienok" class="button"/>
     {{ form_end(document_form) }}
 {% endif %}
-{% if document.isStatusFinishedProcessingComments %}
+{% if document.isStatusFinishedProcessingComments and not document.isFinalVersion %}
     <a href="{{ path('legislator_document_new_version', {'id': document.id }) }}" class="add button">Add a new version</a>
 {% endif %}
 

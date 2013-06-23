@@ -15,7 +15,7 @@ class DocumentNewVersionType extends AbstractType
         $builder
             ->add('name', 'text', array('read_only' => true, 'disabled' => true))
             ->add('description', 'textarea')
-//             ->add('is_final')
+            ->add('is_final_version')
             ->add('file', 'file', array('required' => true))
         ;
     }

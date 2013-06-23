@@ -121,6 +121,16 @@ class Document
     private $previous_version;
 
     /**
+     *
+     * @var boolean
+     *
+     * @ORM\Column(name="is_final_version", type="boolean", nullable=true)
+     */
+    private $is_final_version;
+
+    /* METHODS */
+
+    /**
      * Get id
      *
      * @return integer
@@ -554,6 +564,29 @@ class Document
     public function setPreviousVersion(Document $document)
     {
         $this->previous_version = $document;
+
+        return $this;
+    }
+
+    /**
+     * Get is final version
+     *
+     * @return bool
+     */
+    public function getIsFinalVersion()
+    {
+        return $this->is_final_version;
+    }
+
+    /**
+     * Set is final version
+     *
+     * @param bool $is_final_version
+     * @return Document
+     */
+    public function setIsFinalVersion($is_final_version)
+    {
+        $this->is_final_version = $is_final_version;
 
         return $this;
     }
