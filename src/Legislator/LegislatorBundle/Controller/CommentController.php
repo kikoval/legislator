@@ -36,7 +36,7 @@ class CommentController extends Controller {
             }
             $view_mine = false;
         } else {
-            $user = $this->get('security.context')->getToken()->getUser();
+            $user = $this->getUser();
         }
         $comments = $this->getDoctrine()
                 ->getRepository('LegislatorBundle:Comment')->findBy(
@@ -82,7 +82,7 @@ class CommentController extends Controller {
 
 		if ($form->isValid()) {
 			$comment->setCreatedOn(new \Datetime());
-			$user = $this->get('security.context')->getToken()->getUser();
+			$user = $this->getUser();
 			$comment->setCreatedBy($user);
 
 			$em = $this->getDoctrine()->getManager();
@@ -111,7 +111,7 @@ class CommentController extends Controller {
 	    }
 
 	    // check privileges, only admin or the author himself can edit a comment
-	    $user = $this->get('security.context')->getToken()->getUser();
+	    $user = $this->getUser();
 	    $is_admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
 	    if (!$is_admin || $comment->getCreatedBy()->getId() !== $user->getId()) {
 	        throw new AccessDeniedException();
@@ -180,7 +180,7 @@ class CommentController extends Controller {
 	    $form->handleRequest($request);
 
 	    if ($form->isValid()) {
-	        $user = $this->get('security.context')->getToken()->getUser();
+	        $user = $this->getUser();
 	        $comment->setRepliedBy($user);
 
 	        $em = $this->getDoctrine()->getManager();

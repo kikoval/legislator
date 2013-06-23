@@ -62,7 +62,7 @@ class DocumentController extends Controller {
                 'method' => 'post'));
 
         // check privileges
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $is_document_owner = $user->getID() == $document->getCreatedBy()->getID();
         $can_take_comment_actions = $is_document_owner &&
                 $document->isStatusCommenting();
@@ -96,7 +96,7 @@ class DocumentController extends Controller {
         }
 
         // check ownership
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $is_document_owner = $user->getID() == $document->getCreatedBy()->getID();
         if (!$is_document_owner) {
             throw new AccessDeniedException();
@@ -134,7 +134,7 @@ class DocumentController extends Controller {
             $document->setStatus(Document::STATUS_NEW); // default value
             $document->setModifiedOn(new \DateTime());
             $document->setCreatedOn(new \DateTime());
-            $user = $this->get('security.context')->getToken()->getUser();
+            $user = $this->getUser();
             $document->setCreatedBy($user);
 
             $em = $this->getDoctrine()->getManager();
@@ -205,7 +205,7 @@ class DocumentController extends Controller {
         }
 
         // check ownership
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $is_document_owner = $user->getID() == $document->getCreatedBy()->getID();
         if (!$is_document_owner) {
             throw new AccessDeniedException();
