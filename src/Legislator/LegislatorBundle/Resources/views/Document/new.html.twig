@@ -3,11 +3,15 @@
 {% block body %}
 <div class="row">
     <div class="large-12 columns">
-        <h1>Add a new document</h1>
+        <h1>{% if prev_document is defined %}Add a new version{% else %}Add a new document{% endif %}</h1>
 
         {{ form_start(form) }}
         {{ form_widget(form) }}
+        {% if prev_document is defined %}
+        <input type="submit" value="Add document of version {{ form.vars.data.version }}" class="button"/>
+        {% else %}
         <input type="submit" value="Add document" class="button"/>
+        {% endif %}
         {{ form_end(form) }}
     </div>
 </div>

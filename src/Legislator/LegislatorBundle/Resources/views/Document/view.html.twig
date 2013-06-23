@@ -15,6 +15,11 @@
 <h2>Description</h2>
 <p class="description">{{ document.description }}</p>
 
+{% if document.previousVersion %}
+<h2>Previous version</h2>
+<p><a href="{{ path('legislator_view', {'id': document.previousVersion.id }) }}">View version {{ document.previousVersion.version }}</a></p>
+{% endif %}
+
 <h2>Files</h2>
 <ul>
     {% if document.webpath  %}<li><a href="/{{ document.webpath }}">main document</a></li>{% endif %}
@@ -48,12 +53,16 @@
     <input type="submit" value="Ukončiť pripomienkovanie" class="button"/>
     {{ form_end(document_form) }}
 {% endif %}
+{% if document.isStatusFinishedProcessingComments %}
+    <a href="{{ path('legislator_document_new_version', {'id': document.id }) }}" class="add button">Add a new version</a>
+{% endif %}
 
 {% endif %}
 
 <h2>Meta data</h2>
 <dl class="document-data">
 	<dt>Status</dt><dd>{{ document.status }}</dd>
+	<dt>Version</dt><dd>{{ document.version }}</dd>
 	<dt>Created by</dt><dd>{{ document.createdBy }}</dd>
 	<dt>Created on</dt><dd>{{ document.createdOn|date('d.m.Y H:i:s') }}</dd>
 	<dt>Modified on</dt><dd>{{ document.modifiedOn|date('d.m.Y H:i:s') }}</dd>

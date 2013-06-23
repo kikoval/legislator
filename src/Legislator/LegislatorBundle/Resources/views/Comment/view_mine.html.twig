@@ -4,6 +4,7 @@
 <div class="row">
 <div class="large-12 columns">
 
+{% if comments %}
 <table id="comments">
 	<thead>
 		<tr>
@@ -26,6 +27,9 @@
 	{% endfor %}
 	</tbody>
 </table>
+{% else %}
+<p>No comments found.</p>
+{% endif %}
 
 </div>
 </div>

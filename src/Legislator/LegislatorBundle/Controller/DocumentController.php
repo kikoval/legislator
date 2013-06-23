@@ -12,10 +12,18 @@ use Legislator\LegislatorBundle\Entity\Comment;
 use Legislator\LegislatorBundle\Form\DocumentType;
 use Legislator\LegislatorBundle\Form\DocumentStatusType;
 use Legislator\LegislatorBundle\Form\DocumentNewType;
+use Legislator\LegislatorBundle\Form\DocumentNewVersionType;
 use Legislator\LegislatorBundle\Form\CommentType;
 use Legislator\LegislatorBundle\Form\ContentSectionType;
 
 class DocumentController extends Controller {
+
+    public function preExecute()
+    {
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
+    }
 
     /**
      * View a document
@@ -28,10 +36,12 @@ class DocumentController extends Controller {
     {
         $document = $this->getDoctrine()
                 ->getRepository('LegislatorBundle:Document')->find($id);
-        if (!$document)
+        if (!$document) {
             throw $this->createNotFoundException('No document found for id!');
+        }
 
         // TODO limit comments
+        // TODO handle multiple versions
         $comments = $this->getDoctrine()
                 ->getRepository('LegislatorBundle:Comment')
                 ->findBy(array('document' => $document));
@@ -63,7 +73,11 @@ class DocumentController extends Controller {
 
         // check privileges
         $user = $this->getUser();
-        $is_document_owner = $user->getID() == $document->getCreatedBy()->getID();
+        if (!$user) {
+            $is_document_owner = false;
+        } else {
+            $is_document_owner = $user->getID() == $document->getCreatedBy()->getID();
+        }
         $can_take_comment_actions = $is_document_owner &&
                 $document->isStatusCommenting();
 
@@ -149,6 +163,50 @@ class DocumentController extends Controller {
                 array('form' => $form->createView()));
     }
 
+    public function newVersionAction($id, Request $request)
+    {
+        // TODO make special role
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
+
+        $prev_document = $this->getDoctrine()
+                    ->getRepository('LegislatorBundle:Document')->find($id);
+        if (!$prev_document) {
+            throw $this->createNotFoundException('No document found for id!');
+        }
+
+        // create form
+        $document = new Document();
+        $document->setName($prev_document->getName());
+        $document->setDescription($prev_document->getDescription());
+        $document->setVersion($prev_document->getVersion()+1);
+        $document->setPreviousVersion($prev_document);
+
+        $form = $this->createForm(new DocumentNewVersionType(), $document);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $document->setStatus(Document::STATUS_NEW); // default value
+            $document->setModifiedOn(new \DateTime());
+            $document->setCreatedOn(new \DateTime());
+            $user = $this->getUser();
+            $document->setCreatedBy($user);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($document);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('legislator_homepage'));
+        }
+
+        // display form
+        return $this->render('LegislatorBundle:Document:new.html.twig',
+                array('form' => $form->createView(),
+                      'prev_document' => $prev_document));
+    }
+
     /**
      * Process edit action.
      *
@@ -166,8 +224,9 @@ class DocumentController extends Controller {
         $document = $this->getDoctrine()
                     ->getRepository('LegislatorBundle:Document')->find($id);
 
-        if (!$document)
+        if (!$document) {
             throw $this->createNotFoundException('No document found for id!');
+        }
 
         $form = $this->createForm(new DocumentType(), $document);
         $form->handleRequest($request);

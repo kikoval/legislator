@@ -32,18 +32,6 @@ legislator_delete:
     requirements:
         id: \d+
 
-legislator_enable_commenting:
-    pattern: /document/{id}/enable-commenting
-    defaults: { _controller: LegislatorBundle:Document:enablecommenting}
-    requirements:
-        id: \d+
-
-legislator_disable_commenting:
-    pattern: /document/{id}/disable-commenting
-    defaults: { _controller: LegislatorBundle:Document:disablecommenting}
-    requirements:
-        id: \d+
-        
 legislator_process_comments:
     pattern: /document/{id}/process-comments
     defaults: { _controller: LegislatorBundle:Document:processcomments}
@@ -53,6 +41,12 @@ legislator_process_comments:
 legislator_finish_commenting:
     pattern: /document/{id}/finish-commenting
     defaults: { _controller: LegislatorBundle:Document:finishcommenting}
+    requirements:
+        id: \d+
+
+legislator_document_new_version:
+    pattern: /document/{id}/new-version
+    defaults: { _controller: LegislatorBundle:Document:newVersion}
     requirements:
         id: \d+
 

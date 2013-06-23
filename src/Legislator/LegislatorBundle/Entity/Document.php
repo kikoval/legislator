@@ -111,6 +111,14 @@ class Document
     private $path_substantiation;
     private $temp_path_substantiation;
 
+    /**
+     *
+     * @var Document
+     *
+     * @ORM\OneToOne(targetEntity="Document")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $previous_version;
 
     /**
      * Get id
@@ -505,6 +513,7 @@ class Document
         return $this;
     }
 
+    // Statuses
     public function isStatusCommenting()
     {
         return $this->getStatus() == self::STATUS_COMMENTING;
@@ -524,5 +533,28 @@ class Document
     public function isStatusNew()
     {
         return $this->getStatus() == self::STATUS_NEW;
+    }
+
+    /**
+     * Get previous version of the document
+     *
+     * @return Document
+     */
+    public function getPreviousVersion()
+    {
+        return $this->previous_version;
+    }
+
+    /**
+     * Set previous version of the document
+     *
+     * @param Document $document
+     * @return Document
+     */
+    public function setPreviousVersion(Document $document)
+    {
+        $this->previous_version = $document;
+
+        return $this;
     }
 }
