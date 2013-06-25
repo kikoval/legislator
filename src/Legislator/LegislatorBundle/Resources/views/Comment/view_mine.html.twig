@@ -12,7 +12,8 @@
 			<th width="40%">Content</th>
 			<th>Substantiation</th>
 			<th>Reply</th>
-			<th>Date</th>
+			<th>Created on</th>
+			<th>Modified on</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -23,6 +24,7 @@
 		<td>{{ comment.substantiation }}</td>
 		<td>{{ comment.reply }}</td>
 		<td>{{ comment.createdOn|date('d.m.Y H:i') }}</td>
+		<td>{{ comment.modifiedOn|date('d.m.Y H:i') }}</td>
 	</tr>
 	{% endfor %}
 	</tbody>

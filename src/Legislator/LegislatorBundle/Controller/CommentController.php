@@ -40,7 +40,9 @@ class CommentController extends Controller {
         }
         $comments = $this->getDoctrine()
                 ->getRepository('LegislatorBundle:Comment')->findBy(
-                        array('createdBy' => $user));
+                                array('createdBy' => $user),
+                                array('modifiedOn' => 'DESC',
+                                      'createdOn' => 'DESC'));
 
         if ($view_mine) {
 	        return $this->render('LegislatorBundle:Comment:view_mine.html.twig',
