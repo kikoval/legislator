@@ -1,7 +1,7 @@
 Legislator
 ========================
 
-Legislator is a tool to help create a law documents.
+Legislator is a tool to help create law documents.
 
 After adding a document to the system it can under o several step process that can be repeaded.
   1. Commenting phase
@@ -9,3 +9,11 @@ After adding a document to the system it can under o several step process that c
   3. Uploading a new version of the document
 
 The document from the last iteration can be marked as final.
+
+## Installation ##
+
+1. clone the repository into a directory and `cd` to it
+2. get the dependancies using [Composer](http://getcomposer.org/) `php composer.phar install`
+3. copy `app/config/parameters.yml.dist` to `app/config/parameters.yml` and edit the parameters
+3. initialize the database `app/console doctrine:schema:create`
+4. run the application in a dev webserver `app/console server:run`
