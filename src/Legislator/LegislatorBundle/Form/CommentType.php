@@ -11,11 +11,10 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content')
-            ->add('substantiation')
-            ->add('isPrincipal', 'checkbox', array('required' => false))
-            ->add('isTechnical', 'checkbox', array('required' => false))
-//             ->add('Add comment', 'submit')
+            ->add('content', 'textarea', array('label' => 'comment.content'))
+            ->add('substantiation', 'textarea', array('label' => 'comment.substantiation'))
+            ->add('isPrincipal', 'checkbox', array('label' => 'comment.isprincipal', 'required' => false))
+            ->add('isTechnical', 'checkbox', array('label' => 'comment.istechnical', 'required' => false))
         ;
     }
 

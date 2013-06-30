@@ -13,13 +13,17 @@ class DocumentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('description', 'textarea')
+            ->add('name', 'text', array('label' => 'document.name'))
+            ->add('description', 'textarea',
+                    array('label' => 'document.description'))
             ->add('status', 'choice',
                     array('choices' =>
-                            array(0 => 'New', 'Commenting', 'Reviewing', 'Finished')))
-            ->add('file')
-            ->add('file_substantiation')
+                            array(0 => 'Nový', 'Pripomienkovanie',
+                                    'Vyhodnocovanie pripomienok', 'Dokončený')))
+            ->add('file', 'file',
+                    array('required' => false, 'label' => 'document.file'))
+            ->add('file_substantiation', 'file',
+                    array('required' => false, 'label' => 'document.file_substantiation'))
         ;
     }
 

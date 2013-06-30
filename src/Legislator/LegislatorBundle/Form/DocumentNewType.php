@@ -13,10 +13,13 @@ class DocumentNewType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('description', 'textarea')
-            ->add('file', 'file', array('required' => true))
-            ->add('file_substantiation')
+            ->add('name', 'text', array('label' => 'document.name'))
+            ->add('description', 'textarea',
+                    array('label' => 'document.description'))
+            ->add('file', 'file',
+                    array('label' => 'document.file', 'required' => true))
+            ->add('file_substantiation', 'file',
+                    array('label' => 'document.file_substantiation'))
         ;
     }
 

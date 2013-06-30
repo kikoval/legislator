@@ -8,10 +8,10 @@
 <table id="comments">
 	<thead>
 		<tr>
-			<th width="40%">Content</th>
-			<th>Substantiation</th>
-			<th>Added by</th>
-			<th>Date</th>
+			<th width="40%">{% trans %}comment.content{% endtrans %}</th>
+			<th>{% trans %}comment.substantiation{% endtrans %}</th>
+			<th>{% trans %}comment.created_by{% endtrans %}</th>
+			<th>{% trans %}common.modified_on{% endtrans %}</th>
 			<th>Reply</th>  {# TODO check privileges #}
 		</tr>
 	</thead>
@@ -28,7 +28,7 @@
 	</tbody>
 </table>
 {% else %}
-<p>No comments found.</p>
+<p>Neboli nájdené žiadne pripomienky.</p>
 {% endif %}
 
 </div>

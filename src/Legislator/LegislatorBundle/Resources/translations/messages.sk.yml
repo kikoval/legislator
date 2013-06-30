@@ -1,2 +1,73 @@
-document.listing: Zoznam dokumentov
-document.view.actions.commenting
+common:
+  modified_on: Modifikované
+  created_on: Vytvorené
+  created_by: Pridal
+  actions: Akcie
+  button:
+    delete: Zmazať
+    edit: Editovať
+
+menu:
+  my_comments: Moje pripomienky
+  edit_profile: Zmeniť profil
+  change_password: Zmeniť heslo
+  login: Prihlásiť sa
+  logout: Odhlásiť sa
+
+document:
+  listing: Zoznam dokumentov
+  name: Názov
+  description: Popis
+  status: Status
+  version: Verzia
+  file: Vlastný materiál
+  file_substantiation: Dôvodová správa
+  new:
+    title: Pridať nový dokument
+    title_version: Pridať novú verziu dokumentu
+    button:
+      add: Pridať dokument
+      add_new_version: Pridať dokument verzie
+  edit:
+    title: Upraviť dokument
+    button:
+      save: Uložiť dokument
+  view:
+    files: Súbory
+    meta_data: Meta dáta
+    button:
+      add_new_version: Pridať novú verziu
+      end_comment_processing: Ukončiť spracovanie pripomienok
+    actions:
+      enable: enable
+      disable: disable
+      commenting: pripomienkovanie
+    previous_versions: Predchádzajúce verzie
+    view_version: Pozri verziu
+    no_comments: Zatiaľ bez pripomienok, buďte prvý!
+    commenting_disabled: Nie je možné pripomienkovať.
+    comments: Komentáre
+    add_a_comment: Pridať komentár
+    edit_comment: Upraviť komentár
+
+comment:
+  content: Pripomienka
+  substantiation: Odôvodnenie
+  created_by: Vložil
+  isprincipal: Zásadná
+  istechnical: Legislatívno-technická
+  acceptance: Vyhodnotenie
+  reply: Vyhodnotenie
+  button:
+    reply: Odpoveď
+    edit: Upraviť komentár
+    add: Pridať komentár
+
+button:
+  document:
+    add: Pridať dokument
+    save: Uložiť dokument
+
+form:
+  firstname: Meno:
+  surname: Priezvisko:

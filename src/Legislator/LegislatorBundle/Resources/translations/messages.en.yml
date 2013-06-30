@@ -1,14 +1,73 @@
+common:
+  modified_on: Modified on
+  created_on: Created on
+  created_by: Created by
+  actions: Actions
+  button:
+    delete: Delete
+    edit: Edit
+  
+menu:
+  my_comments: My comments
+  edit_profile: Edit profile
+  change_password: Change password
+  login: Login
+  logout: Logout
+
 document:
   listing: Document listing
+  name: Name
+  description: Description
+  status: Status
+  version: Version
+  file: file
+  file_substantiation: File substantiation
+  new:
+    title: Add new document
+    title_version: Add new version of the document
+    button:
+      add: Add document
+      add_new_version: Add document of version
+  edit:
+    title: Edit document
+    button:
+      save: Add document
   view:
+    files: Files
+    meta_data: Meta data
+    button:
+      add_new_version: Add new version
+      end_comment_processing: End comment processing 
     actions:
       enable: enable
       disable: disable
       commenting: commenting
+    previous_versions: Previous versions
+    view_version: View version
+    no_comments: There are no comments, be first!
+    commenting_disabled: Commenting has been disabled.
+    comments: Comments
+    add_a_comment: Add a document
+    edit_comment: Edit comment
+
+comment:
+  content: Content
+  substantiation: Substantiation
+  created_by: Created by
+  isprincipal: Is principal
+  istechnical: Is technical
+  acceptance: Acceptance
+  reply: Reply
+  button:
+    reply: Reply
+    edit: Edit comment
+    add: Add comment
+
 button:
   document:
-    add: Add a document
+    add: Add document
     save: Save document
+
 form:
   firstname: First name:
   surname: Surname:

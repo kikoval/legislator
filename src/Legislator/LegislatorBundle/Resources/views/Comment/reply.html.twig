@@ -1,24 +1,26 @@
 {% extends "::base.html.twig" %}
 
+{% block title %}{{ comment.document.name }}{% endblock %}
+
 {% block body %}
 <div class="row">
-    <h2>Comment</h2>
+    <h2>Pripomienka</h2>
     <div class="large-6 columns">
-        <h3>Content</h3>
+        <h3>Text</h3>
         <p>{{ comment.content }}</p>
     </div>
     <div class="large-6 columns">
-        <h3>Substantiation</h3>
+        <h3>Zdôvodnenie</h3>
         <p>{{ comment.substantiation }}</p>
     </div>
 </div>
 
 <div class="row">
     <div class="large-12 columns">
-    <h2>Reply</h2>
+    <h2>Odpoveď</h2>
     {{ form_start(form) }}
     {{ form_widget(form) }}
-    <input type="submit" name="add_reply" value="Save" class="save button"/>
+    <input type="submit" name="add_reply" value="Uložiť odpoveď" class="save button"/>
     {{ form_end(form) }}
     </div>
 </div>

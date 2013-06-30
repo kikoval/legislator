@@ -4,7 +4,7 @@ h1.header {font-size: 230%;}
 h2 {font-size: 160%;}
 h3 {font-size: 140%;}
 
-dl.document-data dt {float: left; clear: left; min-width: 6.5em;}
+dl.document-data dt {float: left; clear: left; min-width: 7em;}
 dl.document-data dt:after {content: ":";}
 dl.document-data dd {margin-bottom: 0.4em;}
 

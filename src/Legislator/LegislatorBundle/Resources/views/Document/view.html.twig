@@ -12,28 +12,28 @@
 {# TODO check privileges #}
 <div class="row">
 <div class="large-8 columns">
-<h2>Description</h2>
+<h2>{% trans %}document.description{% endtrans %}</h2>
 <p class="description">{{ document.description }}</p>
 
 {% if document.previousVersion %}
-<h2>Previous version</h2>
-<p><a href="{{ path('legislator_view', {'id': document.previousVersion.id }) }}">View version {{ document.previousVersion.version }}</a></p>
+<h2>{% trans %}document.view.previous_versions{% endtrans %}</h2>
+<p><a href="{{ path('legislator_view', {'id': document.previousVersion.id }) }}">{% trans %}document.view.view_version{% endtrans %} {{ document.previousVersion.version }}</a></p>
 {% endif %}
 
-<h2>Files</h2>
+<h2>{% trans %}document.view.files{% endtrans %}</h2>
 <ul>
-    {% if document.webpath  %}<li><a href="/{{ document.webpath }}">main document</a></li>{% endif %}
-    {% if document.webpathsubstantiation  %}<li><a href="/{{ document.webpathsubstantiation }}">substantiation</a></li>{% endif %}
+    {% if document.webpath  %}<li><a href="/{{ document.webpath }}">{% trans %}document.file{% endtrans %}</a></li>{% endif %}
+    {% if document.webpathsubstantiation  %}<li><a href="/{{ document.webpathsubstantiation }}">{% trans %}document.file_substantiation{% endtrans %}</a></li>{% endif %}
 </ul>
 </div>
 
 <div class="large-4 columns panel">
 {# TODO check privileges #}
 {% if is_document_owner %}
-<h2>Actions</h2>
+<h2>{% trans %}common.actions{% endtrans %}</h2>
 <ul class="button-group">
-	<li><a href="{{ path('legislator_edit', {'id': document.id })}}" class="small button edit">edit</a></li>
-	<li><a href="{{ path('legislator_delete', {'id': document.id })}}" class="small button delete">delete</a></li>
+	<li><a href="{{ path('legislator_edit', {'id': document.id })}}" class="small button edit">{% trans %}common.button.edit{% endtrans %}</a></li>
+	<li><a href="{{ path('legislator_delete', {'id': document.id })}}" class="small button delete">{% trans %}common.button.delete{% endtrans %}</a></li>
 </ul>
 {% if document.isStatusNew %}
     {{ form_start(document_form) }}
@@ -50,22 +50,22 @@
 {% if document.isStatusProcessingComments %}
     {{ form_start(document_form) }}
     {{ form_widget(document_form.status, {'attr': {'value': constant('Legislator\\LegislatorBundle\\Entity\\Document::STATUS_FINISHED')}}) }}
-    <input type="submit" value="Ukončiť spracovanie pripomienok" class="button"/>
+    <input type="submit" value="{% trans %}document.view.button.end_comment_processing{% endtrans %}" class="button"/>
     {{ form_end(document_form) }}
 {% endif %}
 {% if document.isStatusFinishedProcessingComments and not document.isFinalVersion %}
-    <a href="{{ path('legislator_document_new_version', {'id': document.id }) }}" class="add button">Add a new version</a>
+    <a href="{{ path('legislator_document_new_version', {'id': document.id }) }}" class="add button">{% trans %}document.view.button.add_new_version{% endtrans %}</a>
 {% endif %}
 
 {% endif %}
 
-<h2>Meta data</h2>
+<h2>{% trans %}document.view.meta_data{% endtrans %}</h2>
 <dl class="document-data">
-	<dt>Status</dt><dd>{{ document.status }}</dd>
-	<dt>Version</dt><dd>{{ document.version }}</dd>
-	<dt>Created by</dt><dd>{{ document.createdBy }}</dd>
-	<dt>Created on</dt><dd>{{ document.createdOn|date('d.m.Y H:i:s') }}</dd>
-	<dt>Modified on</dt><dd>{{ document.modifiedOn|date('d.m.Y H:i:s') }}</dd>
+	<dt>{% trans %}document.status{% endtrans %}</dt><dd>{{ document.status }}</dd>
+	<dt>{% trans %}document.version{% endtrans %}</dt><dd>{{ document.version }}</dd>
+	<dt>{% trans %}common.created_by{% endtrans %}</dt><dd>{{ document.createdBy }}</dd>
+	<dt>{% trans %}common.created_on{% endtrans %}</dt><dd>{{ document.createdOn|date('d.m.Y H:i:s') }}</dd>
+	<dt>{% trans %}common.modified_on{% endtrans %}</dt><dd>{{ document.modifiedOn|date('d.m.Y H:i:s') }}</dd>
 </dl>
 
 </div>
@@ -73,16 +73,18 @@
 
 <div class="row">
 <div class="large-12 columns">
-<h2>Comments</h2>
+<h2>{% trans %}document.view.comments{% endtrans %}</h2>
 {% if comments %}
 <table id="comments">
 	<thead>
 		<tr>
-			<th width="40%">Content</th>
-			<th>Substantiation</th>
-			<th>Added by</th>
-			<th>Date</th>
-			<th>Actions</th>  {# TODO check privileges #}
+			<th width="40%">{% trans %}comment.content{% endtrans %}</th>
+			<th>{% trans %}comment.substantiation{% endtrans %}</th>
+			<th>{% trans %}comment.created_by{% endtrans %}</th>
+			<th>{% trans %}common.modified_on{% endtrans %}</th>
+            {% if not document.isStatusFinishedProcessingComments %}
+			<th>{% trans %}common.actions{% endtrans %}</th>  {# TODO check privileges #}
+                        {% endif %}
 		</tr>
 	</thead>
 	<tbody>
@@ -91,43 +93,46 @@
 		<td>{{ comment.content }}</td>
 		<td>{{ comment.substantiation }}</td>
 		<td>{{ comment.createdBy }}</td>
-		<td>{{ comment.createdOn|date('d.m.Y H:i') }}</td>
+		<td>{{ comment.modifiedOn|date('d.m.Y H:i') }}</td>
 		{# TODO check privileges #}
+            {% if not document.isStatusFinishedProcessingComments %}
 		<td>
 		<ul class="button-group">
 		    {% if can_take_comment_actions %}
-    		<li><form method="get" action="{{ path('legislator_view', {'id': document.id })}}" class="action"><input type="hidden" name="comment_id" value="{{ comment.id }}"/><input type="submit" name="edit" value="Edit" class="small edit button" /></form></li>
-    		<li><form method="post" action="{{ path('legislator_comment_delete', {'document_id': document.id,'id': comment.id })}}" class="action"><input type="submit" name="delete" value="Delete" class="small delete button" /></form></li>
+    		<li><form method="get" action="{{ path('legislator_view', {'id': document.id })}}#comment-form" class="action"><input type="hidden" name="comment_id" value="{{ comment.id }}"/><input type="submit" name="edit" value="{% trans %}common.button.edit{% endtrans %}" class="small edit button" /></form></li>
+    		<li><form method="post" action="{{ path('legislator_comment_delete', {'document_id': document.id,'id': comment.id })}}" class="action"><input type="submit" name="delete" value="{% trans %}common.button.delete{% endtrans %}" class="small delete button" /></form></li>
     		{% endif %}
     		{% if document.isStatusProcessingComments %}
-    		<li><form method="get" action="{{ path('legislator_comment_reply', {'document_id': document.id,'id': comment.id })}}" class="action"><input type="submit" name="reply" value="Reply" class="small reply button" /></form></li>
+    		<li><form method="get" action="{{ path('legislator_comment_reply', {'document_id': document.id,'id': comment.id })}}" class="action"><input type="submit" name="reply" value="{% trans %}comment.button.reply{% endtrans %}" class="small reply button" /></form></li>
     		{% endif %}
 		</ul>
 		</td>
+    		{% endif %}
 	</tr>
 	{% endfor %}
 	</tbody>
 </table>
 {% else %}
-	<p>There are no comments, be first!</p>
+	<p>{%trans %}document.view.no_comments{% endtrans %}</p>
 {% endif %}
 
-<h3>Add a comment</h3>
+<h3>{% if app.request.get('comment_id') %}{% trans %}document.view.edit_comment{% endtrans %}{% else %}{% trans %}document.view.add_a_comment{% endtrans %}{% endif %}</h3>
+<a name="comment-form"></a>
 {% if app.user %}
     {% if document.canbecommented %}
         {{ form_start(form) }}
         {{ form_widget(form) }}
         {% if app.request.get('comment_id') %}
-        <input type="submit" name="add" value="Edit comment" class="button"/>
+        <input type="submit" name="edit" value="{% trans %}comment.button.edit{% endtrans %}" class="edit button"/>
         {% else %}
-        <input type="submit" name="add" value="Add comment" class="button"/>
+        <input type="submit" name="add" value="{% trans %}comment.button.add{% endtrans %}" class="add button"/>
         {% endif %}
         {{ form_end(form) }}
     {% else %}
-        <p>Commenting has been disabled.</p>
+        <p>{% trans %}document.view.commenting_disabled{% endtrans %}</p>
     {% endif %}
 {% else %}
-<p>To add a comment you need to <a href="{{ path('fos_user_security_login') }}">log in</a> first.</p>
+<p>Na pridanie komentáru je potrebné sa najskôr <a href="{{ path('fos_user_security_login') }}">prihlásiť</a>.</p>
 {% endif %}
 </div>
 </div>

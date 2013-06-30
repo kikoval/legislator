@@ -1,16 +1,24 @@
 {% extends "::base.html.twig" %}
 
+{% if prev_document is defined %}
+    {% set title = "document.new.title_version" %}
+{% else %}
+    {% set title = "document.new.title" %}
+{% endif %}
+
+{% block title %}{{ title|trans }}{% endblock %}
+
 {% block body %}
 <div class="row">
     <div class="large-12 columns">
-        <h1>{% if prev_document is defined %}Add a new version{% else %}Add a new document{% endif %}</h1>
+        <h1>{{ title|trans }}</h1>
 
         {{ form_start(form) }}
         {{ form_widget(form) }}
         {% if prev_document is defined %}
-        <input type="submit" value="Add document of version {{ form.vars.data.version }}" class="button"/>
+        <input type="submit" value="{% trans %}document.new.button.add_new_version{% endtrans %} {{ form.vars.data.version }}" class="add button"/>
         {% else %}
-        <input type="submit" value="Add document" class="button"/>
+        <input type="submit" value="{% trans %}document.new.button.add{% endtrans %}" class="add button"/>
         {% endif %}
         {{ form_end(form) }}
     </div>

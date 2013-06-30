@@ -1,19 +1,22 @@
 {% extends "::base.html.twig" %}
 
+{% block title %}{% trans %}menu.my_comments{% endtrans %}{% endblock %}
+
 {% block body %}
 <div class="row">
 <div class="large-12 columns">
 
+<h1>{% trans %}menu.my_comments{% endtrans %}</h1>
 {% if comments %}
 <table id="comments">
 	<thead>
 		<tr>
-		    <th>Document</th>
-			<th width="40%">Content</th>
-			<th>Substantiation</th>
+		    <th>Dokument</th>
+			<th width="40%">{% trans %}comment.content{% endtrans %}</th>
+			<th>{% trans %}comment.substantiation{% endtrans %}</th>
 			<th>Reply</th>
-			<th>Created on</th>
-			<th>Modified on</th>
+			<th>{% trans %}comment.created_by{% endtrans %}</th>
+			<th>{% trans %}common.modified_on{% endtrans %}</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -30,7 +33,7 @@
 	</tbody>
 </table>
 {% else %}
-<p>No comments found.</p>
+<p>Neboli nájdené žiadne pripomienky.</p>
 {% endif %}
 
 </div>

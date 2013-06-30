@@ -6,7 +6,7 @@
 <div class="row">
 <div class="large-12 columns">
 
-<p>Vitajte v aplikacii Legislator.</p>
+<p>Vitajte v aplikácii Legislator.</p>
 
 {% if documents|length > 0 %}
     <h2>{% trans %}document.listing{% endtrans %}</h2>
@@ -14,14 +14,14 @@
 	<thead>
 		<tr>
 			<th>#</th>
-			<th>Nazov</th>
-			<th>Popis</th>
-			<th>Version</th>
-			<th>Status</th>
-			<th>Vlozil</th>
-			<th>Cas vytvorenia</th>
-			<th>Cas poslednej zmeny</th>
-			{% if app.user %}<th>Action</th>{% endif %} {# TODO check privileges #}
+			<th>{% trans %}document.name{% endtrans %}</th>
+			<th>{% trans %}document.description{% endtrans %}</th>
+			<th>{% trans %}document.version{% endtrans %}</th>
+			<th>{% trans %}document.status{% endtrans %}</th>
+			<th>Vložil</th>
+			<th>Čas vytvorenia</th>
+			<th>Čas poslednej zmeny</th>
+			{% if app.user %}<th>{% trans %}common.actions{% endtrans %}</th>{% endif %} {# TODO check privileges #}
 		</tr>
 	</thead>
 	<tbody>
@@ -44,10 +44,10 @@
 			{% endif %}
 			{% if app.user and d.createdBy.id == app.user.id %}
 			    <li><form method="get" action="{{ path('legislator_edit', {'id': d.id}) }}" class="action">
-			        <input type="submit" value="Edit" class="small edit button"/>
+			        <input type="submit" value="{% trans %}common.button.edit{% endtrans %}" class="small edit button"/>
 			    </form></li>
 			    <li><form method="post" action="{{ path('legislator_delete', {'id': d.id}) }}" class="action">
-			        <input type="submit" value="Delete" class="small delete button"/>
+			        <input type="submit" value="{% trans %}common.button.delete{% endtrans %}" class="small delete button"/>
 			    </form></li>
 
 			{% endif %}
@@ -59,14 +59,14 @@
 	</tbody>
     </table>
 {% else %}
-    <p>There is no document yet.</p>
+    <p>Zatiaľ tu nie sú žiadne dokumenty.</p>
 {% endif %}
 
 <p>
 {% if can_add_document %}
 <a href="{{ path('legislator_new') }}" class="button">{% trans %}button.document.add{% endtrans %}</a>
 {% else %}
-To add a document you need to <a href="{{ path('fos_user_security_login') }}">log in</a> first.
+Aby ste mohli pridať dokument, musíte sa najskôr <a href="{{ path('fos_user_security_login') }}">prihlásiť</a>.
 {% endif %}
 </p>
 
