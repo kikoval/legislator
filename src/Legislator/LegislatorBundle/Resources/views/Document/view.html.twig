@@ -83,8 +83,10 @@
 			<th>{% trans %}comment.created_by{% endtrans %}</th>
 			<th>{% trans %}common.modified_on{% endtrans %}</th>
             {% if not document.isStatusFinishedProcessingComments %}
+            {% if app.user %}
 			<th>{% trans %}common.actions{% endtrans %}</th>  {# TODO check privileges #}
                         {% endif %}
+            {% endif %}
 		</tr>
 	</thead>
 	<tbody>
@@ -95,7 +97,7 @@
 		<td>{{ comment.createdBy }}</td>
 		<td>{{ comment.modifiedOn|date('d.m.Y H:i') }}</td>
 		{# TODO check privileges #}
-            {% if not document.isStatusFinishedProcessingComments %}
+        {% if app.user and not document.isStatusFinishedProcessingComments %}
 		<td>
 		<ul class="button-group">
 		    {% if can_take_comment_actions %}
@@ -107,7 +109,7 @@
     		{% endif %}
 		</ul>
 		</td>
-    		{% endif %}
+    	{% endif %}
 	</tr>
 	{% endfor %}
 	</tbody>

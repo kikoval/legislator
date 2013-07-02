@@ -170,7 +170,16 @@ class CommentController extends Controller {
 	 */
 	public function replyAction($document_id, $id, Request $request)
 	{
-	    // TODO check privileges
+	    // check privileges: only the author of the document can reply
+		$document = $this->getDoctrine()
+				->getRepository('LegislatorBundle:Document')->find($document_id);
+		if (!$document) {
+			throw $this->createNotFoundException('No document found for id!');
+		}
+		$is_document_owner = $document->isOwner($this->getUser());
+		if (!$is_document_owner) {
+			throw new AccessDeniedException();
+		}
 
 	    $comment = $this->getDoctrine()
 	        ->getRepository('LegislatorBundle:Comment')->find($id);

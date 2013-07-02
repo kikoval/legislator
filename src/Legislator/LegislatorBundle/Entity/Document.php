@@ -590,4 +590,19 @@ class Document
 
         return $this;
     }
+
+    /**
+     * Check if a user is the owner of the document
+     *
+     * @param User $user
+     * @return boolean
+     */
+    public function isOwner($user)
+    {
+    	if (!$user) {
+    		return false;
+    	} else {
+    		return $user->getID() == $this->getCreatedBy()->getID();
+    	}
+    }
 }

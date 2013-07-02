@@ -72,12 +72,7 @@ class DocumentController extends Controller {
                 'method' => 'post'));
 
         // check privileges
-        $user = $this->getUser();
-        if (!$user) {
-            $is_document_owner = false;
-        } else {
-            $is_document_owner = $user->getID() == $document->getCreatedBy()->getID();
-        }
+        $is_document_owner = $document->isOwner($this->getUser());
         $can_take_comment_actions = $is_document_owner &&
                 $document->isStatusCommenting();
 
