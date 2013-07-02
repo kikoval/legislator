@@ -46,7 +46,7 @@ document:
     view_version: Pozri verziu
     no_comments: Zatiaľ bez pripomienok, buďte prvý!
     commenting_disabled: Nie je možné pripomienkovať.
-    comments: Komentáre
+    comments: Pripomienky
     add_a_comment: Pridať komentár
     edit_comment: Upraviť komentár
 
@@ -59,7 +59,7 @@ comment:
   acceptance: Vyhodnotenie
   reply: Vyhodnotenie
   button:
-    reply: Odpoveď
+    reply: Odpovedať
     edit: Upraviť komentár
     add: Pridať komentár
 
