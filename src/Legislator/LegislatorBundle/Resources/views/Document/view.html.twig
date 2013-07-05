@@ -82,10 +82,11 @@
 			<th>{% trans %}comment.substantiation{% endtrans %}</th>
 			<th>{% trans %}comment.created_by{% endtrans %}</th>
 			<th>{% trans %}common.modified_on{% endtrans %}</th>
-            {% if not document.isStatusFinishedProcessingComments %}
-            {% if app.user %}
+			{% if document.isStatusFinishedProcessingComments %}
+			<th>{% trans %}comment.reply{% endtrans %}</th>
+			{% endif %}
+            {% if app.user and not document.isStatusFinishedProcessingComments %}
 			<th>{% trans %}common.actions{% endtrans %}</th>  {# TODO check privileges #}
-                        {% endif %}
             {% endif %}
 		</tr>
 	</thead>
@@ -96,6 +97,9 @@
 		<td>{{ comment.substantiation }}</td>
 		<td>{{ comment.createdBy }}</td>
 		<td>{{ comment.modifiedOn|date('d.m.Y H:i') }}</td>
+		{% if document.isStatusFinishedProcessingComments %}
+		<td>{{ comment.reply }}</td>
+		{% endif %}
 		{# TODO check privileges #}
         {% if app.user and not document.isStatusFinishedProcessingComments %}
 		<td>
@@ -104,7 +108,7 @@
     		<li><form method="get" action="{{ path('legislator_view', {'id': document.id })}}#comment-form" class="action"><input type="hidden" name="comment_id" value="{{ comment.id }}"/><input type="submit" name="edit" value="{% trans %}common.button.edit{% endtrans %}" class="small edit button" /></form></li>
     		<li><form method="post" action="{{ path('legislator_comment_delete', {'document_id': document.id,'id': comment.id })}}" class="action"><input type="submit" name="delete" value="{% trans %}common.button.delete{% endtrans %}" class="small delete button" /></form></li>
     		{% endif %}
-    		{% if document.isStatusProcessingComments %}
+    		{% if can_reply %}
     		<li><form method="get" action="{{ path('legislator_comment_reply', {'document_id': document.id,'id': comment.id })}}" class="action"><input type="submit" name="reply" value="{% trans %}comment.button.reply{% endtrans %}" class="small reply button" /></form></li>
     		{% endif %}
 		</ul>

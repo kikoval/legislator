@@ -13,6 +13,7 @@ menu:
   change_password: Zmeniť heslo
   login: Prihlásiť sa
   logout: Odhlásiť sa
+  logged_in_as: Prihlasený ako
 
 document:
   listing: Zoznam dokumentov

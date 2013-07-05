@@ -76,13 +76,17 @@ class DocumentController extends Controller {
         $can_take_comment_actions = $is_document_owner &&
                 $document->isStatusCommenting();
 
+        $can_reply = $document->isOwner($this->getUser()) &&
+        		$document->isStatusProcessingComments();
+
         return $this->render('LegislatorBundle:Document:view.html.twig',
                 array('document' => $document,
                       'comments' => $comments,
                       'form' => $comment_form->createView(),
                       'document_form' => $document_form->createView(),
                       'is_document_owner' => $is_document_owner,
-                      'can_take_comment_actions' => $can_take_comment_actions));
+                      'can_take_comment_actions' => $can_take_comment_actions,
+        			  'can_reply' => $can_reply));
     }
 
     /**

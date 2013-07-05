@@ -506,7 +506,8 @@ class Document
      */
     public function getCanBeCommented()
     {
-        return $this->getStatus() == self::STATUS_COMMENTING;
+        return $this->getStatus() == self::STATUS_COMMENTING
+        		&& !$this->getIsFinalVersion();
     }
 
     /**

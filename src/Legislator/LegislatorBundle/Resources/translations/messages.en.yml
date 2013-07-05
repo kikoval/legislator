@@ -13,6 +13,7 @@ menu:
   change_password: Change password
   login: Login
   logout: Logout
+  logged_in_as: Logged in as
 
 document:
   listing: Document listing

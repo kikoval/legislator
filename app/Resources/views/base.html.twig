@@ -6,9 +6,10 @@
         <title>{% block title %}Vitajte!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-        <link rel="stylesheet" href="{{ asset('css/normalize.css') }}" />
-        <link rel="stylesheet" href="{{ asset('css/foundation.min.css') }}" />
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
+
+        {% stylesheets '@LegislatorBundle/Resources/public/css/*' filter='cssrewrite' %}
+    		<link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
     </head>
     <body>
     <nav class="top-bar">
@@ -22,9 +23,15 @@
     		{% if app.user %}
     		<li><a href="{{ path('legislator_user_my_comments') }}">{% trans %}menu.my_comments{% endtrans %}</a></li>
     		<li class="divider"></li>
-    		<li><a href="{{ path('fos_user_profile_edit') }}">{% trans %}menu.edit_profile{% endtrans %}</a></li>
-    		<li><a href="{{ path('fos_user_change_password') }}">{% trans %}menu.change_password{% endtrans %}</a></li>
-    		<li><a href="{{ path('fos_user_security_logout') }}">{% trans %}menu.logout{% endtrans %}</a></li>
+    		<li class="has-dropdown"><a href="#">{% trans %}menu.logged_in_as{% endtrans %} <span id="username">{{ app.user.username }}</span></a>
+
+    		<ul class="dropdown">
+        		<li><a href="{{ path('fos_user_profile_edit') }}">{% trans %}menu.edit_profile{% endtrans %}</a></li>
+        		<li><a href="{{ path('fos_user_change_password') }}">{% trans %}menu.change_password{% endtrans %}</a></li>
+        		<li><a href="{{ path('fos_user_security_logout') }}">{% trans %}menu.logout{% endtrans %}</a></li>
+    		</ul>
+
+    		</li>
     		{% else %}
     		<li><a href="{{ path('fos_user_security_login') }}">{% trans %}menu.login{% endtrans %}</a></li>
     		{% endif %}
@@ -32,6 +39,15 @@
         </section>
     </nav>
         {% block body %}{% endblock %}
+        {% javascripts '@LegislatorBundle/Resources/public/js/vendor/*' %}
+        	<script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        {% javascripts '@LegislatorBundle/Resources/public/js/*' %}
+        	<script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
         {% block javascripts %}{% endblock %}
+        <script type="text/javascript">
+                $(document).foundation();
+        </script>
     </body>
 </html>
