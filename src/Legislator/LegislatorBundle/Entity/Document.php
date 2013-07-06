@@ -20,6 +20,12 @@ class Document
     const STATUS_PROCESSING_COMMENTS = 2;
     const STATUS_FINISHED = 3;
 
+    private static $status_messages = array(
+            self::STATUS_NEW => 'document.statuses.new',
+            self::STATUS_COMMENTING => 'document.statuses.commenting',
+            self::STATUS_PROCESSING_COMMENTS =>'document.statuses.processing_comments',
+            self::STATUS_FINISHED =>'document.statuses.finished');
+
     /**
      * @var integer
      *
@@ -609,15 +615,11 @@ class Document
 
     public function mapFromStatusCode($code)
     {
-        switch($code) {
-            case self::STATUS_NEW:
-                return 'document.statuses.new';
-            case self::STATUS_COMMENTING:
-                return 'document.statuses.commenting';
-            case self::STATUS_PROCESSING_COMMENTS:
-                return 'document.statuses.processing_comments';
-            case self::STATUS_FINISHED:
-                return 'document.statuses.finished';
-        }
+        return self::$status_messages[$code];
+    }
+
+    public static function getStatusMessages()
+    {
+        return self::$status_messages;
     }
 }

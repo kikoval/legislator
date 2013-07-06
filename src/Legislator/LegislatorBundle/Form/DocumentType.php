@@ -7,6 +7,7 @@ use Legislator\LegislatorBundle\Form\ContentSectionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Legislator\LegislatorBundle\Entity\Document;
 
 class DocumentType extends AbstractType
 {
@@ -17,9 +18,8 @@ class DocumentType extends AbstractType
             ->add('description', 'textarea',
                     array('label' => 'document.description'))
             ->add('status', 'choice',
-                    array('choices' =>
-                            array(0 => 'Nový', 'Pripomienkovanie',
-                                    'Vyhodnocovanie pripomienok', 'Dokončený')))
+                    array('choices' => Document::getStatusMessages()))
+            ->add('is_final_version', 'checkbox', array('label' => 'document.final_version'))
             ->add('file', 'file',
                     array('required' => false, 'label' => 'document.file'))
             ->add('file_substantiation', 'file',

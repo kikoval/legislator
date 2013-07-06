@@ -23,6 +23,7 @@ document:
   version: Version
   file: file
   file_substantiation: File substantiation
+  final_version: final version
   statuses:
     new: New
     commenting: Commenting

@@ -62,7 +62,7 @@
 <h2>{% trans %}document.view.meta_data{% endtrans %}</h2>
 <dl class="document-data">
 	<dt>{% trans %}document.status{% endtrans %}</dt><dd>{{ document.mapFromStatusCode(document.status)|trans }}</dd>
-	<dt>{% trans %}document.version{% endtrans %}</dt><dd>{{ document.version }}</dd>
+	<dt>{% trans %}document.version{% endtrans %}</dt><dd>{{ document.version }}{% if document.isfinalVersion %} ({% trans %}document.final_version{% endtrans %}){% endif %}</dd>
 	<dt>{% trans %}common.created_by{% endtrans %}</dt><dd>{{ document.createdBy }}</dd>
 	<dt>{% trans %}common.created_on{% endtrans %}</dt><dd>{{ document.createdOn|date('d.m.Y H:i:s') }}</dd>
 	<dt>{% trans %}common.modified_on{% endtrans %}</dt><dd>{{ document.modifiedOn|date('d.m.Y H:i:s') }}</dd>
