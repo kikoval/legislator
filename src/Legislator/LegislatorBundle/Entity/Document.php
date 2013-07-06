@@ -606,4 +606,18 @@ class Document
     		return $user->getID() == $this->getCreatedBy()->getID();
     	}
     }
+
+    public function mapFromStatusCode($code)
+    {
+        switch($code) {
+            case self::STATUS_NEW:
+                return 'document.statuses.new';
+            case self::STATUS_COMMENTING:
+                return 'document.statuses.commenting';
+            case self::STATUS_PROCESSING_COMMENTS:
+                return 'document.statuses.processing_comments';
+            case self::STATUS_FINISHED:
+                return 'document.statuses.finished';
+        }
+    }
 }

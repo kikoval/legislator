@@ -23,6 +23,11 @@ document:
   version: Verzia
   file: Vlastný materiál
   file_substantiation: Dôvodová správa
+  statuses:
+    new: Nový
+    commenting: Pripomienkovanie
+    processing_comments: Vyhodnocovanie pripomienok
+    finished: Hotový
   new:
     title: Pridať nový dokument
     title_version: Pridať novú verziu dokumentu

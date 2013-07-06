@@ -31,7 +31,7 @@
 			<td><a href="{{ path('legislator_view', {'id': d.id}) }}">{{ d.name }}</a></td>
 			<td>{{ d.description|trim(100) }}</td>
 			<td>{{ d.version }}</td>
-			<td>{{ d.status }}</td>
+			<td>{{ d.mapFromStatusCode(d.status)|trans }}</td>
 			<td>{{ d.createdBy.surname }}</td>
 			<td>{{ d.createdOn|date('d.m.Y H:i:s') }}</td>
 			<td>{{ d.modifiedOn|date('d.m.Y H:i:s') }}</td>

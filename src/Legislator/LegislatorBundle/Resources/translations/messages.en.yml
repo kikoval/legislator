@@ -23,6 +23,11 @@ document:
   version: Version
   file: file
   file_substantiation: File substantiation
+  statuses:
+    new: New
+    commenting: Commenting
+    processing_comments: Processing comments
+    finished: Finished
   new:
     title: Add new document
     title_version: Add new version of the document
