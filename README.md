@@ -12,8 +12,9 @@ The document from the last iteration can be marked as final.
 
 ## Installation ##
 
-1. clone the repository into a directory and `cd` to it
-2. get the dependancies using [Composer](http://getcomposer.org/) `php composer.phar install`
+1. clone (`git closne <repo_url>`) the repository into a directory and `cd` to it
+2. get the vendor dependencies using [Composer](http://getcomposer.org/) `php composer.phar install`
 3. copy `app/config/parameters.yml.dist` to `app/config/parameters.yml` and edit the parameters
-3. initialize the database `app/console doctrine:schema:create`
+3. initialize the database `php app/console doctrine:schema:create`
+4. install assets `php app/console assetic:dump --env=prod --no-debug`
 4. run the application in a dev webserver `app/console server:run`
