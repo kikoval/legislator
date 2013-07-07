@@ -488,6 +488,10 @@ class Document
         }
         $this->file = null;
         $this->file_substantiation = null;
+
+        # making sure we have correct permissions
+        chmod($this->getAbsolutePath(), 0644);
+        chmod($this->getAbsolutePathSubstantiation(), 0644);
     }
 
     /**
