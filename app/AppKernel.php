@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Legislator\LegislatorBundle\LegislatorBundle(),
         	new FOS\UserBundle\FOSUserBundle(),
+        	new SVT\CosignBundle\SVTCosignBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

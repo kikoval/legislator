@@ -1,8 +1,8 @@
 {
-    "name": "symfony/framework-standard-edition",
+    "name": "legislator",
     "licence": "MIT",
     "type": "project",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "description": "Web application for commenting legal documents.",
     "autoload": {
         "psr-0": { "": "src/" }
     },
@@ -20,8 +20,15 @@
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
         
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "svt/cosign-bundle": "@dev"
     },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/fmfi-svt/cosign-bundle.git"
+        }
+    ],
     "scripts": {
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",

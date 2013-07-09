@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "bcf4992599ed2233c9d12d7eaff40b1f",
+    "hash": "0e76203f6f752354acb85442c84e4b62",
     "packages": [
         {
             "name": "doctrine/common",
@@ -759,6 +759,29 @@
             "time": "2013-06-02 16:13:06"
         },
         {
+            "name": "svt/cosign-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fmfi-svt/cosign-bundle.git",
+                "reference": "c6b1ff35ec67bec9a3771e09c80f030af3314308"
+            },
+            "require": {
+                "symfony/symfony": ">=2.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "SVT\\CosignBundle": "src/"
+                }
+            },
+            "license": [
+                "BSD"
+            ],
+            "description": "Support for login via CoSign",
+            "time": "2013-07-08 18:44:54"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v5.0.0",
             "source": {
@@ -1243,7 +1266,8 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "friendsofsymfony/user-bundle": 20
+        "friendsofsymfony/user-bundle": 20,
+        "svt/cosign-bundle": 20
     },
     "platform": {
         "php": ">=5.3.3"
