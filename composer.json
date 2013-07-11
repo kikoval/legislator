@@ -1,6 +1,6 @@
 {
-    "name": "legislator",
-    "licence": "MIT",
+    "name": "kikoval/legislator",
+    "licence": "AGPL",
     "type": "project",
     "description": "Web application for commenting legal documents.",
     "autoload": {
