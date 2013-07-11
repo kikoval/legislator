@@ -13,3 +13,4 @@ parameters:
     secret: 82297cbe6f8301ad17daffa283e27eb8
     database_path: null
     cosign_logout_prefix: null
+    cosign_login_enabled: False
