@@ -17,6 +17,7 @@
             <li class="name">
                 <h1><a href="{{ path('legislator_homepage') }}">Legislator</a></h1>
             </li>
+            <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
         </ul>
         <section class="top-bar-section">
     	<ul class="right">
@@ -41,6 +42,14 @@
         </section>
     </nav>
         {% block body %}{% endblock %}
+
+        <footer class="full-width">
+        	<div class="row">
+        		<div class="large-6 columns"><a href="{{ url('legislator_homepage') }}">Legislator</a> (<a href="https://github.com/kikoval/legislator">GitHub</a>) &copy; 2013 Kristián Valentín</div>
+        		<div class="large-6 columns"><a title="Na začiatok stránky" href="#">Na začiatok ^</a></div>
+        	</div>
+        </footer>
+
         {% javascripts '@LegislatorBundle/Resources/public/js/vendor/*' %}
         	<script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}

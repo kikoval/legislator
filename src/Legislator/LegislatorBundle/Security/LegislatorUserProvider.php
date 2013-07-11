@@ -11,21 +11,20 @@ use FOS\UserBundle\Model\User;
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 
-class LegislatorUserProvider implements UserProviderInterface
-{
+class LegislatorUserProvider implements UserProviderInterface {
 
-public function __construct(UserManagerInterface $userManager, $cosign_login_enabled=FALSE)
-{
-  $this->userManager = $userManager;
-  $this->cosign_login_enabled = $cosign_login_enabled;
-}
+	public function __construct(UserManagerInterface $userManager, $cosign_login_enabled=FALSE)
+	{
+	  $this->userManager = $userManager;
+	  $this->cosign_login_enabled = $cosign_login_enabled;
+	}
 
-public function loadUserByUsername($username)
+	public function loadUserByUsername($username)
     {
         $user = $this->findUser($username);
 
-	if ($this->cosign_login_enabled) {
-	    if ($user === null) {
+		if ($this->cosign_login_enabled) {
+		    if ($user === null) {
                 // TODO check na fakultu
                 $user = $this->userManager->createUser();
                 $user->setUsername($username);
@@ -37,18 +36,17 @@ public function loadUserByUsername($username)
                 $user->setSurname($username);
 
                 $this->userManager->updateUser($user);
-            }
-	} else {
+			}
+		} else {
             if (!$user) {
                 throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
             }
-	}
+		}
 
         return $user;
     }
 
-
-/**
+	/**
      * {@inheritDoc}
      */
     public function refreshUser(SecurityUserInterface $user)

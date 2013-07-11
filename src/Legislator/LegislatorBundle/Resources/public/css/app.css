@@ -5,6 +5,7 @@ h2 {font-size: 160% !important;}
 h3 {font-size: 140% !important;}
 
 textarea, select {margin-bottom: 1em !important;}
+textarea {min-height: 5em;}
 form input[type="text"], input[type="email"], form input[type="password"], textarea,
     select {width: auto !important;}
 form input[type="text"], form input[type="password"], textarea {min-width: 30em;}
@@ -13,7 +14,7 @@ dl.document-data dt {float: left; clear: left; min-width: 7em;}
 dl.document-data dt:after {content: ":";}
 dl.document-data dd {margin-bottom: 0.4em;}
 
-textarea {min-height: 5em;}
+a:hover {text-decoration: underline;}
 
 #comments {width: 100%;}
 #comments form, #comments .button {margin: 0;}
@@ -33,3 +34,18 @@ select {width: inherit;}
 #legislator_comment_reply_isAccepted label {display: inline-block; margin-right: 2em;}
 label[for="legislator_comment_reply_isAccepted_0"] {border-bottom: solid medium green;}
 label[for="legislator_comment_reply_isAccepted_1"] {border-bottom: solid medium red;}
+
+.full-width {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+body > footer {
+    margin-top: 2em;
+    padding: 1em 0;
+    border-top: thin solid #AAA;
+    background-color: #CCC;
+}
+body > footer a:link, body > footer a:visited {color: black;}
+body > footer div.columns {font-size: 90%;}
+body > footer div.columns + div.columns {text-align: right;}

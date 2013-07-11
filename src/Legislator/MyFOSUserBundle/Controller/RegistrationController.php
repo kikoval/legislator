@@ -15,7 +15,7 @@ class RegistrationController extends BaseController
         if ($this->container->getParameter('cosign_login_enabled')) {
             throw new AccessDeniedException("Registration is disabled.");
         }
-        parent::registerAction($request);
+        return parent::registerAction($request);
     }
 }
 

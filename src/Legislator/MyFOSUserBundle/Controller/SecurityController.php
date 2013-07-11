@@ -11,12 +11,14 @@ class SecurityController extends BaseController
 {
     public function loginAction(Request $request)
     {
-        $user = $this->container->get('security.context')->getToken()->getUser();
-        if ($user !== null) {
-            $router = $this->container->get('router');
-            return new RedirectResponse($router->generate('legislator_homepage'));
-        }
-        parent::loginAction($request);
+    	if ($this->container->getParameter('cosign_login_enabled')) {
+	        $user = $this->container->get('security.context')->getToken()->getUser();
+	        if ($user !== null) {
+	            $router = $this->container->get('router');
+	            return new RedirectResponse($router->generate('legislator_homepage'));
+	        }
+    	}
+        return parent::loginAction($request);
     }
 }
 ?>
