@@ -114,8 +114,7 @@ class CommentController extends Controller {
 
 	    // check privileges, only admin or the author himself can edit a comment
 	    $user = $this->getUser();
-	    $is_admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
-	    if (!$is_admin || $comment->getCreatedBy()->getId() !== $user->getId()) {
+	    if ($comment->getCreatedBy()->getId() !== $user->getId()) {
 	        throw new AccessDeniedException();
 	    }
 

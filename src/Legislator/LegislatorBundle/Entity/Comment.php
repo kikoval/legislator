@@ -12,6 +12,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Comment
 {
+	const TYPE_STANDARD = 0;
+	const TYPE_TECHNICAL = 1;
+	const TYPE_PRINCIPAL = 2;
+
+	private static $types = array(
+			self::TYPE_STANDARD => 'comment.types.standard',
+			self::TYPE_TECHNICAL => 'comment.types.technical',
+			self::TYPE_PRINCIPAL => 'comment.types.principal',
+	);
+
     /**
      * @var integer
      *
@@ -65,18 +75,13 @@ class Comment
     private $modifiedOn;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="isPrincipal", type="boolean")
-     */
-    private $isPrincipal;
 
     /**
-     * @var boolean
+     * @var int
      *
-     * @ORM\Column(name="isTechnical", type="boolean")
+     * @ORM\Column(name="type", type="smallint")
      */
-    private $isTechnical;
+    private $type;
 
     /**
      * @var boolean
@@ -250,49 +255,36 @@ class Comment
     }
 
     /**
-     * Set isPrincipal
+     * Set type
      *
-     * @param boolean $isPrincipal
+     * @param int $type
      * @return Comment
      */
-    public function setIsPrincipal($isPrincipal)
+    public function setType($type)
     {
-        $this->isPrincipal = $isPrincipal;
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * Get isPrincipal
+     * Get type
      *
-     * @return boolean
+     * @return int
      */
-    public function getIsPrincipal()
+    public function getType()
     {
-        return $this->isPrincipal;
+        return $this->type;
     }
 
-    /**
-     * Set isTechnical
-     *
-     * @param boolean $isTechnical
-     * @return Comment
-     */
-    public function setIsTechnical($isTechnical)
+    public function isTechnical()
     {
-        $this->isTechnical = $isTechnical;
-
-        return $this;
+    	return $this->getType() == self::TYPE_TECHNICAL;
     }
 
-    /**
-     * Get isTechnical
-     *
-     * @return boolean
-     */
-    public function getIsTechnical()
+    public function isPrincipal()
     {
-        return $this->isTechnical;
+    	return $this->getType() == self::TYPE_PRINCIPAL;
     }
 
     /**
@@ -367,5 +359,10 @@ class Comment
         $this->repliedBy = $repliedBy;
 
         return $this;
+    }
+
+    public static function getTypes()
+    {
+    	return self::$types;
     }
 }

@@ -61,8 +61,11 @@ comment:
   content: Content
   substantiation: Substantiation
   created_by: Created by
-  isprincipal: Is principal
-  istechnical: Is technical
+  type: Type
+  types:
+    standard: Standard
+    principal: Principal
+    technical: Technical
   acceptance: Acceptance
   reply: Reply
   button:

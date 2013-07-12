@@ -54,21 +54,24 @@ document:
     no_comments: Zatiaľ bez pripomienok, buďte prvý!
     commenting_disabled: Nie je možné pripomienkovať.
     comments: Pripomienky
-    add_a_comment: Pridať komentár
-    edit_comment: Upraviť komentár
+    add_a_comment: Pridať pripomienku
+    edit_comment: Upraviť pripomienku
 
 comment:
   content: Pripomienka
   substantiation: Odôvodnenie
   created_by: Vložil
-  isprincipal: Zásadná
-  istechnical: Legislatívno-technická
+  type: Typ
+  types:
+    standard: Štandardná
+    principal: Zásadná
+    technical: Legislatívno-technická
   acceptance: Vyhodnotenie
   reply: Vyhodnotenie
   button:
     reply: Odpovedať
-    edit: Upraviť komentár
-    add: Pridať komentár
+    edit: Upraviť pripomienku
+    add: Pridať pripomienku
 
 button:
   document:

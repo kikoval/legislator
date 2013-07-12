@@ -19,7 +19,9 @@ class DocumentType extends AbstractType
                     array('label' => 'document.description'))
             ->add('status', 'choice',
                     array('choices' => Document::getStatusMessages()))
-            ->add('is_final_version', 'checkbox', array('label' => 'document.final_version'))
+            ->add('is_final_version', 'checkbox',
+            		array('label' => 'document.final_version',
+        				  'required' => false))
             ->add('file', 'file',
                     array('required' => false, 'label' => 'document.file'))
             ->add('file_substantiation', 'file',

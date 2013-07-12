@@ -5,6 +5,7 @@ namespace Legislator\LegislatorBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Legislator\LegislatorBundle\Entity\Comment;
 
 class CommentType extends AbstractType
 {
@@ -13,8 +14,9 @@ class CommentType extends AbstractType
         $builder
             ->add('content', 'textarea', array('label' => 'comment.content'))
             ->add('substantiation', 'textarea', array('label' => 'comment.substantiation'))
-            ->add('isPrincipal', 'checkbox', array('label' => 'comment.isprincipal', 'required' => false))
-            ->add('isTechnical', 'checkbox', array('label' => 'comment.istechnical', 'required' => false))
+            ->add('type', 'choice',
+            		array('label' => 'comment.type',
+            			  'choices' => Comment::getTypes()))
         ;
     }
 
