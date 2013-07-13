@@ -16,6 +16,8 @@ dl.document-data dd {margin-bottom: 0.4em;}
 
 a:hover {text-decoration: underline;}
 
+#org-unit {font-weight: normal;}
+
 #comments {width: 100%;}
 #comments form, #comments .button {margin: 0;}
 #comments .button {margin-right: 1em;}

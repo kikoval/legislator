@@ -6,16 +6,20 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface as SecurityUserInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use FOS\UserBundle\Model\User;
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 
+
 class LegislatorUserProvider implements UserProviderInterface {
 
-	public function __construct(UserManagerInterface $userManager, $cosign_login_enabled=FALSE)
+	public function __construct(UserManagerInterface $userManager, Container $container, $cosign_login_enabled=FALSE)
 	{
 	  $this->userManager = $userManager;
+	  $this->container = $container;
 	  $this->cosign_login_enabled = $cosign_login_enabled;
 	}
 
@@ -24,16 +28,27 @@ class LegislatorUserProvider implements UserProviderInterface {
         $user = $this->findUser($username);
 
 		if ($this->cosign_login_enabled) {
+			$ldapSearch = $this->container->get('legislator.teacher_search');
+			$user_info = $ldapSearch->byLogin($username);
+			$user_info = $user_info[$username];
+
+			$org_unit = $this->container->getParameter('org_unit');
+
+			// checking org unit if set
+			if ($org_unit !== null && is_array($user_info)
+	        		&& array_search($org_unit, $user_info['orgUnits']) === FALSE) {
+	        	throw new AccessDeniedException(sprintf('Username "%s" does not belong to unit "%s".', $username, $org_unit));
+	        }
+
 		    if ($user === null) {
-                // TODO check na fakultu
                 $user = $this->userManager->createUser();
                 $user->setUsername($username);
                 $user->setEmail("$username@uniba.sk");
                 $user->setPassword("$username@uniba.sk");
                 $user->setEnabled(1);
-                // TODO set full name from LDAP
-                $user->setFirstName("");
-                $user->setSurname($username);
+                // set full name from LDAP
+                $user->setFirstName($user_info['givenName']);
+                $user->setSurname($user_info['familyName']);
 
                 $this->userManager->updateUser($user);
 			}
@@ -57,6 +72,24 @@ class LegislatorUserProvider implements UserProviderInterface {
 
         if (null === $reloadedUser = $this->userManager->findUserBy(array('id' => $user->getId()))) {
             throw new UsernameNotFoundException(sprintf('User with ID "%d" could not be reloaded.', $user->getId()));
+        }
+
+        // filling up full name from LDAP if enabled
+        if ($this->cosign_login_enabled) {
+        	$name = $reloadedUser->getFirstName();
+        	if (empty($name)) {
+        		$username = $reloadedUser->getUsername();
+	        	$ldapSearch = $this->container->get('legislator.teacher_search');
+	        	$user_info = $ldapSearch->byLogin($username);
+	        	if (is_array($user_info)) {
+	        		$user_info = $user_info [$username];
+
+					$reloadedUser->setFirstName($user_info['givenName']);
+					$reloadedUser->setSurname($user_info['familyName']);
+
+					$this->userManager->updateUser($reloadedUser);
+	        	}
+        	}
         }
 
         return $reloadedUser;
@@ -85,6 +118,7 @@ class LegislatorUserProvider implements UserProviderInterface {
     {
         return $this->userManager->findUserByUsername($username);
     }
+
 }
 
 ?>

@@ -15,7 +15,7 @@
     <nav class="top-bar">
         <ul class="title-area">
             <li class="name">
-                <h1><a href="{{ path('legislator_homepage') }}">Legislator</a></h1>
+                <h1><a href="{{ path('legislator_homepage') }}">Legislator{% if org_unit %} <span id="org-unit">{{ org_unit }}</span>{% endif %}</a></h1>
             </li>
             <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
         </ul>

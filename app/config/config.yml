@@ -26,6 +26,7 @@ twig:
     strict_variables: %kernel.debug%
     globals:
         cosign_login_enabled: %cosign_login_enabled%
+        org_unit: %org_unit%
 
 # Assetic Configuration
 assetic:
@@ -71,8 +72,6 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: Legislator\LegislatorBundle\Entity\User
-#    service:
-#        user_provider: legislator_user.manager
     registration:
         form:
             type: legislator_user_registration
