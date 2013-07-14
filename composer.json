@@ -21,7 +21,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "svt/cosign-bundle": "@dev"
+        "svt/cosign-bundle": "@dev",
+        "liip/url-auto-converter-bundle": "dev-master"
     },
     "repositories": [
         {

@@ -29,7 +29,7 @@
 		<tr>
 			<td>{{ loop.index }}.</td>
 			<td><a href="{{ path('legislator_view', {'id': d.id}) }}">{{ d.name }}</a></td>
-			<td>{{ d.description|trim(100) }}</td>
+			<td>{{ d.description[:100] ~ '...' }}</td>
 			<td>{{ d.version }}{% if d.isfinalVersion %} ({% trans %}document.final_version{% endtrans %}){% endif %}</td>
 			<td>{{ d.mapFromStatusCode(d.status)|trans }}</td>
 			<td>{{ d.createdBy.surname }}</td>

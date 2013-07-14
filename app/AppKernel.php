@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new SVT\CosignBundle\SVTCosignBundle(),
             new Legislator\MyFOSUserBundle\MyFOSUserBundle(),
+        	new Liip\UrlAutoConverterBundle\LiipUrlAutoConverterBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -13,7 +13,7 @@
 <div class="row">
 <div class="large-8 columns">
 <h2>{% trans %}document.description{% endtrans %}</h2>
-<p class="description">{{ document.description }}</p>
+<p class="description">{{ document.description | nl2br | converturls }}</p>
 
 {% if document.previousVersion %}
 <h2>{% trans %}document.view.previous_versions{% endtrans %}</h2>

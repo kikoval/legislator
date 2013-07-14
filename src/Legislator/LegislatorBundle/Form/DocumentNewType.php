@@ -19,7 +19,8 @@ class DocumentNewType extends AbstractType
             ->add('file', 'file',
                     array('label' => 'document.file', 'required' => true))
             ->add('file_substantiation', 'file',
-                    array('label' => 'document.file_substantiation'))
+                    array('label' => 'document.file_substantiation',
+        				  'required' => false))
         ;
     }
 
