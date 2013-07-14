@@ -1,0 +1,8 @@
+{% extends "MyFOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+<h1>Zoznam skupín používateľov</h1>
+{% include "MyFOSUserBundle:Group:list_content.html.twig" %}
+
+<p><a href="{{ path('fos_user_group_new') }}" class="add button">Pridať skupinu</a></p>
+{% endblock fos_user_content %}

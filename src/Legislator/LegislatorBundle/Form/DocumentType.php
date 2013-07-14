@@ -21,11 +21,12 @@ class DocumentType extends AbstractType
                     array('choices' => Document::getStatusMessages()))
             ->add('is_final_version', 'checkbox',
             		array('label' => 'document.final_version',
-        				  'required' => false))
+        				  'required' => FALSE))
+        	->add('groups', null, array('required' => FALSE))
             ->add('file', 'file',
-                    array('required' => false, 'label' => 'document.file'))
+                    array('required' => FALSE, 'label' => 'document.file'))
             ->add('file_substantiation', 'file',
-                    array('required' => false, 'label' => 'document.file_substantiation'))
+                    array('required' => FALSE, 'label' => 'document.file_substantiation'))
         ;
     }
 

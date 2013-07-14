@@ -1,0 +1,23 @@
+<div class="fos_user_group_list">
+    <table>
+    <thead>
+    	<tr>
+    		<th>name</th>
+    		<th>actions</th>
+    	</tr>
+    </thead>
+    <tbody>
+    {% for group in groups %}
+    	<tr>
+       		<td><a href="{{ path('fos_user_group_show', {'groupName': group.getName()} ) }}">{{ group.getName() }}</a></td>
+            <td>
+            	<ul class="button-group">
+            		<a href="{{ path('fos_user_group_edit', {'groupName': group.getName()} ) }}" class="small edit button">Edit</a>
+            		<a href="{{ path('fos_user_group_delete', {'groupName': group.getName()} ) }}" class="small delete button">Delete</a>
+            	</ul>
+        	</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>

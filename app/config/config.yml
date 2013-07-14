@@ -78,4 +78,6 @@ fos_user:
     profile:
         form:
             type: legislator_user_profile
+    group:
+        group_class: Legislator\LegislatorBundle\Entity\Group
 

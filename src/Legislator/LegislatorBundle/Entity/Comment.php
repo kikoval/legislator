@@ -34,7 +34,7 @@ class Comment
     /**
      * @var Document
      *
-     * @ORM\ManyToOne(targetEntity="Document")
+     * @ORM\ManyToOne(targetEntity="Document", inversedBy="comments")
      * @ORM\JoinColumn(name="document_id", referencedColumnName="id", nullable=false)
      */
     private $document;
@@ -364,5 +364,20 @@ class Comment
     public static function getTypes()
     {
     	return self::$types;
+    }
+
+    /**
+     * Check if a user is the owner of the document
+     *
+     * @param User $user
+     * @return boolean
+     */
+    public function isOwner(User $user)
+    {
+    	if (!$user) {
+    		return FALSE;
+    	} else {
+    		return $user->getId() == $this->getCreatedBy()->getId();
+    	}
     }
 }

@@ -1,0 +1,68 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}List of users{% endblock %}
+
+{% block body %}
+<div class="row">
+<div class="large-12 columns">
+
+<h1>Zoznam používateľov</h1>
+
+<table>
+	<thead>
+        <tr>
+            <th>id</th>
+            <th>Username</th>
+            <th>Meno</th>
+            <th>Priezvisko</th>
+            <th>Rola</th>
+            <th>Skupiny</th>
+            <td>Akcie</td>
+        </tr>
+	</thead>
+	<tbody>
+    {% for user in users %}
+    <tr>
+    	<td>{{ user.id }}</td>
+    	<td>{{ user.username }}</td>
+    	<td>{{ user.firstName }}</td>
+    	<td>{{ user.surname }}</td>
+    	<td>{{ user.roles|join(', ') }}</td>
+    	<td>
+    	{% for group in user.groups %}
+    		<div>
+    	    {{ group.name }}
+    	    <form class="action" style="display: inline;" action="{{ path('legislator_user_list_group_form', {'id': user.id}) }}" method="post">
+    			<input type="hidden" name="group_id" value="{{ group.id }}" />
+    			<input type="submit" name="remove_from_group" value="X" title="zmazat" class="tiny delete button" />
+    		</form>
+    		</div>
+    	{% endfor %}
+    	</td>
+    	<td>
+
+    		<form action="{{ path('legislator_user_list_group_form', {'id': user.id}) }}" method="post" class="action">
+    			<select name="group_id">
+    				{% for group in groups %}
+    				<option value="{{ group.id }}">{{ group.name }}</option>
+    				{% endfor %}
+    			</select>
+    			<input type="submit" name="add_to_group" value="Add to group" class="small add button" />
+    		</form>
+
+    		<form action="{{ path('legislator_user_list_admin_form', {'id': user.id}) }}" method="post" class="action">
+    			{% if "ROLE_ADMIN" in user.roles %}
+    			<input type="submit" name="remove_admin_role" value="Remove admin role" class="small delete button" />
+    			{% else %}
+    			<input type="submit" name="add_admin_role" value="Add admin role" class="small add button" />
+    			{% endif %}
+    		</form>
+    	</td>
+    </tr>
+    {% endfor %}
+	</tbody>
+</table>
+
+</div>
+</div>
+{% endblock %}

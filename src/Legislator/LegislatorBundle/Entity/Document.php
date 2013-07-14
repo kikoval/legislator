@@ -5,6 +5,9 @@ namespace Legislator\LegislatorBundle\Entity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\GroupableInterface;
+use FOS\UserBundle\Model\GroupInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Document
@@ -13,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
-class Document
+class Document implements GroupableInterface
 {
     const STATUS_NEW = 0;
     const STATUS_COMMENTING = 1;
@@ -36,6 +39,15 @@ class Document
     private $id;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Group")
+     * @ORM\JoinTable(name="document_group",
+     *      joinColumns={@ORM\JoinColumn(name="document_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
+     * )
+     */
+    private $groups;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=128)
@@ -54,7 +66,7 @@ class Document
      *
      * @ORM\Column(name="version", type="smallint")
      */
-    private $version;
+    private $version = 1;
 
     /**
      * @var \DateTime
@@ -144,6 +156,63 @@ class Document
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Gets the groups granted to the user.
+     *
+     * @return Collection
+     */
+    public function getGroups()
+    {
+    	return $this->groups ?: $this->groups = new ArrayCollection();
+    }
+
+    public function getGroupNames()
+    {
+    	$names = array();
+    	foreach ($this->getGroups() as $group) {
+    		$names[] = $group->getName();
+    	}
+
+    	return $names;
+    }
+
+    public function hasGroup($name)
+    {
+    	return in_array($name, $this->getGroupNames());
+    }
+
+    public function addGroup(GroupInterface $group)
+    {
+    	if (!$this->getGroups()->contains($group)) {
+    		$this->getGroups()->add($group);
+    	}
+
+    	return $this;
+    }
+
+    public function removeGroup(GroupInterface $group)
+    {
+    	if ($this->getGroups()->contains($group)) {
+    		$this->getGroups()->removeElement($group);
+    	}
+
+    	return $this;
+    }
+
+    public function canBeAccessed(User $user)
+    {
+    	if ($user === null) return FALSE;
+
+    	$groups = $this->getGroups();
+    	if (count($groups) == 0) return TRUE;
+
+    	$has_access = FALSE;
+    	foreach ($groups as $group) {
+    		$has_access |= $user->hasGroup($group);
+    	}
+    	return $has_access;
     }
 
     /**
@@ -611,7 +680,7 @@ class Document
     public function isOwner($user)
     {
     	if (!$user) {
-    		return false;
+    		return FALSE;
     	} else {
     		return $user->getID() == $this->getCreatedBy()->getID();
     	}

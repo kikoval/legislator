@@ -24,7 +24,19 @@
     		{% if app.user %}
     		<li><a href="{{ path('legislator_user_my_comments') }}">{% trans %}menu.my_comments{% endtrans %}</a></li>
     		<li class="divider"></li>
-    		<li class="has-dropdown"><a href="#">{% trans %}menu.logged_in_as{% endtrans %} <span id="username">{{ app.user.username }}</span></a>
+
+    		{# Admin menu #}
+    		{% if is_granted('ROLE_ADMIN') %}
+    			<li><a href="{{ path('legislator_user_list') }}">Používatelia</a></li>
+    			<li class="has-dropdown"><a href="{{ path('fos_user_group_list') }}">Skupiny</a>
+    				<ul class="dropdown">
+    					<li><a href="{{ path('fos_user_group_new') }}">Pridať novú</a></li>
+    				</ul>
+    			</li>
+    			<li class="divider"></li>
+    		{% endif %}
+
+    		<li class="has-dropdown"><a href="#">{% trans %}menu.logged_in_as{% endtrans %} <span id="username">{{ app.user.username }}</span>{% if is_granted('ROLE_ADMIN') %} (admin){% endif %}</a>
 
     		<ul class="dropdown">
                         {% if not cosign_login_enabled %}

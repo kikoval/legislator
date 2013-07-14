@@ -85,8 +85,8 @@
 			{% if document.isStatusFinishedProcessingComments %}
 			<th>{% trans %}comment.reply{% endtrans %}</th>
 			{% endif %}
-            {% if app.user and not document.isStatusFinishedProcessingComments %}
-			<th>{% trans %}common.actions{% endtrans %}</th>  {# TODO check privileges #}
+            {% if show_comment_actions %}
+			<th>{% trans %}common.actions{% endtrans %}</th>
             {% endif %}
 		</tr>
 	</thead>
@@ -100,11 +100,10 @@
 		{% if document.isStatusFinishedProcessingComments %}
 		<td>{{ comment.reply }}</td>
 		{% endif %}
-		{# TODO check privileges #}
-        {% if app.user and not document.isStatusFinishedProcessingComments %}
+        {% if show_comment_actions %}
 		<td>
 		<ul class="button-group">
-		    {% if can_take_comment_actions %}
+		    {% if can_take_comment_actions and comment.isOwner(app.user) %}
     		<li><form method="get" action="{{ path('legislator_view', {'id': document.id })}}#comment-form" class="action"><input type="hidden" name="comment_id" value="{{ comment.id }}"/><input type="submit" name="edit" value="{% trans %}common.button.edit{% endtrans %}" class="small edit button" /></form></li>
     		<li><form method="post" action="{{ path('legislator_comment_delete', {'document_id': document.id,'id': comment.id })}}" class="action"><input type="submit" name="delete" value="{% trans %}common.button.delete{% endtrans %}" class="small delete button" /></form></li>
     		{% endif %}
@@ -122,10 +121,10 @@
 	<p>{%trans %}document.view.no_comments{% endtrans %}</p>
 {% endif %}
 
-<h3>{% if app.request.get('comment_id') %}{% trans %}document.view.edit_comment{% endtrans %}{% else %}{% trans %}document.view.add_a_comment{% endtrans %}{% endif %}</h3>
-<a name="comment-form"></a>
-{% if app.user %}
-    {% if document.canbecommented %}
+{% if show_add_comment %}
+    <h3>{% if app.request.get('comment_id') %}{% trans %}document.view.edit_comment{% endtrans %}{% else %}{% trans %}document.view.add_a_comment{% endtrans %}{% endif %}</h3>
+    <a name="comment-form"></a>
+    {% if app.user %}
         {{ form_start(form) }}
         {{ form_widget(form) }}
         {% if app.request.get('comment_id') %}
@@ -135,10 +134,8 @@
         {% endif %}
         {{ form_end(form) }}
     {% else %}
-        <p>{% trans %}document.view.commenting_disabled{% endtrans %}</p>
+    	<p>Na pridanie komentáru je potrebné sa najskôr <a href="{{ path('fos_user_security_login') }}">prihlásiť</a>.</p>
     {% endif %}
-{% else %}
-<p>Na pridanie komentáru je potrebné sa najskôr <a href="{{ path('fos_user_security_login') }}">prihlásiť</a>.</p>
 {% endif %}
 </div>
 </div>

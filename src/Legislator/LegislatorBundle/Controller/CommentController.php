@@ -12,13 +12,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CommentController extends Controller {
 
-    public function preExecute()
-    {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException();
-        }
-    }
-
     /**
      * View comments by a user.
      *
@@ -70,8 +63,10 @@ class CommentController extends Controller {
 		if ($document == null) {
 			throw new $this->createNotFoundException('No document found for id!');
 		}
-		if (!$document->getCanBeCommented()) {
-		    // TODO find a better exception
+
+		// checking permissions
+		if (!$document->canBeAccessed($this->getUser()) ||
+				!$document->getCanBeCommented()) {
 		    throw new AccessDeniedException();
 		}
 
@@ -112,9 +107,8 @@ class CommentController extends Controller {
 	        throw $this->createNotFoundException('No comment found for id!');
 	    }
 
-	    // check privileges, only admin or the author himself can edit a comment
-	    $user = $this->getUser();
-	    if ($comment->getCreatedBy()->getId() !== $user->getId()) {
+	    // check privileges, only the author himself can edit a comment
+	    if ($comment->isOwner($this->getUser())) {
 	        throw new AccessDeniedException();
 	    }
 
@@ -150,14 +144,17 @@ class CommentController extends Controller {
 			throw $this->createNotFoundException('No comment found for id!');
 		}
 
-		$doc_id = $comment->getDocument()->getId();
+		// check privileges, only the author himself can edit a comment
+		if ($comment->isOwner($this->getUser())) {
+			throw new AccessDeniedException();
+		}
 
 		$em = $this->getDoctrine()->getManager();
 		$em->remove($comment);
 		$em->flush();
 
 		return $this->redirect($this->generateUrl('legislator_view',
-				array('id' => $doc_id)));
+				array('id' => $document_id)));
 	}
 
 	/**
@@ -175,8 +172,9 @@ class CommentController extends Controller {
 		if (!$document) {
 			throw $this->createNotFoundException('No document found for id!');
 		}
-		$is_document_owner = $document->isOwner($this->getUser());
-		if (!$is_document_owner) {
+
+		// checking ownership
+		if (!$document->isOwner($this->getUser())) {
 			throw new AccessDeniedException();
 		}
 

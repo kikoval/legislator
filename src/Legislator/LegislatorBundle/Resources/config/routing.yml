@@ -37,7 +37,7 @@ legislator_process_comments:
     defaults: { _controller: LegislatorBundle:Document:processcomments}
     requirements:
         id: \d+
-        
+
 legislator_finish_commenting:
     pattern: /document/{id}/finish-commenting
     defaults: { _controller: LegislatorBundle:Document:finishcommenting}
@@ -57,7 +57,7 @@ legislator_comment_new:
     methods: [POST]
     requirements:
         document_id: \d+
-        
+
 legislator_comment_edit:
     pattern: /document/{document_id}/comment/{id}
     defaults: { _controller: LegislatorBundle:Comment:edit }
@@ -73,7 +73,7 @@ legislator_comment_delete:
     requirements:
         document_id: \d+
         id: \d+
-        
+
 legislator_comment_reply:
     pattern: /document/{document_id}/comment/{id}/reply
     defaults: { _controller: LegislatorBundle:Comment:reply }
@@ -81,15 +81,33 @@ legislator_comment_reply:
         document_id: \d+
         id: \d+
 
-# user        
+# user
+legislator_user_list:
+    pattern: /admin/user/list
+    defaults: { _controller: LegislatorBundle:AdminUser:list }
+    methods: [GET]
+
+legislator_user_list_group_form:
+    pattern: /admin/user/{id}/group
+    defaults: { _controller: LegislatorBundle:AdminUser:processGroupFrom }
+    methods: [POST]
+    requirements:
+        id: \d+
+
+legislator_user_list_admin_form:
+    pattern: /admin/user/{id}/role_admin
+    defaults: { _controller: LegislatorBundle:AdminUser:processAdminRoleForm }
+    methods: [POST]
+    requirements:
+        id: \d+
+
 legislator_user_comments:
     pattern: /user/{user_id}/comments/
     defaults: { _controller: LegislatorBundle:Comment:viewByUser }
     requirements:
         user_id: \d+
-        
+
 legislator_user_my_comments:
     pattern: /user/comments/
     defaults: { _controller: LegislatorBundle:Comment:viewByUser }
-        
-        
+

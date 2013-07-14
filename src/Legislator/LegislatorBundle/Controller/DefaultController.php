@@ -11,8 +11,19 @@ class DefaultController extends Controller
     	$documents = $this->getDoctrine()
     		->getRepository('LegislatorBundle:Document')->findAll();
 
+    	$documents_show = $documents;
+    	if (!$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		// removing documents that cannot be accessed
+    		$documents_show = array();
+	    	foreach ($documents as $d) {
+	    		if ($d->canBeAccessed($this->getUser())) {
+	    			array_push($documents_show, $d);
+	    		}
+	    	}
+    	}
+
         return $this->render('LegislatorBundle:Default:index.html.twig',
-        		array('documents' => $documents,
+        		array('documents' => $documents_show,
         		      'can_add_document' => $this->get('security.context')->isGranted('ROLE_USER')));
     }
 }

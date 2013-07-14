@@ -16,11 +16,12 @@ class DocumentNewType extends AbstractType
             ->add('name', 'text', array('label' => 'document.name'))
             ->add('description', 'textarea',
                     array('label' => 'document.description'))
+            ->add('groups', null, array('required' => FALSE))
             ->add('file', 'file',
-                    array('label' => 'document.file', 'required' => true))
+                    array('label' => 'document.file', 'required' => TRUE))
             ->add('file_substantiation', 'file',
                     array('label' => 'document.file_substantiation',
-        				  'required' => false))
+        				  'required' => FALSE))
         ;
     }
 
