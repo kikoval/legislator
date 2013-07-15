@@ -4,7 +4,7 @@ parameters:
 services:
     legislator_user.provider:
         class: Legislator\LegislatorBundle\Security\LegislatorUserProvider
-        arguments: ["@fos_user.user_manager", "@service_container", "%cosign_login_enabled%"]
+        arguments: ["@fos_user.user_manager", "@service_container"]
 
     legislator_user.registration.form.type:
         class: Legislator\LegislatorBundle\Form\RegistrationFormType

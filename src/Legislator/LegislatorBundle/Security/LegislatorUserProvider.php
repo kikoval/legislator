@@ -6,8 +6,8 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface as SecurityUserInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use FOS\UserBundle\Model\User;
 use FOS\UserBundle\Model\UserInterface;
@@ -16,11 +16,12 @@ use FOS\UserBundle\Model\UserManagerInterface;
 
 class LegislatorUserProvider implements UserProviderInterface {
 
-	public function __construct(UserManagerInterface $userManager, Container $container, $cosign_login_enabled=FALSE)
+	public function __construct(UserManagerInterface $userManager, ContainerInterface $container)
 	{
 	  $this->userManager = $userManager;
 	  $this->container = $container;
-	  $this->cosign_login_enabled = $cosign_login_enabled;
+
+	  $this->cosign_login_enabled = $this->container->getParameter('cosign_login_enabled');
 	}
 
 	public function loadUserByUsername($username)
@@ -57,7 +58,6 @@ class LegislatorUserProvider implements UserProviderInterface {
 			$user->setSurname($user_info['familyName']);
 
 			$this->userManager->updateUser($user);
-
 
 		} else {
             if (!$user) {

@@ -42,8 +42,8 @@ class AdminUserController extends Controller
     	}
 
     	$em = $this->getDoctrine()->getEntityManager();
-    	$em->persist($group);
-    	$em->flush($user);
+    	$em->persist($user);
+    	$em->flush();
 
     	return $this->redirect($this->generateUrl('legislator_user_list'));
     }
