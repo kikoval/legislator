@@ -22,6 +22,6 @@ services:
         class: Legislator\LegislatorBundle\Integration\LDAPRetriever
         arguments: ["%ldap_url%", "%ldap_base_dn%"]
 
-    legislator.teacher_search:
-        class: Legislator\LegislatorBundle\Integration\LDAPTeacherSearch
+    legislator.user_search:
+        class: Legislator\LegislatorBundle\Integration\LDAPUserSearch
         arguments: ["@legislator.ldap_retriever", "%org_unit%"]

@@ -1,66 +1,28 @@
 <?php
-/**
- * @copyright Copyright (c) 2013 The FMFI Anketa authors (see AUTHORS).
- * Use of this source code is governed by a license that can be
- * found in the LICENSE file in the project root directory.
- *
- * @package    Anketa
- * @subpackage Integration
- * @author     Martin Kralik <majak47@gmail.com>
- */
 
 namespace Legislator\LegislatorBundle\Integration;
 use Legislator\LegislatorBundle\Integration\LDAPRetriever;
 
 /**
- * Searches LDAP for teachers.
+ * Searches LDAP for any users (teachers or students).
  *
- * @author Martin Kralik <majak47@gmail.com>
  */
-class LDAPTeacherSearch {
+class LDAPUserSearch {
 
     private $ldap;
     private $orgUnit;
     const GROUP_REGEXP = '@^pouzivatelia_(?P<orgUnits>[a-zA-Z]+)(?<!interni|externi)$@';
 
-    public function __construct(LDAPRetriever $ldap, $orgUnit) {
+    public function __construct(LDAPRetriever $ldap, $orgUnit)
+    {
         $this->ldap = $ldap;
         $this->ldap->loginIfNotAlready();
         $this->orgUnit = $orgUnit;
     }
 
-    public function __destruct() {
+    public function __destruct()
+    {
         $this->ldap->logoutIfNotAlready();
-    }
-
-    /**
-     * Trims and transliterate string with accents into ASCII.
-     *
-     * @param string $string
-     * @return string
-     */
-    private function removeAccents($string) {
-
-        if (function_exists('iconv')) {
-            $string = iconv('utf-8', 'us-ascii//TRANSLIT', trim($string));
-        }
-        return $string;
-    }
-
-    /**
-     * Searches LDAP for users by substring of their full name (without accents).
-     * In addition, users must be either teachers on any faculty or PhD students
-     * on faculty provided in class constructor.
-     *
-     * @param string $name Substring of name
-     * @return array @see executeSeachAndProcessData for docs
-     */
-    public function byFullName($name) {
-        $safeName = $this->removeAccents($this->ldap->escape($name));
-        $safeOrgUnit = $this->ldap->escape($this->orgUnit);
-        $filter = '(&(cn=*'.$safeName.'*)(|(group=zamestnanci)(group=doktorandi_'.$safeOrgUnit.')))';
-
-        return $this->executeSeachAndProcessData($filter);
     }
 
     /**
@@ -71,10 +33,15 @@ class LDAPTeacherSearch {
      * @param string $login full login
      * @return array @see executeSeachAndProcessData for docs
      */
-    public function byLogin($login) {
+    public function byLogin($login, $only_from_orgunit=TRUE)
+    {
         $safeLogin = $this->ldap->escape($login);
-        $safeOrgUnit = $this->ldap->escape($this->orgUnit);
-        $filter = '(&(uid='.$safeLogin.')(|(group=zamestnanci)(group=doktorandi_'.$safeOrgUnit.')))';
+        $filter_org = '';
+        if ($only_from_orgunit) {
+        	$safeOrgUnit = $this->ldap->escape($this->orgUnit);
+        	$filter_org = '_'.$safeOrgUnit;
+        }
+        $filter = '(&(uid='.$safeLogin.')(group=pouzivatelia'.$filter_org.'))';
 
         return $this->executeSeachAndProcessData($filter);
     }
@@ -107,15 +74,16 @@ class LDAPTeacherSearch {
      * @param string $filter
      * @return array
      */
-    private function executeSeachAndProcessData($filter) {
+    private function executeSeachAndProcessData($filter)
+    {
         $result = $this->ldap->searchAll($filter,
                 array('displayName', 'uid', 'group', 'givenNameU8', 'snU8'));
 
-        $teachers = array();
+        $users = array();
         foreach ($result as $record) {
-            $teachers[$record['uid'][0]]['name'] = $record['displayName'][0];
-            $teachers[$record['uid'][0]]['givenName'] = $record['givenNameU8'][0];
-            $teachers[$record['uid'][0]]['familyName'] = $record['snU8'][0];
+            $users[$record['uid'][0]]['name'] = $record['displayName'][0];
+            $users[$record['uid'][0]]['givenName'] = $record['givenNameU8'][0];
+            $users[$record['uid'][0]]['familyName'] = $record['snU8'][0];
             $orgUnits = array();
             foreach ($record['group'] as $group) {
                 $match = array();
@@ -123,9 +91,9 @@ class LDAPTeacherSearch {
                     $orgUnits[] = $match['orgUnits'];
                 }
             }
-            $teachers[$record['uid'][0]]['orgUnits'] = $orgUnits;
+            $users[$record['uid'][0]]['orgUnits'] = $orgUnits;
         }
-        return $teachers;
+        return $users;
     }
 
 }
