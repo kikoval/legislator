@@ -19,8 +19,7 @@ The application is by default accessible only to authorized users.
 
 ### Requirements ###
 
-* PHP >=5.3.3
-* relation database (MySQL, Postgre)
+* [Symfony 2.3 requirements](http://symfony.com/doc/current/reference/requirements.html)
 * [Composer](http://getcomposer.org/) for package management
 * [Git](http://git-scm.com/) for cloning the repository
 
