@@ -524,12 +524,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipUrlAutoConverterBundle.git",
-                "reference": "1.0.0"
+                "reference": "907763f0ee44456ee121c0d5fe9b5f8d99b90044"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipUrlAutoConverterBundle/zipball/1.0.0",
-                "reference": "1.0.0",
+                "url": "https://api.github.com/repos/liip/LiipUrlAutoConverterBundle/zipball/907763f0ee44456ee121c0d5fe9b5f8d99b90044",
+                "reference": "907763f0ee44456ee121c0d5fe9b5f8d99b90044",
                 "shasum": ""
             },
             "require": {
@@ -567,7 +567,7 @@
             "keywords": [
                 "url"
             ],
-            "time": "2013-06-19 13:22:07"
+            "time": "2013-07-16 13:32:53"
         },
         {
             "name": "monolog/monolog",
