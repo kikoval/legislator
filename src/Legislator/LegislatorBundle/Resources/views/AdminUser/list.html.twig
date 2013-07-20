@@ -40,7 +40,7 @@
     	{% endfor %}
     	</td>
     	<td>
-
+			{% if groups %}
     		<form action="{{ path('legislator_user_list_group_form', {'id': user.id}) }}" method="post" class="action">
     			<select name="group_id">
     				{% for group in groups %}
@@ -49,6 +49,7 @@
     			</select>
     			<input type="submit" name="add_to_group" value="Add to group" class="small add button" />
     		</form>
+    		{% endif %}
 
     		<form action="{{ path('legislator_user_list_admin_form', {'id': user.id}) }}" method="post" class="action">
     			{% if "ROLE_ADMIN" in user.roles %}
