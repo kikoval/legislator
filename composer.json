@@ -22,7 +22,8 @@
         
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "svt/cosign-bundle": "@dev",
-        "liip/url-auto-converter-bundle": "dev-master"
+        "liip/url-auto-converter-bundle": "dev-master",
+        "doctrine/doctrine-fixtures-bundle": "dev-master"
     },
     "repositories": [
         {
@@ -49,7 +50,8 @@
     "config": {
         "bin-dir": "bin"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",

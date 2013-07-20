@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new SVT\CosignBundle\SVTCosignBundle(),
             new Legislator\MyFOSUserBundle\MyFOSUserBundle(),
         	new Liip\UrlAutoConverterBundle\LiipUrlAutoConverterBundle(),
+        	new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
