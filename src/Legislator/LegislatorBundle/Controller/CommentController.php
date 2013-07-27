@@ -108,7 +108,7 @@ class CommentController extends Controller {
 	    }
 
 	    // check privileges, only the author himself can edit a comment
-	    if ($comment->isOwner($this->getUser())) {
+	    if (!$comment->isOwner($this->getUser())) {
 	        throw new AccessDeniedException();
 	    }
 
@@ -145,7 +145,7 @@ class CommentController extends Controller {
 		}
 
 		// check privileges, only the author himself can edit a comment
-		if ($comment->isOwner($this->getUser())) {
+		if (!$comment->isOwner($this->getUser())) {
 			throw new AccessDeniedException();
 		}
 
@@ -166,7 +166,6 @@ class CommentController extends Controller {
 	 */
 	public function replyAction($document_id, $id, Request $request)
 	{
-	    // check privileges: only the author of the document can reply
 		$document = $this->getDoctrine()
 				->getRepository('LegislatorBundle:Document')->find($document_id);
 		if (!$document) {
