@@ -78,9 +78,11 @@ class CommentController extends Controller {
 		$form->handleRequest($request);
 
 		if ($form->isValid()) {
-			$comment->setCreatedOn(new \Datetime());
-			$user = $this->getUser();
-			$comment->setCreatedBy($user);
+			$current_datetime = new \Datetime();
+			$comment->setCreatedOn($current_datetime);
+			$comment->setModifiedOn($current_datetime);
+
+			$comment->setCreatedBy($this->getUser());
 
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($comment);
