@@ -531,36 +531,42 @@ class Document implements GroupableInterface
     public function upload()
     {
         // the file property can be empty if the field is not required
-        if (null === $this->getFile() || null == $this->getFileSubstantiation()) {
-            return;
+        if (null !== $this->getFile()) {
+            // if there is an error when moving the file, an exception will
+	        // be automatically thrown by move(). This will properly prevent
+	        // the entity from being persisted to the database on error
+	        $this->getFile()->move($this->getUploadRootDir(), $this->path);
+	        
+	        // check if we have an old file
+	        if (isset($this->temp_path)) {
+	        	// delete the old image
+	        	unlink($this->getUploadRootDir().'/'.$this->temp_path);
+	        	// clear the temp image path
+	        	$this->temp_path = null;
+	        }
+	        
+	        $this->file = null;
+	        
+	        // making sure we have correct permissions
+	        chmod($this->getAbsolutePath(), 0644);
         }
-
-        // if there is an error when moving the file, an exception will
-        // be automatically thrown by move(). This will properly prevent
-        // the entity from being persisted to the database on error
-        $this->getFile()->move($this->getUploadRootDir(), $this->path);
-        $this->getFileSubstantiation()->move($this->getUploadRootDir(), $this->path_substantiation);
-
-        // check if we have an old file
-        if (isset($this->temp_path)) {
-            // delete the old image
-            unlink($this->getUploadRootDir().'/'.$this->temp_path);
-            // clear the temp image path
-            $this->temp_path = null;
+        
+        if (null !== $this->getFileSubstantiation()) {
+        	$this->getFileSubstantiation()->move($this->getUploadRootDir(), $this->path_substantiation);
+        	
+        	// check if we have an old file
+        	if (isset($this->temp_path_substantiation)) {
+        		// delete the old image
+        		unlink($this->getUploadRootDir().'/'.$this->temp_path_substantiation);
+        		// clear the temp image path
+        		$this->temp_path_substantiation = null;
+        	}
+        	
+        	$this->file_substantiation = null;
+        	
+        	// making sure we have correct permissions
+        	chmod($this->getAbsolutePathSubstantiation(), 0644);
         }
-        // check if we have an old file
-        if (isset($this->temp_path_substantiation)) {
-            // delete the old image
-            unlink($this->getUploadRootDir().'/'.$this->temp_path_substantiation);
-            // clear the temp image path
-            $this->temp_path_substantiation = null;
-        }
-        $this->file = null;
-        $this->file_substantiation = null;
-
-        # making sure we have correct permissions
-        chmod($this->getAbsolutePath(), 0644);
-        chmod($this->getAbsolutePathSubstantiation(), 0644);
     }
 
     /**
