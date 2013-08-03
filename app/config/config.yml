@@ -81,3 +81,5 @@ fos_user:
     group:
         group_class: Legislator\LegislatorBundle\Entity\Group
 
+igorw_file_serve:
+    base_dir: %kernel.root_dir%/../web

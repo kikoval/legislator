@@ -22,8 +22,8 @@
 
 <h2>{% trans %}document.view.files{% endtrans %}</h2>
 <ul>
-    {% if document.webpath  %}<li><a href="{{ asset(document.webpath) }}">{% trans %}document.file{% endtrans %}</a></li>{% endif %}
-    {% if document.webpathsubstantiation  %}<li><a href="{{ asset(document.webpathsubstantiation) }}">{% trans %}document.file_substantiation{% endtrans %}</a></li>{% endif %}
+    {% if document.webpath  %}<li><a href="{{ path('legislator_document_download_main_file', {'id': document.id}) }}">{% trans %}document.file{% endtrans %}</a></li>{% endif %}
+    {% if document.webpathsubstantiation  %}<li><a href="{{ path('legislator_document_download_substantiation_file', {'id': document.id}) }}">{% trans %}document.file_substantiation{% endtrans %}</a></li>{% endif %}
 </ul>
 </div>
 

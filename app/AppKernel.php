@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Legislator\MyFOSUserBundle\MyFOSUserBundle(),
         	new Liip\UrlAutoConverterBundle\LiipUrlAutoConverterBundle(),
         	new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+        	new Igorw\FileServeBundle\IgorwFileServeBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

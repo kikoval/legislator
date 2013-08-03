@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "0a5df3211289288749c83536ffbbcf3e",
+    "hash": "fb76a2a9e4678a66006756db87975ef8",
     "packages": [
         {
             "name": "doctrine/common",
@@ -383,12 +383,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "6fc28e41805868c6c635de12266c40595c2e7ce8"
+                "reference": "f82149141bedbb966ae409e54f4c6fdeaaab2080"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/6fc28e41805868c6c635de12266c40595c2e7ce8",
-                "reference": "6fc28e41805868c6c635de12266c40595c2e7ce8",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/f82149141bedbb966ae409e54f4c6fdeaaab2080",
+                "reference": "f82149141bedbb966ae409e54f4c6fdeaaab2080",
                 "shasum": ""
             },
             "require": {
@@ -443,7 +443,60 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2013-07-18 14:23:03"
+            "time": "2013-07-31 06:42:13"
+        },
+        {
+            "name": "igorw/file-serve-bundle",
+            "version": "v1.0.2",
+            "target-dir": "Igorw/FileServeBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/igorw/IgorwFileServeBundle",
+                "reference": "v1.0.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/igorw/IgorwFileServeBundle/zipball/v1.0.2",
+                "reference": "v1.0.2",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/http-foundation": "2.*"
+            },
+            "require-dev": {
+                "symfony/framework-bundle": "2.*"
+            },
+            "suggest": {
+                "symfony/framework-bundle": "2.*"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Igorw\\FileServeBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Igor Wiedler",
+                    "email": "igor@wiedler.ch",
+                    "homepage": "http://wiedler.ch/igor/"
+                }
+            ],
+            "description": "Symfony2 Bundle for serving protected files.",
+            "keywords": [
+                "file-system",
+                "sendfile"
+            ],
+            "time": "2012-10-24 07:48:24"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -670,26 +723,26 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "1.5.0"
+                "reference": "1.6.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1.5.0",
-                "reference": "1.5.0",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1.6.0",
+                "reference": "1.6.0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0",
-                "psr/log": ">=1.0,<2.0"
+                "psr/log": "~1.0"
             },
             "require-dev": {
                 "doctrine/couchdb": "dev-master",
                 "mlehner/gelf-php": "1.0.*",
-                "raven/raven": "0.3.*"
+                "raven/raven": "0.5.*"
             },
             "suggest": {
                 "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
@@ -701,7 +754,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.4.x-dev"
+                    "dev-master": "1.6.x-dev"
                 }
             },
             "autoload": {
@@ -728,7 +781,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2013-04-23 10:09:48"
+            "time": "2013-07-28 22:38:30"
         },
         {
             "name": "psr/log",
@@ -915,7 +968,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fmfi-svt/cosign-bundle.git",
-                "reference": "88040361196753c6eaa944a15007605b531c4600"
+                "reference": "6d4315d079d59b9ec460ba3a05253bd39f716f34"
             },
             "require": {
                 "symfony/symfony": ">=2.1"
@@ -930,7 +983,7 @@
                 "BSD"
             ],
             "description": "Support for login via CoSign",
-            "time": "2013-07-08 20:06:50"
+            "time": "2013-07-22 07:39:05"
         },
         {
             "name": "swiftmailer/swiftmailer",

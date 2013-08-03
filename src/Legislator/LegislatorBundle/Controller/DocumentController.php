@@ -336,4 +336,45 @@ class DocumentController extends Controller {
 
         return $this->redirect($this->generateUrl('legislator_view', array('id' => $id)));
     }
+
+    /**
+     * Download file attached to the document.
+     * 
+     * @param int $id
+     * @param string $file
+     */
+    public function downloadAction($id, $file='main')
+    {
+    	function sanitize($filename)
+    	{
+    		$filename = strtolower($filename);
+    		$filename = str_replace(' ', '_', $filename);
+    		return $filename;
+    	}
+    	
+    	$document = $this->getDoctrine()
+    			->getRepository('LegislatorBundle:Document')->find($id);
+    	if (!$document) {
+    		throw $this->createNotFoundException('No document found for id!');
+    	}
+
+    	$options['absolute_path'] = FALSE;
+    	$options['serve_filename'] = sanitize($document->getName());
+
+    	$finfo = finfo_open(FILEINFO_MIME);
+    	if (!$finfo) {
+    		return $this->createNotFoundException('File not found');
+    	}
+
+    	if ($file == 'main') {
+    		$path = $document->getWebPath();
+    		$mimetype = finfo_file($finfo, $path);
+    	} else {
+    		$path = $document->getWebPathSubstantiation();
+    		$mimetype = finfo_file($finfo, $path);
+    		$options['serve_filename'] .= '_substantiation';
+    	}
+
+    	return $this->get('igorw_file_serve.response_factory')->create($path, $mimetype, $options);
+    }
 }

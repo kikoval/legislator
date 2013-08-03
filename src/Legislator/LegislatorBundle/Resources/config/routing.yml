@@ -49,6 +49,18 @@ legislator_document_new_version:
     defaults: { _controller: LegislatorBundle:Document:newVersion}
     requirements:
         id: \d+
+        
+legislator_document_download_main_file:
+    pattern: /document/{id}/download/main-file
+    defaults: { _controller: LegislatorBundle:Document:download, file:"main"}
+    requirements:
+        id: \d+
+
+legislator_document_download_substantiation_file:
+    pattern: /document/{id}/download/substantiation
+    defaults: { _controller: LegislatorBundle:Document:download, file:"substantiation"}
+    requirements:
+        id: \d+
 
 # comments
 legislator_comment_new:

@@ -23,7 +23,8 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "svt/cosign-bundle": "@dev",
         "liip/url-auto-converter-bundle": "dev-master",
-        "doctrine/doctrine-fixtures-bundle": "dev-master"
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
+        "igorw/file-serve-bundle": "1.0.*"
     },
     "repositories": [
         {
