@@ -2,15 +2,24 @@
 
 namespace Legislator\LegislatorBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Legislator\LegislatorBundle\Tests\MyWebTestCase;
 
-class AdminUserControllerTest extends WebTestCase
+class AdminUserControllerTest extends MyWebTestCase
 {
     public function testList()
     {
-        $client = static::createClient();
+        $crawler = $this->client->request('GET', $this->getUrl('legislator_user_list'));
 
-        $crawler = $client->request('GET', '/users/list');
+        // we are not logged in
+        $this->assertTrue($this->client->getResponse()->isRedirect());
+
+        $this->client->restart();
+
+		$this->loadFixtures();
+        $this->logIn();
+
+        $crawler = $this->client->request('GET', $this->getUrl('legislator_user_list'));
+        $this->assertTrue($this->client->getResponse()->isForbidden());
     }
 
 }

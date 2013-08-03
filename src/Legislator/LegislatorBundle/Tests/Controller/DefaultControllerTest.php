@@ -2,16 +2,22 @@
 
 namespace Legislator\LegislatorBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Legislator\LegislatorBundle\Tests\MyWebTestCase;
 
-class DefaultControllerTest extends WebTestCase
+class DefaultControllerTest extends MyWebTestCase
 {
     public function testIndex()
     {
-        $client = static::createClient();
+    	$this->client->request('GET', $this->getUrl('legislator_homepage'));
+    	// we are not logged in
+    	$this->assertTrue($this->client->getResponse()->isRedirect());
 
-        $crawler = $client->request('GET', '/hello/Fabien');
+    	$this->loadFixtures();
+        $this->logIn();
 
-        $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
+        $crawler = $this->client->request('GET', $this->getUrl('legislator_homepage'));
+
+        // make sure we are on main page
+        $this->assertCount(1, $crawler->filter('h1'));
     }
 }
