@@ -9,8 +9,8 @@ textarea {min-height: 5em !important;}
 form input[type="text"], input[type="email"], form input[type="password"], textarea,
     select {width: auto !important;}
 form input[type="text"], form input[type="password"], textarea {min-width: 30em;}
-
 option[selected] {background-color: greenyellow;}
+label:first-letter {text-transform: uppercase;}
 
 dl.document-data dt {float: left; clear: left; min-width: 7em;}
 dl.document-data dt:after {content: ":";}

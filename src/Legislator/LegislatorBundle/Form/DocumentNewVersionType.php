@@ -13,10 +13,16 @@ class DocumentNewVersionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array('read_only' => true, 'disabled' => true))
-            ->add('description', 'textarea')
-            ->add('is_final_version')
-            ->add('file', 'file', array('required' => true))
+            ->add('name', 'text',
+            		array('read_only' => TRUE,
+            			  'disabled' => TRUE,
+            			  'label' => 'document.name'))
+            ->add('description', 'textarea',
+            		array('label' => 'document.description'))
+            ->add('is_final_version', 'checkbox',
+            		array('label' => 'document.final_version'))
+            ->add('file', 'file',
+            		array('label' => 'document.file', 'required' => TRUE))
         ;
     }
 
