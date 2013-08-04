@@ -20,7 +20,8 @@ class DocumentNewVersionType extends AbstractType
             ->add('description', 'textarea',
             		array('label' => 'document.description'))
             ->add('is_final_version', 'checkbox',
-            		array('label' => 'document.final_version'))
+            		array('label' => 'document.final_version',
+            			  'required' => FALSE))
             ->add('file', 'file',
             		array('label' => 'document.file', 'required' => TRUE))
         ;
