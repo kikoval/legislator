@@ -133,10 +133,18 @@ class Document implements GroupableInterface
      *
      * @var Document
      *
-     * @ORM\OneToOne(targetEntity="Document")
+     * @ORM\OneToOne(targetEntity="Document", mappedBy="next_version")
      * @ORM\JoinColumn(nullable=true)
      */
     private $previous_version;
+
+    /**
+     * @var Document
+     *
+     * @ORM\OneToOne(targetEntity="Document", inversedBy="previous_version")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     */
+    private $next_version;
 
     /**
      *
@@ -536,7 +544,7 @@ class Document implements GroupableInterface
 	        // be automatically thrown by move(). This will properly prevent
 	        // the entity from being persisted to the database on error
 	        $this->getFile()->move($this->getUploadRootDir(), $this->path);
-	        
+
 	        // check if we have an old file
 	        if (isset($this->temp_path)) {
 	        	// delete the old image
@@ -544,16 +552,16 @@ class Document implements GroupableInterface
 	        	// clear the temp image path
 	        	$this->temp_path = null;
 	        }
-	        
+
 	        $this->file = null;
-	        
+
 	        // making sure we have correct permissions
 	        chmod($this->getAbsolutePath(), 0644);
         }
-        
+
         if (null !== $this->getFileSubstantiation()) {
         	$this->getFileSubstantiation()->move($this->getUploadRootDir(), $this->path_substantiation);
-        	
+
         	// check if we have an old file
         	if (isset($this->temp_path_substantiation)) {
         		// delete the old image
@@ -561,9 +569,9 @@ class Document implements GroupableInterface
         		// clear the temp image path
         		$this->temp_path_substantiation = null;
         	}
-        	
+
         	$this->file_substantiation = null;
-        	
+
         	// making sure we have correct permissions
         	chmod($this->getAbsolutePathSubstantiation(), 0644);
         }
@@ -650,8 +658,32 @@ class Document implements GroupableInterface
     public function setPreviousVersion(Document $document)
     {
         $this->previous_version = $document;
+        $document->setNextVersion($this);
 
         return $this;
+    }
+
+    /**
+     * Get next version of the document
+     *
+     * @return Document
+     */
+    public function getNextVersion()
+    {
+    	return $this->next_version;
+    }
+
+    /**
+     * Set next version of the document
+     *
+     * @param Document $document
+     * @return Document
+     */
+    public function setNextVersion(Document $document)
+    {
+    	$this->next_version = $document;
+
+    	return $this;
     }
 
     /**

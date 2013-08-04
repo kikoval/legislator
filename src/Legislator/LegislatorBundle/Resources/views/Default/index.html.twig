@@ -35,7 +35,6 @@
 			<td>{{ d.createdBy.surname }}</td>
 			<td>{{ d.createdOn|date('d.m.Y H:i:s') }}</td>
 			<td>{{ d.modifiedOn|date('d.m.Y H:i:s') }}</td>
-			{# TODO check privileges #}
 			{% if app.user %}
 			<td>
 			<ul class="button-group">
@@ -46,9 +45,11 @@
 			    <li><form method="get" action="{{ path('legislator_edit', {'id': d.id}) }}" class="action">
 			        <input type="submit" value="{% trans %}common.button.edit{% endtrans %}" class="small edit button"/>
 			    </form></li>
+			    {% if not d.nextversion %}
 			    <li><form method="post" action="{{ path('legislator_delete', {'id': d.id}) }}" class="action">
 			        <input type="submit" value="{% trans %}common.button.delete{% endtrans %}" class="small delete button"/>
 			    </form></li>
+			    {% endif %}
 
 			{% endif %}
 			</ul>
