@@ -40,8 +40,10 @@ The application is by default accessible only to authorized users.
 To run the application in a dev web server execute `php app/console server:run`.
 
 ### CoSign ###
+
 To enable [CoSign](http://www.weblogin.org/) authentication:
-1. In `app/config/paramters.yml`, set `cosign_login_enabled` to `TRUE`. Make sure the `cosign_logout_prefix` parameters has correct value.
+
+1. In `app/config/paramters.yml`, set `cosign_login_enabled` to `TRUE`. Make sure the `cosign_logout_prefix` parameters has a correct value.
 2. Follow instructions in `app/config/security.cosign.yml.dist`.
 
 ## License ##
