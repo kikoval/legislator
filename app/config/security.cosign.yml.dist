@@ -1,0 +1,12 @@
+# Overwrite the "main" firewall config in firewalls section of security.yml
+# with the config below to enable CoSign authentification
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_provider: form.csrf_provider
+            anonymous: true
+            cosign:
+                login_route: fos_user_security_login
+            logout:
+                success_handler: security.logout.success_handler.cosign

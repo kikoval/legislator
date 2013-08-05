@@ -1,18 +1,20 @@
 parameters:
     database_driver: pdo_mysql
     database_host: 127.0.0.1
-    database_port: null
+    database_port: ~
     database_name: legislator
     database_user: legislator
-    database_password: legislator
+    database_password: ~
+
     mailer_transport: smtp
     mailer_host: 127.0.0.1
-    mailer_user: null
-    mailer_password: null
+    mailer_user: ~
+    mailer_password: ~
+
     locale: en
-    secret: 82297cbe6f8301ad17daffa283e27eb8
+    secret: ThisIsNotSecretChangeIt
     database_path: null
-    
+
     cosign_login_enabled: FALSE
     cosign_logout_prefix: 'https://login.uniba.sk/logout.cgi?'
     ldap_url: 'ldaps://jas2.uniba.sk/,ldaps://jas1.uniba.sk/'
