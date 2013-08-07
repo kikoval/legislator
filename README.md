@@ -17,6 +17,8 @@ The application is by default accessible only to authorized users.
 
 ## Installation ##
 
+[![Build Status](https://travis-ci.org/kikoval/legislator.png)](https://travis-ci.org/kikoval/legislator)
+
 ### Requirements ###
 
 * [Symfony 2.3 requirements](http://symfony.com/doc/current/reference/requirements.html)
