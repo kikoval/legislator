@@ -67,6 +67,8 @@ comment:
     principal: Principal
     technical: Technical
   acceptance: Acceptance
+  accepted: Accepted
+  declined: Not accepted
   reply: Reply
   button:
     reply: Reply

@@ -67,6 +67,8 @@ comment:
     principal: Zásadná
     technical: Legislatívno-technická
   acceptance: Vyhodnotenie
+  accepted: Akceptovaná
+  declined: Neakceptovaná
   reply: Vyhodnotenie
   button:
     reply: Odpovedať

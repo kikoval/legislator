@@ -13,7 +13,7 @@ class CommentReplyType extends AbstractType
         $builder
             ->add('isAccepted', 'choice',
                     array('choices' =>
-                            array(1 => 'Akcetovaný', 0 => 'Neakceptovaný'),
+                            array(1 => 'comment.accepted', 0 => 'comment.declined'),
                           'expanded' => true,
                           'label' => 'comment.acceptance'))
             ->add('reply')
