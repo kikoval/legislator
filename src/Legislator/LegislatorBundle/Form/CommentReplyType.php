@@ -16,7 +16,7 @@ class CommentReplyType extends AbstractType
                             array(1 => 'comment.accepted', 0 => 'comment.declined'),
                           'expanded' => true,
                           'label' => 'comment.acceptance'))
-            ->add('reply')
+            ->add('reply', 'textarea', array('label' => 'comment.substantiation'))
         ;
     }
 
