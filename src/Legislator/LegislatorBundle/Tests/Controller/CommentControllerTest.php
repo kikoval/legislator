@@ -59,8 +59,8 @@ class CommentControllerTest extends MyWebTestCase
 		$this->assertCount(1, $crawler->filter('#comments'));
 
 		// edit the comment
-		$form = $crawler->filter('tbody input[name="edit"]')->eq(0)->form();
-		$crawler = $this->client->submit($form);
+                $edit_link = $crawler->filter('tbody a[class~="edit"]')->eq(0)->link();
+		$crawler = $this->client->click($edit_link);
 
 		$form = $crawler->filter('#legislator_comment')->parents()->eq(0)->form();
 		$this->assertEquals($form['legislator_comment[content]']->getValue(), 'standard test comment');
@@ -86,7 +86,7 @@ class CommentControllerTest extends MyWebTestCase
 		$this->assertCount(1, $crawler->filter('#comments'));
 		
 		// delete comment
-		$form = $crawler->filter('tbody input[name="delete"]')->eq(0)->form();
+		$form = $crawler->filter('tbody button[name="delete"]')->eq(0)->form();
 		$crawler = $this->client->submit($form);
 		$this->assertCount(0, $crawler->filter('table')); // there is not comment
 	}

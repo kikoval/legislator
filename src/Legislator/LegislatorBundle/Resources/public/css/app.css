@@ -12,6 +12,9 @@ form input[type="text"], form input[type="password"], textarea {min-width: 30em;
 option[selected] {background-color: greenyellow;}
 label:first-letter {text-transform: uppercase;}
 
+.delete.button {background-color: #FF4B2F; border-color: #DD432B;}
+.delete.button:hover {background-color: #DD432B;}
+
 dl.document-data dt {float: left; clear: left; min-width: 7em;}
 dl.document-data dt:after {content: ":";}
 dl.document-data dd {margin-bottom: 0.4em;}

@@ -54,7 +54,7 @@ class DocumentControllerTest extends MyWebTestCase
 	public function testDelete()
 	{
 		$crawler = $this->client->request('GET', $this->getUrl('legislator_homepage'));
-		$form = $crawler->filter('tbody tr:first-child form')->eq(1)->form();
+		$form = $crawler->filter('tbody tr:first-child form')->eq(0)->form();
 
 		$this->client->submit($form);
 		$crawler = $this->client->followRedirect();

@@ -7,58 +7,60 @@
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
-        {% stylesheets '@LegislatorBundle/Resources/public/css/*' filter='cssrewrite' %}
+        {% stylesheets 'bundles/legislator/css/*' filter='cssrewrite' %}
     		<link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
     </head>
     <body>
-    <nav class="top-bar">
-        <ul class="title-area">
-            <li class="name">
-                <h1><a href="{{ path('legislator_homepage') }}">Legislator{% if org_unit %} <span id="org-unit">{{ org_unit }}</span>{% endif %}</a></h1>
-            </li>
-            <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-        </ul>
-        <section class="top-bar-section">
-    	<ul class="right">
-    		{% if app.user %}
-    		<li><a href="{{ path('legislator_user_my_comments') }}">{% trans %}menu.my_comments{% endtrans %}</a></li>
-    		<li class="divider"></li>
+        <nav class="top-bar">
+            <ul class="title-area">
+                <li class="name">
+                    <h1><a href="{{ path('legislator_homepage') }}">Legislator{% if org_unit %} <span id="org-unit">{{ org_unit }}</span>{% endif %}</a></h1>
+                </li>
+                <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+            </ul>
+            <section class="top-bar-section">
+        	<ul class="right">
+        		{% if app.user %}
+        		<li><a href="{{ path('legislator_user_my_comments') }}"><i class="foundicon-g-idea"></i>{% trans %}menu.my_comments{% endtrans %}</a></li>
+        		<li class="divider"></li>
 
-    		{# Admin menu #}
-    		{% if is_granted('ROLE_ADMIN') %}
-    			<li><a href="{{ path('legislator_user_list') }}">Používatelia</a></li>
-    			<li class="has-dropdown"><a href="{{ path('fos_user_group_list') }}">Skupiny</a>
-    				<ul class="dropdown">
-    					<li><a href="{{ path('fos_user_group_new') }}">Pridať novú</a></li>
-    				</ul>
-    			</li>
-    			<li class="divider"></li>
-    		{% endif %}
+        		{# Admin menu #}
+        		{% if is_granted('ROLE_ADMIN') %}
+        			<li><a href="{{ path('legislator_user_list') }}">Používatelia</a></li>
+        			<li class="has-dropdown"><a href="{{ path('fos_user_group_list') }}">Skupiny</a>
+        				<ul class="dropdown">
+        					<li><a href="{{ path('fos_user_group_new') }}">Pridať novú</a></li>
+        				</ul>
+        			</li>
+        			<li class="divider"></li>
+        		{% endif %}
 
-    		<li class="has-dropdown"><a href="#">{% trans %}menu.logged_in_as{% endtrans %} <span id="username">{{ app.user.username }}</span>{% if is_granted('ROLE_ADMIN') %} (admin){% endif %}</a>
+        		<li class="has-dropdown"><a href="#">{% trans %}menu.logged_in_as{% endtrans %} <span id="username">{{ app.user.username }}</span>{% if is_granted('ROLE_ADMIN') %} (admin){% endif %}</a>
 
-    		<ul class="dropdown">
-                        {% if not cosign_login_enabled %}
-        		<li><a href="{{ path('fos_user_profile_edit') }}">{% trans %}menu.edit_profile{% endtrans %}</a></li>
-        		<li><a href="{{ path('fos_user_change_password') }}">{% trans %}menu.change_password{% endtrans %}</a></li>
-                        {% endif %}
-        		<li><a href="{{ path('fos_user_security_logout') }}">{% trans %}menu.logout{% endtrans %}</a></li>
-    		</ul>
+        		<ul class="dropdown">
+                            {% if not cosign_login_enabled %}
+            		<li><a href="{{ path('fos_user_profile_edit') }}">{% trans %}menu.edit_profile{% endtrans %}</a></li>
+            		<li><a href="{{ path('fos_user_change_password') }}">{% trans %}menu.change_password{% endtrans %}</a></li>
+                            {% endif %}
+            		<li><a href="{{ path('fos_user_security_logout') }}">{% trans %}menu.logout{% endtrans %}</a></li>
+        		</ul>
 
-    		</li>
-    		{% else %}
-                    <li><a href="{{ path('fos_user_security_login') }}">{% trans %}menu.login{% endtrans %}</a></li>
-    		{% endif %}
-    	</ul>
-        </section>
-    </nav>
+        		</li>
+        		{% else %}
+                        <li><a href="{{ path('fos_user_security_login') }}">{% trans %}menu.login{% endtrans %}</a></li>
+        		{% endif %}
+        	</ul>
+            </section>
+        </nav>
         {% block body %}{% endblock %}
 
         <footer class="full-width">
         	<div class="row">
-        		<div class="large-6 columns"><a href="{{ url('legislator_homepage') }}">Legislator</a> (<a href="https://github.com/kikoval/legislator">GitHub</a>) &copy; 2013 Kristián Valentín</div>
-        		<div class="large-6 columns"><a title="Na začiatok stránky" href="#">Na začiatok ^</a></div>
+        		<div class="large-8 columns">
+        			<a href="{{ url('legislator_homepage') }}">Legislator</a>. &copy; 2013 Kristián Valentín. Zdrojové kódy sú dostupné na <a href="https://github.com/kikoval/legislator"><i class="foundicon-s-github"></i>GitHub</a>.
+        			</div>
+        		<div class="large-4 columns"><a title="Na začiatok stránky" href="#">Na začiatok ^</a></div>
         	</div>
         </footer>
 
@@ -70,7 +72,14 @@
         {% endjavascripts %}
         {% block javascripts %}{% endblock %}
         <script type="text/javascript">
-                $(document).foundation();
+            $(document).foundation();
+
+            /* ask for confirmation before deletion */
+            $(document).ready(function() {
+                $('.button.delete').click(function() {
+                    return confirm('Ste si isty?');
+                });
+            });
         </script>
     </body>
 </html>

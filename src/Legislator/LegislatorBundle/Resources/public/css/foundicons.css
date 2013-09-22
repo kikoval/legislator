@@ -1,0 +1,352 @@
+/* font-face */
+@font-face {
+  font-family: "GeneralFoundicons";
+  src: url("../fonts/general_foundicons.eot");
+  src: url("../fonts/general_foundicons.eot?#iefix") format("embedded-opentype"), url("../fonts/general_foundicons.woff") format("woff"), url("../fonts/general_foundicons.ttf") format("truetype"), url("../fonts/general_foundicons.svg#GeneralFoundicons") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "SocialFoundicons";
+  src: url("../fonts/social_foundicons.eot");
+  src: url("../fonts/social_foundicons.eot?#iefix") format("embedded-opentype"), url("../fonts/social_foundicons.woff") format("woff"), url("../fonts/social_foundicons.ttf") format("truetype"), url("../fonts/social_foundicons.svg#SocialFoundicons") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* global foundicon styles */
+[class*="foundicon-"] {
+  display: inline;
+  width: auto;
+  height: auto;
+  line-height: inherit;
+  vertical-align: baseline;
+  background-image: none;
+  background-position: 0 0;
+  background-repeat: repeat;
+}
+
+[class*="foundicon-s-"]:before {
+  font-family: "SocialFoundicons";
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+}
+[class*="foundicon-g-"]:before {
+  font-family: "GeneralFoundicons";
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+}
+[class*="foundicon-"]:before {
+    padding-right: 0.5ex;
+}
+
+/* icons */
+.foundicon-g-settings:before {
+  content: "\f000";
+}
+
+.foundicon-g-heart:before {
+  content: "\f001";
+}
+
+.foundicon-g-star:before {
+  content: "\f002";
+}
+
+.foundicon-g-plus:before {
+  content: "\f003";
+}
+
+.foundicon-g-minus:before {
+  content: "\f004";
+}
+
+.foundicon-g-checkmark:before {
+  content: "\f005";
+}
+
+.foundicon-g-remove:before {
+  content: "\f006";
+}
+
+.foundicon-g-mail:before {
+  content: "\f007";
+}
+
+.foundicon-g-calendar:before {
+  content: "\f008";
+}
+
+.foundicon-g-page:before {
+  content: "\f009";
+}
+
+.foundicon-g-tools:before {
+  content: "\f00a";
+}
+
+.foundicon-g-globe:before {
+  content: "\f00b";
+}
+
+.foundicon-g-home:before {
+  content: "\f00c";
+}
+
+.foundicon-g-quote:before {
+  content: "\f00d";
+}
+
+.foundicon-g-people:before {
+  content: "\f00e";
+}
+
+.foundicon-g-monitor:before {
+  content: "\f00f";
+}
+
+.foundicon-g-laptop:before {
+  content: "\f010";
+}
+
+.foundicon-g-phone:before {
+  content: "\f011";
+}
+
+.foundicon-g-cloud:before {
+  content: "\f012";
+}
+
+.foundicon-g-error:before {
+  content: "\f013";
+}
+
+.foundicon-g-right-arrow:before {
+  content: "\f014";
+}
+
+.foundicon-g-left-arrow:before {
+  content: "\f015";
+}
+
+.foundicon-g-up-arrow:before {
+  content: "\f016";
+}
+
+.foundicon-g-down-arrow:before {
+  content: "\f017";
+}
+
+.foundicon-g-trash:before {
+  content: "\f018";
+}
+
+.foundicon-g-add-doc:before {
+  content: "\f019";
+}
+
+.foundicon-g-edit:before {
+  content: "\f01a";
+}
+
+.foundicon-g-lock:before {
+  content: "\f01b";
+}
+
+.foundicon-g-unlock:before {
+  content: "\f01c";
+}
+
+.foundicon-g-refresh:before {
+  content: "\f01d";
+}
+
+.foundicon-g-paper-clip:before {
+  content: "\f01e";
+}
+
+.foundicon-g-video:before {
+  content: "\f01f";
+}
+
+.foundicon-g-photo:before {
+  content: "\f020";
+}
+
+.foundicon-g-graph:before {
+  content: "\f021";
+}
+
+.foundicon-g-idea:before {
+  content: "\f022";
+}
+
+.foundicon-g-mic:before {
+  content: "\f023";
+}
+
+.foundicon-g-cart:before {
+  content: "\f024";
+}
+
+.foundicon-g-address-book:before {
+  content: "\f025";
+}
+
+.foundicon-g-compass:before {
+  content: "\f026";
+}
+
+.foundicon-g-flag:before {
+  content: "\f027";
+}
+
+.foundicon-g-location:before {
+  content: "\f028";
+}
+
+.foundicon-g-clock:before {
+  content: "\f029";
+}
+
+.foundicon-g-folder:before {
+  content: "\f02a";
+}
+
+.foundicon-g-inbox:before {
+  content: "\f02b";
+}
+
+.foundicon-g-website:before {
+  content: "\f02c";
+}
+
+.foundicon-g-smiley:before {
+  content: "\f02d";
+}
+
+.foundicon-g-search:before {
+  content: "\f02e";
+}
+/* social */
+.foundicon-s-thumb-up:before {
+  content: "\f000";
+}
+
+.foundicon-s-thumb-down:before {
+  content: "\f001";
+}
+
+.foundicon-s-rss:before {
+  content: "\f002";
+}
+
+.foundicon-s-facebook:before {
+  content: "\f003";
+}
+
+.foundicon-s-twitter:before {
+  content: "\f004";
+}
+
+.foundicon-s-pinterest:before {
+  content: "\f005";
+}
+
+.foundicon-s-github:before {
+  content: "\f006";
+}
+
+.foundicon-s-path:before {
+  content: "\f007";
+}
+
+.foundicon-s-linkedin:before {
+  content: "\f008";
+}
+
+.foundicon-s-dribbble:before {
+  content: "\f009";
+}
+
+.foundicon-s-stumble-upon:before {
+  content: "\f00a";
+}
+
+.foundicon-s-behance:before {
+  content: "\f00b";
+}
+
+.foundicon-s-reddit:before {
+  content: "\f00c";
+}
+
+.foundicon-s-google-plus:before {
+  content: "\f00d";
+}
+
+.foundicon-s-youtube:before {
+  content: "\f00e";
+}
+
+.foundicon-s-vimeo:before {
+  content: "\f00f";
+}
+
+.foundicon-s-flickr:before {
+  content: "\f010";
+}
+
+.foundicon-s-slideshare:before {
+  content: "\f011";
+}
+
+.foundicon-s-picassa:before {
+  content: "\f012";
+}
+
+.foundicon-s-skype:before {
+  content: "\f013";
+}
+
+.foundicon-s-steam:before {
+  content: "\f014";
+}
+
+.foundicon-s-instagram:before {
+  content: "\f015";
+}
+
+.foundicon-s-foursquare:before {
+  content: "\f016";
+}
+
+.foundicon-s-delicious:before {
+  content: "\f017";
+}
+
+.foundicon-s-chat:before {
+  content: "\f018";
+}
+
+.foundicon-s-torso:before {
+  content: "\f019";
+}
+
+.foundicon-s-tumblr:before {
+  content: "\f01a";
+}
+
+.foundicon-s-video-chat:before {
+  content: "\f01b";
+}
+
+.foundicon-s-digg:before {
+  content: "\f01c";
+}
+
+.foundicon-s-wordpress:before {
+  content: "\f01d";
+}
