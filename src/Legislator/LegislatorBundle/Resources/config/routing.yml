@@ -2,6 +2,10 @@ legislator_homepage:
     pattern:  /
     defaults: { _controller: LegislatorBundle:Default:index }
 
+legislator_archive:
+    pattern: /archive
+    defaults: { _controller: LegislatorBundle:Default:showArchive }
+
 legislator_view:
     pattern: /document/{id}
     defaults: { _controller: LegislatorBundle:Document:view }

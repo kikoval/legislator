@@ -6,8 +6,11 @@
 <div class="row">
 <div class="large-12 columns">
 
+{% if is_archive %}
+<h1>Archív</h1>
+{% else %}
 <p>Vitajte v aplikácii Legislator.</p>
-
+{% endif %}
 {% if documents|length > 0 %}
     <h2>{% trans %}document.listing{% endtrans %}</h2>
     <table>
@@ -43,11 +46,11 @@
 			{% endif %}
 			{% if app.user and d.createdBy.id == app.user.id %}
 			    <li>
-			    	<a href="{{ path('legislator_edit', {'id': d.id}) }}" class="small edit button"><i class="foundicon-g-edit"></i>{% trans %}common.button.edit{% endtrans %}</a>
+			    	<a href="{{ path('legislator_edit', {'id': d.id}) }}" class="small edit button"><i class="fi-page-edit"></i>{% trans %}common.button.edit{% endtrans %}</a>
 			    </li>
 			    {% if not d.nextversion %}
 			    <li><form method="post" action="{{ path('legislator_delete', {'id': d.id}) }}" class="action">
-			        <button type="submit" class="small delete button"><i class="foundicon-g-remove"></i>{% trans %}common.button.delete{% endtrans %}</button>
+			        <button type="submit" class="small delete button"><i class="fi-page-delete"></i>{% trans %}common.button.delete{% endtrans %}</button>
 			    </form></li>
 			    {% endif %}
 
@@ -63,13 +66,15 @@
     <p>Zatiaľ tu nie sú žiadne dokumenty.</p>
 {% endif %}
 
-<p>
-{% if can_add_document %}
-<a href="{{ path('legislator_new') }}" class="add button"><i class="foundicon-g-add-doc"></i>{% trans %}button.document.add{% endtrans %}</a>
-{% else %}
-Aby ste mohli pridať dokument, musíte sa najskôr <a href="{{ path('fos_user_security_login') }}">prihlásiť</a>.
+{% if not is_archive %}
+    <p>
+    {% if can_add_document %}
+    <a href="{{ path('legislator_new') }}" class="add button"><i class="fi-page-add"></i>{% trans %}button.document.add{% endtrans %}</a>
+    {% else %}
+    Aby ste mohli pridať dokument, musíte sa najskôr <a href="{{ path('fos_user_security_login') }}">prihlásiť</a>.
+    {% endif %}
+    </p>
 {% endif %}
-</p>
 
 </div>
 </div>

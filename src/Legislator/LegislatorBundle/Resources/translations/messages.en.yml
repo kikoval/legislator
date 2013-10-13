@@ -6,8 +6,10 @@ common:
   button:
     delete: Delete
     edit: Edit
+    archive: Archive
   
 menu:
+  archive: Archive
   my_comments: My comments
   edit_profile: Edit profile
   change_password: Change password
@@ -24,6 +26,7 @@ document:
   file: file
   file_substantiation: File substantiation
   final_version: final version
+  is_archived: Archived
   statuses:
     new: New
     commenting: Commenting

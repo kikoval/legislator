@@ -154,6 +154,14 @@ class Document implements GroupableInterface
      */
     private $is_final_version;
 
+    /**
+     *
+     * @var boolean
+     *
+     * @ORM\Column(name="is_archived", type="boolean")
+     */
+    private $is_archived = FALSE;
+
     /* METHODS */
 
     /**
@@ -732,5 +740,16 @@ class Document implements GroupableInterface
     public static function getStatusMessages()
     {
         return self::$status_messages;
+    }
+
+    public function getIsArchived()
+    {
+        return $this->is_archived;
+    }
+
+    public function setIsArchived($is_archived)
+    {
+        $this->is_archived = $is_archived;
+        return $this;
     }
 }

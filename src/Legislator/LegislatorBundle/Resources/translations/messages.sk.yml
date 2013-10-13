@@ -6,8 +6,10 @@ common:
   button:
     delete: Zmazať
     edit: Editovať
+    archive: Archivovať
 
 menu:
+  archive: Archív
   my_comments: Moje pripomienky
   edit_profile: Zmeniť profil
   change_password: Zmeniť heslo
@@ -23,7 +25,8 @@ document:
   version: Verzia
   file: Vlastný materiál
   file_substantiation: Dôvodová správa
-  final_version: konečná verzia
+  final_version: Konečná verzia
+  is_archived: Archivovaný
   statuses:
     new: Nový
     commenting: Pripomienkovanie

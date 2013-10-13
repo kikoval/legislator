@@ -20,7 +20,7 @@
 <p><a href="{{ path('legislator_view', {'id': document.previousVersion.id }) }}">{% trans %}document.view.view_version{% endtrans %} {{ document.previousVersion.version }}</a></p>
 {% endif %}
 
-<h2><i class="foundicon-g-paper-clip"></i>{% trans %}document.view.files{% endtrans %}</h2>
+<h2><i class="fi-paperclip"></i>{% trans %}document.view.files{% endtrans %}</h2>
 <ul>
     {% if document.webpath  %}<li><a href="{{ path('legislator_document_download_main_file', {'id': document.id}) }}">{% trans %}document.file{% endtrans %}</a></li>{% endif %}
     {% if document.webpathsubstantiation  %}<li><a href="{{ path('legislator_document_download_substantiation_file', {'id': document.id}) }}">{% trans %}document.file_substantiation{% endtrans %}</a></li>{% endif %}
@@ -30,10 +30,10 @@
 <div class="large-4 columns panel">
 {# TODO check privileges #}
 {% if is_document_owner %}
-<h2><i class="foundicon-g-tools"></i>{% trans %}common.actions{% endtrans %}</h2>
+<h2><i class="fi-wrench"></i>{% trans %}common.actions{% endtrans %}</h2>
 <ul class="button-group">
-	<li><a href="{{ path('legislator_edit', {'id': document.id })}}" class="small button edit"><i class="foundicon-g-edit"></i>{% trans %}common.button.edit{% endtrans %}</a></li>
-	<li><a href="{{ path('legislator_delete', {'id': document.id })}}" class="small button delete"><i class="foundicon-g-remove"></i>{% trans %}common.button.delete{% endtrans %}</a></li>
+    <li><a href="{{ path('legislator_edit', {'id': document.id })}}" class="small button edit"><i class="fi-page-edit"></i>{% trans %}common.button.edit{% endtrans %}</a></li>
+    <li><a href="{{ path('legislator_delete', {'id': document.id })}}" class="small button delete"><i class="fi-page-delete"></i>{% trans %}common.button.delete{% endtrans %}</a></li>
 </ul>
 {% if document.isStatusNew %}
     {{ form_start(document_form) }}
@@ -73,7 +73,7 @@
 
 <div class="row">
 <div class="large-12 columns">
-<h2><i class="foundicon-g-idea"></i>{% trans %}document.view.comments{% endtrans %}</h2>
+<h2><i class="fi-lightbulb"></i>{% trans %}document.view.comments{% endtrans %}</h2>
 {% if comments %}
 <table id="comments">
 	<thead>
@@ -92,7 +92,7 @@
 	</thead>
 	<tbody>
 	{% for comment in comments %}
-	<tr class="comment{% if comment.isPrincipal() %} principal{% endif %}{% if comment.isTechnical() %} technical{% endif %}{% if comment.isAccepted %} accepted{% endif %}{% if comment.isRejected %} rejected{% endif %}">
+	<tr class="comment{% if comment.isPrincipal() %} principal{% endif %}{% if comment.isTechnical() %} technical{% endif %}{% if comment.isAccepted %} accepted{% endif %}{% if comment.isPartlyAccepted %} partly-accepted {% endif %}{% if comment.isRejected %} rejected{% endif %}">
 		<td>{{ comment.content }}</td>
 		<td>{{ comment.substantiation }}</td>
 		<td>{{ comment.createdBy }}</td>
@@ -104,10 +104,10 @@
 		<td>
 		<ul class="button-group">
 		    {% if can_take_comment_actions and comment.isOwner(app.user) %}
-    		<li><a href="{{ path('legislator_view', {'id': document.id, 'comment_id': comment.id})}}#comment-form" class="small edit button"><i class="foundicon-g-edit"></i>{% trans %}common.button.edit{% endtrans %}</a></li>
+    		<li><a href="{{ path('legislator_view', {'id': document.id, 'comment_id': comment.id})}}#comment-form" class="small edit button"><i class="fi-page-edit"></i>{% trans %}common.button.edit{% endtrans %}</a></li>
     		<li>
     			<form method="post" action="{{ path('legislator_comment_delete', {'document_id': document.id,'id': comment.id })}}" class="action">
-    				<button type="submit" name="delete" class="small delete button"><i class="foundicon-g-remove"></i>{% trans %}common.button.delete{% endtrans %}</button>
+    				<button type="submit" name="delete" class="small delete button"><i class="fi-page-delete"></i>{% trans %}common.button.delete{% endtrans %}</button>
     			</form>
     		</li>
     		{% endif %}
@@ -134,7 +134,7 @@
         {% if app.request.get('comment_id') %}
         <input type="submit" name="edit" value="{% trans %}comment.button.edit{% endtrans %}" class="edit button"/>
         {% else %}
-        <button type="submit" name="add" class="add button"><i class="foundicon-g-plus"></i>{% trans %}comment.button.add{% endtrans %}</button>
+        <button type="submit" name="add" class="add button"><i class="fi-plus"></i>{% trans %}comment.button.add{% endtrans %}</button>
         {% endif %}
         {{ form_end(form) }}
     {% else %}

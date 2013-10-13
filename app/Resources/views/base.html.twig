@@ -21,8 +21,10 @@
             </ul>
             <section class="top-bar-section">
         	<ul class="right">
+        		<li><a href="{{ path('legislator_archive') }}"><i class="fi-archive"></i>{% trans %}menu.archive{% endtrans %}</a></li>
+        		<li class="divider"></li>
         		{% if app.user %}
-        		<li><a href="{{ path('legislator_user_my_comments') }}"><i class="foundicon-g-idea"></i>{% trans %}menu.my_comments{% endtrans %}</a></li>
+        		<li><a href="{{ path('legislator_user_my_comments') }}"><i class="fi-lightbulb"></i>{% trans %}menu.my_comments{% endtrans %}</a></li>
         		<li class="divider"></li>
 
         		{# Admin menu #}
@@ -60,7 +62,7 @@
         		<div class="large-8 columns">
         			<a href="{{ url('legislator_homepage') }}">Legislator</a>. &copy; 2013 Kristián Valentín. Zdrojové kódy sú dostupné na <a href="https://github.com/kikoval/legislator"><i class="foundicon-s-github"></i>GitHub</a>.
         			</div>
-        		<div class="large-4 columns"><a title="Na začiatok stránky" href="#">Na začiatok ^</a></div>
+        		<div class="large-4 columns"><a title="Na začiatok stránky" href="#">Na začiatok <i class="fi-arrow-up"></i></a></div>
         	</div>
         </footer>
 

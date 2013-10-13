@@ -7,6 +7,7 @@ use Legislator\LegislatorBundle\Form\ContentSectionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 use Legislator\LegislatorBundle\Entity\Document;
 
 class DocumentType extends AbstractType
@@ -21,6 +22,9 @@ class DocumentType extends AbstractType
                     array('choices' => Document::getStatusMessages()))
             ->add('is_final_version', 'checkbox',
             		array('label' => 'document.final_version',
+        				  'required' => FALSE))
+        	->add('is_archived', 'checkbox',
+        			array('label' => 'document.is_archived',
         				  'required' => FALSE))
         	->add('groups', null, array('required' => FALSE))
             ->add('file', 'file',

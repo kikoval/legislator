@@ -6,10 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
+    public function indexAction($archive = FALSE)
     {
     	$documents = $this->getDoctrine()
-    		->getRepository('LegislatorBundle:Document')->findAll();
+    		->getRepository('LegislatorBundle:Document')->findBy(
+    			array('is_archived' => $archive)
+    	);
 
     	$documents_show = $documents;
     	if (!$this->get('security.context')->isGranted('ROLE_ADMIN')) {
@@ -24,6 +26,13 @@ class DefaultController extends Controller
 
         return $this->render('LegislatorBundle:Default:index.html.twig',
         		array('documents' => $documents_show,
-        		      'can_add_document' => $this->get('security.context')->isGranted('ROLE_USER')));
+        		      'can_add_document' => $this->get('security.context')->isGranted('ROLE_USER'),
+        			  'is_archive' => $archive
+        ));
+    }
+
+    public function showArchiveAction()
+    {
+    	return $this->indexAction(TRUE);
     }
 }
