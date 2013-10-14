@@ -152,7 +152,7 @@ class Document implements GroupableInterface
      *
      * @ORM\Column(name="is_final_version", type="boolean", nullable=true)
      */
-    private $is_final_version;
+    private $is_final_version = FALSE;
 
     /**
      *
