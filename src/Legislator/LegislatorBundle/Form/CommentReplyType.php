@@ -6,15 +6,16 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+use Legislator\LegislatorBundle\Entity\Comment;
+
 class CommentReplyType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('isAccepted', 'choice',
-                    array('choices' =>
-                            array(1 => 'comment.accepted', 0 => 'comment.declined'),
-                          'expanded' => true,
+            ->add('result', 'choice',
+                    array('choices' => Comment::getResultChoices(),
+                          'expanded' => false,
                           'label' => 'comment.acceptance'))
             ->add('reply', 'textarea', array('label' => 'comment.substantiation'))
         ;

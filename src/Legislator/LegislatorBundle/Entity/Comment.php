@@ -22,6 +22,16 @@ class Comment
 			self::TYPE_PRINCIPAL => 'comment.types.principal',
 	);
 
+	const RESULT_ACCEPTED = 0;
+	const RESULT_PARTLY_ACCEPTED = 1;
+	const RESULT_NOT_ACCEPTED = 2;
+
+	private static $results = array(
+			self::RESULT_ACCEPTED => 'comment.results.accepted',
+			self::RESULT_PARTLY_ACCEPTED => 'comment.results.partly_accepted',
+			self::RESULT_NOT_ACCEPTED => 'comment.results.not_accepted',
+	);
+
     /**
      * @var integer
      *
@@ -86,9 +96,9 @@ class Comment
     /**
      * @var boolean
      *
-     * @ORM\Column(name="isAccepted", type="boolean", nullable=true)
+     * @ORM\Column(name="result", type="smallint", nullable=true)
      */
-    private $isAccepted = null;
+    private $result = null;
 
     /**
      * @var string
@@ -287,19 +297,34 @@ class Comment
     	return $this->getType() == self::TYPE_PRINCIPAL;
     }
 
-    /**
-     * Get isAccepted
-     *
-     * @return boolean
-     */
-    public function getIsAccepted()
+    public function getResult()
     {
-        return $this->isAccepted;
+    	return $this->result;
     }
 
+    /**
+     * @return boolean
+     */
+    public function isAccepted()
+    {
+        return $this->result === self::RESULT_ACCEPTED;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isPartlyAccepted()
+    {
+    	return $this->result === self::RESULT_PARTLY_ACCEPTED;
+    }
+
+
+    /**
+     * @return boolean
+     */
     public function isRejected()
     {
-        return !is_null($this->isAccepted) && $this->isAccepted == 0;
+        return $this->result === self::RESULT_NOT_ACCEPTED;
     }
 
     /**
@@ -308,9 +333,9 @@ class Comment
      * @param boolean $isAccepted
      * @return Comment
      */
-    public function setIsAccepted($isAccepted)
+    public function setResult($result)
     {
-        $this->isAccepted = $isAccepted;
+        $this->result = $result;
 
         return $this;
     }
@@ -379,5 +404,15 @@ class Comment
     	} else {
     		return $user->getId() == $this->getCreatedBy()->getId();
     	}
+    }
+
+    /**
+     * Get the array of choices for the result (whether it is accepted, etc.).
+     *
+     * @return array
+     */
+    public static function getResultChoices()
+    {
+    	return self::$results;
     }
 }

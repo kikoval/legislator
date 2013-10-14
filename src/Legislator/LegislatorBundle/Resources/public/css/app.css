@@ -30,8 +30,9 @@ a:hover {text-decoration: underline;}
 
 table tr.comment.principal td:first-child {border-left: solid red medium ;}
 table tr.comment.technical td:first-child {border-left: solid blue medium ;}
-table tr.comment.accepted {background-color: lightgreen}
-table tr.comment.rejected {background-color: rgb(255, 219, 219);}
+table tr.comment.accepted {background-color: YellowGreen}
+table tr.comment.partly-accepted {background-color: orange;}
+table tr.comment.rejected {background-color: Tomato;}
 
 .button-group form, form.action, form.action input {margin: 0}
 select {width: inherit;}
