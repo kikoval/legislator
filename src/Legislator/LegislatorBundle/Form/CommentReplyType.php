@@ -15,9 +15,11 @@ class CommentReplyType extends AbstractType
         $builder
             ->add('result', 'choice',
                     array('choices' => Comment::getResultChoices(),
-                          'expanded' => false,
+                          'expanded' => FALSE,
                           'label' => 'comment.acceptance'))
-            ->add('reply', 'textarea', array('label' => 'comment.substantiation'))
+            ->add('reply', 'textarea',
+            		array('required' => FALSE,
+            			  'label' => 'comment.substantiation'))
         ;
     }
 
