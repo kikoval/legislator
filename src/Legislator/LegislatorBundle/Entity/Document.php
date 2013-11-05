@@ -162,6 +162,13 @@ class Document implements GroupableInterface
      */
     private $is_archived = FALSE;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="comment_until", type="datetime", nullable=true)
+     */
+    private $comment_until;
+
     /* METHODS */
 
     /**
@@ -751,5 +758,28 @@ class Document implements GroupableInterface
     {
         $this->is_archived = $is_archived;
         return $this;
+    }
+
+    /**
+     * Set comment_until datetime.
+     *
+     * @param \DateTime $createdOn
+     * @return Document
+     */
+    public function setCommentUntil($comment_until)
+    {
+    	$this->comment_until = $comment_until;
+
+    	return $this;
+    }
+
+    /**
+     * Get comment_until
+     *
+     * @return \DateTime
+     */
+    public function getCommentUntil()
+    {
+    	return $this->comment_until;
     }
 }

@@ -16,6 +16,9 @@ class DocumentNewType extends AbstractType
             ->add('name', 'text', array('label' => 'document.name'))
             ->add('description', 'textarea',
                     array('label' => 'document.description'))
+            ->add('comment_until', 'date',
+            		array('label' => 'document.comment_until',
+            			  'required' => FALSE))
             ->add('groups', null, array('required' => FALSE))
             ->add('file', 'file',
                     array('label' => 'document.file', 'required' => TRUE))

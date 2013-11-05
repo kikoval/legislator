@@ -7,6 +7,7 @@ common:
     delete: Delete
     edit: Edit
     archive: Archive
+  until: until  
   
 menu:
   archive: Archive
@@ -27,6 +28,7 @@ document:
   file_substantiation: File substantiation
   final_version: final version
   is_archived: Archived
+  comment_until: Comments enabled until
   statuses:
     new: New
     commenting: Commenting

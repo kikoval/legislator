@@ -141,6 +141,10 @@ class DocumentController extends Controller {
         // create form
         $document = new Document();
 
+        $until_date = new \DateTime();
+        $until_date->modify('+14 days');
+        $document->setCommentUntil($until_date);
+
         $form = $this->createForm(new DocumentNewType(), $document);
         $form->handleRequest($request);
 

@@ -7,6 +7,7 @@ common:
     delete: Zmazať
     edit: Editovať
     archive: Archivovať
+  until: do
 
 menu:
   archive: Archív
@@ -27,6 +28,7 @@ document:
   file_substantiation: Dôvodová správa
   final_version: Konečná verzia
   is_archived: Archivovaný
+  comment_until: Pripomienky posielať do
   statuses:
     new: Nový
     commenting: Pripomienkovanie

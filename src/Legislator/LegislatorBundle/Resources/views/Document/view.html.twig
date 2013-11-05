@@ -73,7 +73,10 @@
 
 <div class="row">
 <div class="large-12 columns">
-<h2><i class="fi-lightbulb"></i>{% trans %}document.view.comments{% endtrans %}</h2>
+<h2>
+	<i class="fi-lightbulb"></i>{% trans %}document.view.comments{% endtrans %}
+    ({% if date(document.commentUntil) > date() %}{% trans %}common.until{% endtrans %} {{ document.commentUntil|date('d.m.Y') }}{% else %}neobmedzene{% endif %})
+</h2>
 {% if comments %}
 <table id="comments">
 	<thead>

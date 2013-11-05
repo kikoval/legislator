@@ -18,6 +18,9 @@ class DocumentType extends AbstractType
             ->add('name', 'text', array('label' => 'document.name'))
             ->add('description', 'textarea',
                     array('label' => 'document.description'))
+            ->add('comment_until', 'date',
+            		array('label' => 'document.comment_until',
+            			  'required' => FALSE))
             ->add('status', 'choice',
                     array('choices' => Document::getStatusMessages()))
             ->add('is_final_version', 'checkbox',

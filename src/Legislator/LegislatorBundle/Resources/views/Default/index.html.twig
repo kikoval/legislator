@@ -22,8 +22,8 @@
 			<th>{% trans %}document.version{% endtrans %}</th>
 			<th>{% trans %}document.status{% endtrans %}</th>
 			<th>Vložil</th>
-			<th>Čas vytvorenia</th>
 			<th>Čas poslednej zmeny</th>
+			<th>{% trans %}document.comment_until{% endtrans %}</th>
 			{% if app.user %}<th>{% trans %}common.actions{% endtrans %}</th>{% endif %} {# TODO check privileges #}
 		</tr>
 	</thead>
@@ -36,8 +36,8 @@
 			<td>{{ d.version }}{% if d.isfinalVersion %} ({% trans %}document.final_version{% endtrans %}){% endif %}</td>
 			<td>{{ d.mapFromStatusCode(d.status)|trans }}</td>
 			<td>{{ d.createdBy.surname }}</td>
-			<td>{{ d.createdOn|date('d.m.Y H:i:s') }}</td>
 			<td>{{ d.modifiedOn|date('d.m.Y H:i:s') }}</td>
+			<td>{% if date(d.commentUntil) > date() %}{{ d.commentUntil|date('d.m.Y') }}{% else %}neobmedzene{% endif %}</td>
 			{% if app.user %}
 			<td>
 			<ul class="button-group">
