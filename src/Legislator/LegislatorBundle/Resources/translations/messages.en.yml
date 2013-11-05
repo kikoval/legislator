@@ -57,6 +57,8 @@ document:
     previous_versions: Previous versions
     view_version: View version
     no_comments: There are no comments, be first!
+    commenting_finished: Commenting has finished.
+    commenting_not_possible: Commenting is not possible at the moment.
     commenting_disabled: Commenting has been disabled.
     comments: Comments
     add_a_comment: Add a document

@@ -125,7 +125,13 @@
 	</tbody>
 </table>
 {% else %}
-	<p>{%trans %}document.view.no_comments{% endtrans %}</p>
+	{% if document.isStatusCommenting %}
+		<p class="alert-box secondary"><i class="fi-info"></i>{%trans %}document.view.no_comments{% endtrans %}</p>
+	{% elseif document.isStatusFinishedProcessingComments %}
+		<p class="alert-box secondary"><i class="fi-info"></i>{% trans %}document.view.commenting_finished{% endtrans %}</p>
+	{% else %}
+		<p class="alert-box secondary"><i class="fi-info"></i>{% trans %}document.view.commenting_not_possible{% endtrans %}</p>
+	{% endif %}
 {% endif %}
 
 {% if show_add_comment %}

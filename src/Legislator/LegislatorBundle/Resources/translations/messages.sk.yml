@@ -57,6 +57,8 @@ document:
     previous_versions: Predchádzajúce verzie
     view_version: Pozri verziu
     no_comments: Zatiaľ bez pripomienok, buďte prvý!
+    commenting_finished: Pripomienkovanie bolo ukončené.
+    commenting_not_possible: Pripomienkovanie momentálne nie je možné.
     commenting_disabled: Nie je možné pripomienkovať.
     comments: Pripomienky
     add_a_comment: Pridať pripomienku
