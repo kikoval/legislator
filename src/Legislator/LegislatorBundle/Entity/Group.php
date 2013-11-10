@@ -18,6 +18,17 @@ class Group extends BaseGroup
 	 */
 	protected $id;
 
+	/**
+	 * @ORM\ManyToMany(targetEntity="User", mappedBy="groups")
+	 *
+	 */
+	protected $users;
+
+	public function getUsers()
+	{
+		return $this->users;
+	}
+
 	public function __toString()
 	{
 		return $this->getName();

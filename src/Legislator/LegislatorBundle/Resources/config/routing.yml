@@ -127,3 +127,24 @@ legislator_user_my_comments:
     pattern: /user/comments/
     defaults: { _controller: LegislatorBundle:Comment:viewByUser }
 
+
+
+legislator_group_list:
+    pattern: /admin/group/list
+    defaults: { _controller: LegislatorBundle:Group:list }
+    methods: [GET]
+    
+legislator_group_new:
+    pattern: /admin/group/new
+    defaults: { _controller: FOSUserBundle:Group:new }
+    methods: [GET]
+
+legislator_group_show:
+    pattern: /admin/group/{groupName}
+    defaults: { _controller: LegislatorBundle:Group:show }
+    methods: [GET]
+    
+legislator_group_add_user:
+    pattern: /admin/group/{groupName}/add-user
+    defaults: { _controller: LegislatorBundle:Group:addUser }
+    methods: [POST]

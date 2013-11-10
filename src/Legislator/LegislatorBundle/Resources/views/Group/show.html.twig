@@ -1,0 +1,47 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ 'group.show.name'|trans({}, 'FOSUserBundle') }}: {{ group.getName() }}{% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="large-12 columns">
+        <h1>{{ 'group.show.name'|trans({}, 'FOSUserBundle') }}: {{ group.getName() }}</h1>
+
+        <h2>{% trans %}admin.list_of_users{% endtrans %}</h2>
+        <table>
+        	<thead>
+            	<tr>
+            		<th>username</th>
+            		<th>full name</th>
+            		<th>action</th>
+        		</tr>
+        	</thead>
+        	<tbody>
+        	{% for user in users %}
+        		<tr>
+        			<td>{{ user.username }}</td>
+        			<td>{{ user.firstname }} {{ user.surname }}</td>
+        			<td>
+        			<form class="action" style="display: inline;" action="{{ path('legislator_user_list_group_form', {'id': user.id}) }}" method="post">
+            			<div>
+                			<input type="hidden" name="group_id" value="{{ group.id }}" />
+                			<input type="submit" name="remove_from_group" value="X" title="zmazat" class="tiny delete button" />
+                		</div>
+            		</form>
+        			</td>
+        		</tr>
+            {% endfor %}
+        	</tbody>
+        </table>
+
+        <form action="{{ path('legislator_group_add_user', {'groupName': group.name}) }}" method="post">
+        	<div>
+        	<label>{{ 'form.username'|trans({}, 'FOSUserBundle') }}
+            	<input name="username" value="" /></label>
+            	<input type="submit" value="Add user" class="small add button" />
+        	</div>
+        </form>
+    </div>
+</div>
+{% endblock %}

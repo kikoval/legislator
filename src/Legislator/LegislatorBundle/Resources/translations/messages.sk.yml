@@ -92,3 +92,6 @@ button:
 form:
   firstname: Meno:
   surname: Priezvisko:
+
+admin:
+  list_of_users: Zoznam používateľov
