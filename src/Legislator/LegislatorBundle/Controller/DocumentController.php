@@ -343,7 +343,7 @@ class DocumentController extends Controller {
 
     /**
      * Download file attached to the document.
-     * 
+     *
      * @param int $id
      * @param string $file
      */
@@ -355,7 +355,7 @@ class DocumentController extends Controller {
     		$filename = str_replace(' ', '_', $filename);
     		return $filename;
     	}
-    	
+
     	$document = $this->getDoctrine()
     			->getRepository('LegislatorBundle:Document')->find($id);
     	if (!$document) {
