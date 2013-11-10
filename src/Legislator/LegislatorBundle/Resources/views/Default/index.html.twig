@@ -1,4 +1,5 @@
 {% extends "::base.html.twig" %}
+{% import "LegislatorBundle::macros.html.twig" as macros %}
 
 {% block title %}Legislator{% endblock %}
 
@@ -22,7 +23,7 @@
 			<th>{% trans %}document.version{% endtrans %}</th>
 			<th>{% trans %}document.status{% endtrans %}</th>
 			<th>Vložil</th>
-			<th>Čas poslednej zmeny</th>
+			<th>Dátum poslednej zmeny</th>
 			<th>{% trans %}document.comment_until{% endtrans %}</th>
 			{% if app.user %}<th>{% trans %}common.actions{% endtrans %}</th>{% endif %} {# TODO check privileges #}
 		</tr>
@@ -36,8 +37,8 @@
 			<td>{{ d.version }}{% if d.isfinalVersion %} ({% trans %}document.final_version{% endtrans %}){% endif %}</td>
 			<td>{{ d.mapFromStatusCode(d.status)|trans }}</td>
 			<td>{{ d.createdBy.surname }}</td>
-			<td>{{ d.modifiedOn|date('d.m.Y H:i:s') }}</td>
-			<td>{% if date(d.commentUntil) > date() %}{{ d.commentUntil|date('d.m.Y') }}{% else %}neobmedzene{% endif %}</td>
+			<td>{{ macros.datetime(d.modifiedOn) }}</td>
+			<td>{% if date(d.commentUntil) > date() %}{{ macros.datetime(d.commentUntil) }}{% else %}neobmedzene{% endif %}</td>
 			{% if app.user %}
 			<td>
 			<ul class="button-group">

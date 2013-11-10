@@ -1,4 +1,5 @@
 {% extends "::base.html.twig" %}
+{% import "LegislatorBundle::macros.html.twig" as macros %}
 
 {% block title %}{% trans %}menu.my_comments{% endtrans %}{% endblock %}
 
@@ -26,8 +27,8 @@
 	    <td>{{ comment.content }}</td>
 		<td>{{ comment.substantiation }}</td>
 		<td>{{ comment.reply }}</td>
-		<td>{{ comment.createdOn|date('d.m.Y H:i') }}</td>
-		<td>{{ comment.modifiedOn|date('d.m.Y H:i') }}</td>
+		<td>{{ macros.datetime(comment.createdOn) }}</td>
+		<td>{{ macros.datetime(comment.modifiedOn) }}</td>
 	</tr>
 	{% endfor %}
 	</tbody>

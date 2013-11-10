@@ -1,4 +1,5 @@
 {% extends "::base.html.twig" %}
+{% import "LegislatorBundle::macros.html.twig" as macros %}
 
 {% block body %}
 <div class="row">
@@ -21,7 +22,7 @@
 		<td>{{ comment.content }}</td>
 		<td>{{ comment.substantiation }}</td>
 		<td>{{ comment.createdBy }}</td>
-		<td>{{ comment.createdOn|date('d.m.Y H:i') }}</td>
+		<td>{{ macros.datetime(comment.createdOn) }}</td>
 		<td>{{ comment.reply }}</td>
 	</tr>
 	{% endfor %}
