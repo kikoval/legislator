@@ -90,8 +90,8 @@ button:
     save: Save document
 
 form:
-  firstname: First name:
-  surname: Surname:
+  firstname: "First name:"
+  surname: "Surname:"
 
 admin:
   list_of_users: List of users
