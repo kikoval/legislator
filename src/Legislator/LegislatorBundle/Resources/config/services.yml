@@ -25,3 +25,8 @@ services:
     legislator.user_search:
         class: Legislator\LegislatorBundle\Integration\LDAPUserSearch
         arguments: ["@legislator.ldap_retriever", "%org_unit%"]
+        
+    twig.extension.text:
+      class: Twig_Extensions_Extension_Text
+      tags:
+        - { name: twig.extension }
