@@ -23,7 +23,7 @@
 	<tbody>
 	{% for comment in comments %}
 	<tr class="comment{% if comment.isprincipal %} principal{% endif %}{% if comment.istechnical %} technical{% endif %}{% if comment.isAccepted %} accepted{% endif %}{% if comment.isRejected %} rejected{% endif %}">
-        <td><a href="{{ path('legislator_view', {'id': comment.document.id}) }}">{{ comment.document.name }}</a></td>
+        <td><a href="{{ path('legislator_document_view', {'id': comment.document.id}) }}">{{ comment.document.name }}</a></td>
 	    <td>{{ comment.content }}</td>
 		<td>{{ comment.substantiation }}</td>
 		<td>{{ comment.reply }}</td>

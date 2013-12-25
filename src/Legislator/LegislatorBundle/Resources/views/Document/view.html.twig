@@ -33,25 +33,25 @@
 {% if is_document_owner %}
 <h2><i class="fi-wrench"></i>{% trans %}common.actions{% endtrans %}</h2>
 <ul class="button-group">
-    <li><a href="{{ path('legislator_edit', {'id': document.id })}}" class="small button edit"><i class="fi-page-edit"></i>{% trans %}common.button.edit{% endtrans %}</a></li>
-    <li><a href="{{ path('legislator_delete', {'id': document.id })}}" class="small button delete"><i class="fi-page-delete"></i>{% trans %}common.button.delete{% endtrans %}</a></li>
+    <li><a href="{{ path('legislator_document_edit_form', {'id': document.id })}}" class="small button edit"><i class="fi-page-edit"></i>{% trans %}common.button.edit{% endtrans %}</a></li>
+    <li><a href="{{ path('legislator_document_delete', {'id': document.id })}}" class="small button delete"><i class="fi-page-delete"></i>{% trans %}common.button.delete{% endtrans %}</a></li>
 </ul>
 {% if document.isStatusNew %}
     {{ form_start(document_form) }}
     {{ form_widget(document_form.status, {'attr': {'value': constant('Legislator\\LegislatorBundle\\Entity\\Document::STATUS_COMMENTING')}}) }}
-    <input type="submit" value="Začať pripomienkovanie" class="button"/>
+    <input type="submit" name="submit_status" value="Začať pripomienkovanie" class="button"/>
     {{ form_end(document_form) }}
 {% endif %}
 {% if document.isStatusCommenting %}
     {{ form_start(document_form) }}
     {{ form_widget(document_form.status, {'attr': {'value': constant('Legislator\\LegislatorBundle\\Entity\\Document::STATUS_PROCESSING_COMMENTS')}}) }}
-    <input type="submit" value="Vyhodnotiť pripomienky" class="button"/>
+    <input type="submit" name="submit_status" value="Vyhodnotiť pripomienky" class="button"/>
     {{ form_end(document_form) }}
 {% endif %}
 {% if document.isStatusProcessingComments %}
     {{ form_start(document_form) }}
     {{ form_widget(document_form.status, {'attr': {'value': constant('Legislator\\LegislatorBundle\\Entity\\Document::STATUS_FINISHED')}}) }}
-    <input type="submit" value="{% trans %}document.view.button.end_comment_processing{% endtrans %}" class="button"/>
+    <input type="submit" name="submit_status" value="{% trans %}document.view.button.end_comment_processing{% endtrans %}" class="button"/>
     {{ form_end(document_form) }}
 {% endif %}
 {% if document.isStatusFinishedProcessingComments and not document.isFinalVersion %}
@@ -108,7 +108,7 @@
 		<td>
 		<ul class="button-group">
 		    {% if can_take_comment_actions and comment.isOwner(app.user) %}
-    		<li><a href="{{ path('legislator_view', {'id': document.id, 'comment_id': comment.id})}}#comment-form" class="small edit button"><i class="fi-page-edit"></i>{% trans %}common.button.edit{% endtrans %}</a></li>
+    		<li><a href="{{ path('legislator_document_view', {'id': document.id, 'comment_id': comment.id})}}#comment-form" class="small edit button"><i class="fi-page-edit"></i>{% trans %}common.button.edit{% endtrans %}</a></li>
     		<li>
     			<form method="post" action="{{ path('legislator_comment_delete', {'document_id': document.id,'id': comment.id })}}" class="action">
     				<button type="submit" name="delete" class="small delete button"><i class="fi-page-delete"></i>{% trans %}common.button.delete{% endtrans %}</button>

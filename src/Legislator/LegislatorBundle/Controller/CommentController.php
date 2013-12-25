@@ -89,7 +89,7 @@ class CommentController extends Controller {
 			$em->flush();
 		}
 
-		return $this->redirect($this->generateUrl('legislator_view',
+		return $this->redirect($this->generateUrl('legislator_document_view',
 				array('id' => $document_id)));
 	}
 
@@ -126,7 +126,7 @@ class CommentController extends Controller {
 	    }
 	    // TODO show validation errors to the user
 
-	    return $this->redirect($this->generateUrl('legislator_view',
+	    return $this->redirect($this->generateUrl('legislator_document_view',
 	            array('id' => $comment->getDocument()->getId())));
 	}
 
@@ -155,7 +155,7 @@ class CommentController extends Controller {
 		$em->remove($comment);
 		$em->flush();
 
-		return $this->redirect($this->generateUrl('legislator_view',
+		return $this->redirect($this->generateUrl('legislator_document_view',
 				array('id' => $document_id)));
 	}
 
@@ -196,7 +196,7 @@ class CommentController extends Controller {
 	        $em->persist($comment);
 	        $em->flush();
 
-	        return $this->redirect($this->generateUrl('legislator_view',
+	        return $this->redirect($this->generateUrl('legislator_document_view',
 	                 array('id' => $comment->getDocument()->getId())));
 	    }
 

@@ -2,35 +2,35 @@ legislator_homepage:
     pattern:  /
     defaults: { _controller: LegislatorBundle:Default:index }
 
-legislator_archive:
+legislator_document_archive:
     pattern: /archive
     defaults: { _controller: LegislatorBundle:Default:showArchive }
 
-legislator_view:
+legislator_document_view:
     pattern: /document/{id}
     defaults: { _controller: LegislatorBundle:Document:view }
     methods: [GET]
     requirements:
         id: \d+
 
-legislator_view_form:
+legislator_document_update:
     pattern: /document/{id}
     defaults: { _controller: LegislatorBundle:Document:processForm }
     methods: [POST]
     requirements:
         id: \d+
 
-legislator_new:
+legislator_document_new_form:
     pattern: /document/new
     defaults: { _controller: LegislatorBundle:Document:new }
 
-legislator_edit:
+legislator_document_edit_form:
     pattern: /document/{id}/edit
     defaults: { _controller: LegislatorBundle:Document:edit }
     requirements:
         id: \d+
 
-legislator_delete:
+legislator_document_delete:
     pattern: /document/{id}/delete
     defaults: { _controller: LegislatorBundle:Document:delete }
     requirements:
@@ -38,13 +38,13 @@ legislator_delete:
 
 legislator_process_comments:
     pattern: /document/{id}/process-comments
-    defaults: { _controller: LegislatorBundle:Document:processcomments}
+    defaults: { _controller: LegislatorBundle:Document:processComments}
     requirements:
         id: \d+
 
 legislator_finish_commenting:
     pattern: /document/{id}/finish-commenting
-    defaults: { _controller: LegislatorBundle:Document:finishcommenting}
+    defaults: { _controller: LegislatorBundle:Document:finishCommenting}
     requirements:
         id: \d+
 

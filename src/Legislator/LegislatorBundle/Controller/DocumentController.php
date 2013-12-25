@@ -70,7 +70,10 @@ class DocumentController extends Controller {
                 	  'action' => $action));
 
         $document_form = $this->createForm(new DocumentStatusType(), $document,
-        		array('method' => 'post'));
+        		array('action' => $this->generateUrl('legislator_document_update',
+        				array('id' => $document->getId())),
+        			  'method' => 'post')
+        );
 
         // check privileges
         $is_document_owner = $document->isOwner($this->getUser());
@@ -233,23 +236,14 @@ class DocumentController extends Controller {
         	throw new AccessDeniedException();
         }
 
-        $form = $this->createForm(new DocumentType(), $document);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $document->setModifiedOn(new \DateTime());
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($document);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('legislator_view', array('id' => $id)));
-        }
+        $form = $this->createForm(new DocumentType(), $document, array(
+            'action' => $this->generateUrl('legislator_document_update',
+            		array('id' => $document->getId()))
+        ));
 
         // display form
         return $this->render('LegislatorBundle:Document:edit.html.twig',
                 array('form' => $form->createView(), 'id' => $id));
-
     }
 
     /**
@@ -275,7 +269,11 @@ class DocumentController extends Controller {
             throw new AccessDeniedException();
         }
 
-        $form = $this->createForm(new DocumentStatusType(), $document);
+        if ($request->get('submit_edit')) {
+        	$form = $this->createForm(new DocumentType(), $document);
+        } else {
+        	$form = $this->createForm(new DocumentStatusType(), $document);
+        }
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -284,9 +282,15 @@ class DocumentController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $em->persist($document);
             $em->flush();
+
+            return $this->redirect($this->generateUrl('legislator_document_view', array('id' => $id)));
         }
 
-        return $this->redirect($this->generateUrl('legislator_view', array('id' => $id)));
+        if ($request->get('submit_edit')) {
+        	return $this->editAction($request);
+        } else {
+        	return $this->viewAction($id, $request);
+        }
     }
 
     /**
@@ -310,7 +314,7 @@ class DocumentController extends Controller {
         $em->persist($document);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('legislator_view', array('id' => $id)));
+        return $this->redirect($this->generateUrl('legislator_document_view', array('id' => $id)));
     }
 
     /**
@@ -320,7 +324,7 @@ class DocumentController extends Controller {
      * @return RedirectResponse
      */
     // TODO check if all comments have a reply
-    public function finishcommentingAction($id)
+    public function finishCommentingAction($id)
     {
         $document = $this->getDoctrine()
                 ->getRepository('LegislatorBundle:Document')->find($id);
@@ -338,7 +342,7 @@ class DocumentController extends Controller {
         // TODO notify users that commented that the commenting the document
         // is finished
 
-        return $this->redirect($this->generateUrl('legislator_view', array('id' => $id)));
+        return $this->redirect($this->generateUrl('legislator_document_view', array('id' => $id)));
     }
 
     /**
