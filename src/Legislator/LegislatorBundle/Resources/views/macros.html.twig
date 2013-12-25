@@ -1,3 +1,7 @@
 {% macro datetime(dt) %}
-	<time datetime="{{ dt|date('Y-m-d H:i') }}" title="{{ dt|date('d.m.Y H:i') }}">{{ dt|date('d.&\\nb\\sp;m.&\\nb\\sp;Y')|raw }}</time>
+    {% if dt is null %}
+        &ndash;
+    {% else %}
+        <time datetime="{{ dt|date('Y-m-d H:i') }}" title="{{ dt|date('d.m.Y H:i') }}">{{ dt|date('d.&\\nb\\sp;m.&\\nb\\sp;Y')|raw }}</time>
+    {% endif %}
 {% endmacro %}
