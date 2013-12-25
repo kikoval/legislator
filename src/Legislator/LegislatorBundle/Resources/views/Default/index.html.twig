@@ -64,7 +64,11 @@
 	</tbody>
     </table>
 {% else %}
-    <p>Zatiaľ tu nie sú žiadne dokumenty.</p>
+    {% if is_archive %}
+    	<p>Momentálnie v archíve nie sú žiadne dokumenty.</p>
+    {% else %}
+    	<p>Aktuálne nie sú žiadne dokumenty na pripomienkovanie. Históriu pripomienkovaných dokumentov nájdete v <a href="{{ path('legislator_document_archive') }}">Archíve</a>.</p>
+    {% endif %}
 {% endif %}
 
 {% if not is_archive %}
