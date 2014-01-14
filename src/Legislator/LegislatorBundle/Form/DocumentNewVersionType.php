@@ -2,8 +2,6 @@
 
 namespace Legislator\LegislatorBundle\Form;
 
-use Legislator\LegislatorBundle\Form\ContentSectionType;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -14,16 +12,16 @@ class DocumentNewVersionType extends AbstractType
     {
         $builder
             ->add('name', 'text',
-            		array('read_only' => TRUE,
-            			  'disabled' => TRUE,
-            			  'label' => 'document.name'))
+                    array('read_only' => TRUE,
+                          'disabled' => TRUE,
+                          'label' => 'document.name'))
             ->add('description', 'textarea',
-            		array('label' => 'document.description'))
+                    array('label' => 'document.description'))
             ->add('is_final_version', 'checkbox',
-            		array('label' => 'document.final_version',
-            			  'required' => FALSE))
+                    array('label' => 'document.final_version',
+                          'required' => FALSE))
             ->add('file', 'file',
-            		array('label' => 'document.file', 'required' => TRUE))
+                    array('label' => 'document.file', 'required' => TRUE))
         ;
     }
 

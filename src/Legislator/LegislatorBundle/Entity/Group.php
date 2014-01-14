@@ -11,26 +11,26 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Group extends BaseGroup
 {
-	/**
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	protected $id;
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
 
-	/**
-	 * @ORM\ManyToMany(targetEntity="User", mappedBy="groups")
-	 *
-	 */
-	protected $users;
+    /**
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="groups")
+     *
+     */
+    protected $users;
 
-	public function getUsers()
-	{
-		return $this->users;
-	}
+    public function getUsers()
+    {
+        return $this->users;
+    }
 
-	public function __toString()
-	{
-		return $this->getName();
-	}
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }

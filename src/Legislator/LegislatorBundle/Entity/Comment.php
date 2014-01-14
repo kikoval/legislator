@@ -12,25 +12,25 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Comment
 {
-	const TYPE_STANDARD = 0;
-	const TYPE_TECHNICAL = 1;
-	const TYPE_PRINCIPAL = 2;
+    const TYPE_STANDARD = 0;
+    const TYPE_TECHNICAL = 1;
+    const TYPE_PRINCIPAL = 2;
 
-	private static $types = array(
-			self::TYPE_STANDARD => 'comment.types.standard',
-			self::TYPE_TECHNICAL => 'comment.types.technical',
-			self::TYPE_PRINCIPAL => 'comment.types.principal',
-	);
+    private static $types = array(
+            self::TYPE_STANDARD => 'comment.types.standard',
+            self::TYPE_TECHNICAL => 'comment.types.technical',
+            self::TYPE_PRINCIPAL => 'comment.types.principal',
+    );
 
-	const RESULT_ACCEPTED = 0;
-	const RESULT_PARTLY_ACCEPTED = 1;
-	const RESULT_NOT_ACCEPTED = 2;
+    const RESULT_ACCEPTED = 0;
+    const RESULT_PARTLY_ACCEPTED = 1;
+    const RESULT_NOT_ACCEPTED = 2;
 
-	private static $results = array(
-			self::RESULT_ACCEPTED => 'comment.results.accepted',
-			self::RESULT_PARTLY_ACCEPTED => 'comment.results.partly_accepted',
-			self::RESULT_NOT_ACCEPTED => 'comment.results.not_accepted',
-	);
+    private static $results = array(
+            self::RESULT_ACCEPTED => 'comment.results.accepted',
+            self::RESULT_PARTLY_ACCEPTED => 'comment.results.partly_accepted',
+            self::RESULT_NOT_ACCEPTED => 'comment.results.not_accepted',
+    );
 
     /**
      * @var integer
@@ -115,7 +115,6 @@ class Comment
      */
     private $repliedBy;
 
-
     /**
      * Get id
      *
@@ -129,7 +128,7 @@ class Comment
     /**
      * Set document
      *
-     * @param Document $document
+     * @param  Document $document
      * @return Comment
      */
     public function setDocument(Document $document)
@@ -152,7 +151,7 @@ class Comment
     /**
      * Set content
      *
-     * @param string $content
+     * @param  string  $content
      * @return Comment
      */
     public function setContent($content)
@@ -175,7 +174,7 @@ class Comment
     /**
      * Set substantiation
      *
-     * @param string $substantiation
+     * @param  string  $substantiation
      * @return Comment
      */
     public function setSubstantiation($substantiation)
@@ -198,7 +197,7 @@ class Comment
     /**
      * Set createdOn
      *
-     * @param \DateTime $createdOn
+     * @param  \DateTime $createdOn
      * @return Comment
      */
     public function setCreatedOn($createdOn)
@@ -221,7 +220,7 @@ class Comment
     /**
      * Set createdBy
      *
-     * @param User $createdBy
+     * @param  User    $createdBy
      * @return Comment
      */
     public function setCreatedBy($createdBy)
@@ -244,7 +243,7 @@ class Comment
     /**
      * Set modifiedOn
      *
-     * @param \DateTime $modifiedOn
+     * @param  \DateTime $modifiedOn
      * @return Comment
      */
     public function setModifiedOn($modifiedOn)
@@ -267,7 +266,7 @@ class Comment
     /**
      * Set type
      *
-     * @param int $type
+     * @param  int     $type
      * @return Comment
      */
     public function setType($type)
@@ -289,17 +288,17 @@ class Comment
 
     public function isTechnical()
     {
-    	return $this->getType() == self::TYPE_TECHNICAL;
+        return $this->getType() == self::TYPE_TECHNICAL;
     }
 
     public function isPrincipal()
     {
-    	return $this->getType() == self::TYPE_PRINCIPAL;
+        return $this->getType() == self::TYPE_PRINCIPAL;
     }
 
     public function getResult()
     {
-    	return $this->result;
+        return $this->result;
     }
 
     /**
@@ -315,9 +314,8 @@ class Comment
      */
     public function isPartlyAccepted()
     {
-    	return $this->result === self::RESULT_PARTLY_ACCEPTED;
+        return $this->result === self::RESULT_PARTLY_ACCEPTED;
     }
-
 
     /**
      * @return boolean
@@ -330,7 +328,7 @@ class Comment
     /**
      * Set isAccepted
      *
-     * @param boolean $isAccepted
+     * @param  boolean $isAccepted
      * @return Comment
      */
     public function setResult($result)
@@ -353,7 +351,7 @@ class Comment
     /**
      * Set reply
      *
-     * @param string $reply
+     * @param  string  $reply
      * @return Comment
      */
     public function setReply($reply)
@@ -376,7 +374,7 @@ class Comment
     /**
      * Set repliedBy
      *
-     * @param User $repliedBy
+     * @param  User    $repliedBy
      * @return Comment
      */
     public function setRepliedBy($repliedBy)
@@ -388,22 +386,22 @@ class Comment
 
     public static function getTypes()
     {
-    	return self::$types;
+        return self::$types;
     }
 
     /**
      * Check if a user is the owner of the document
      *
-     * @param User $user
+     * @param  User    $user
      * @return boolean
      */
     public function isOwner(User $user)
     {
-    	if (!$user) {
-    		return FALSE;
-    	} else {
-    		return $user->getId() == $this->getCreatedBy()->getId();
-    	}
+        if (!$user) {
+            return FALSE;
+        } else {
+            return $user->getId() == $this->getCreatedBy()->getId();
+        }
     }
 
     /**
@@ -413,6 +411,6 @@ class Comment
      */
     public static function getResultChoices()
     {
-    	return self::$results;
+        return self::$results;
     }
 }

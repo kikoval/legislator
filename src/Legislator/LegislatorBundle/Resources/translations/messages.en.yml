@@ -7,8 +7,8 @@ common:
     delete: Delete
     edit: Edit
     archive: Archive
-  until: until  
-  
+  until: until
+
 menu:
   archive: Archive
   my_comments: My comments
@@ -49,7 +49,7 @@ document:
     meta_data: Meta data
     button:
       add_new_version: Add new version
-      end_comment_processing: End comment processing 
+      end_comment_processing: End comment processing
     actions:
       enable: enable
       disable: disable

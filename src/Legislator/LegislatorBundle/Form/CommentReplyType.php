@@ -18,8 +18,8 @@ class CommentReplyType extends AbstractType
                           'expanded' => FALSE,
                           'label' => 'comment.acceptance'))
             ->add('reply', 'textarea',
-            		array('required' => FALSE,
-            			  'label' => 'comment.substantiation'))
+                    array('required' => FALSE,
+                          'label' => 'comment.substantiation'))
         ;
     }
 

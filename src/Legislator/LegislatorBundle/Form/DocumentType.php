@@ -2,8 +2,6 @@
 
 namespace Legislator\LegislatorBundle\Form;
 
-use Legislator\LegislatorBundle\Form\ContentSectionType;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -19,17 +17,17 @@ class DocumentType extends AbstractType
             ->add('description', 'textarea',
                     array('label' => 'document.description'))
             ->add('comment_until', 'date',
-            		array('label' => 'document.comment_until',
-            			  'required' => FALSE))
+                    array('label' => 'document.comment_until',
+                          'required' => FALSE))
             ->add('status', 'choice',
                     array('choices' => Document::getStatusMessages()))
             ->add('is_final_version', 'checkbox',
-            		array('label' => 'document.final_version',
-        				  'required' => FALSE))
-        	->add('is_archived', 'checkbox',
-        			array('label' => 'document.is_archived',
-        				  'required' => FALSE))
-        	->add('groups', null, array('required' => FALSE))
+                    array('label' => 'document.final_version',
+                          'required' => FALSE))
+            ->add('is_archived', 'checkbox',
+                    array('label' => 'document.is_archived',
+                          'required' => FALSE))
+            ->add('groups', null, array('required' => FALSE))
             ->add('file', 'file',
                     array('required' => FALSE, 'label' => 'document.file'))
             ->add('file_substantiation', 'file',

@@ -2,8 +2,6 @@
 
 namespace Legislator\LegislatorBundle\Form;
 
-use Legislator\LegislatorBundle\Form\ContentSectionType;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;

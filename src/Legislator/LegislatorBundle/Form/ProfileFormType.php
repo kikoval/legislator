@@ -4,8 +4,6 @@ namespace Legislator\LegislatorBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use FOS\UserBundle\Form\Type\ProfileFormType as BaseType;
-use FOS\UserBundle\Form\Type\ChangePasswordFormType;
-use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
 class ProfileFormType extends BaseType
 {

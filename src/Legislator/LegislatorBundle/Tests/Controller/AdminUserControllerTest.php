@@ -15,7 +15,7 @@ class AdminUserControllerTest extends MyWebTestCase
 
         $this->client->restart();
 
-		$this->loadFixtures();
+        $this->loadFixtures();
         $this->logIn();
 
         $crawler = $this->client->request('GET', $this->getUrl('legislator_user_list'));

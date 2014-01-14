@@ -2,8 +2,6 @@
 
 namespace Legislator\LegislatorBundle\Form;
 
-use Legislator\LegislatorBundle\Form\ContentSectionType;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -17,14 +15,14 @@ class DocumentNewType extends AbstractType
             ->add('description', 'textarea',
                     array('label' => 'document.description'))
             ->add('comment_until', 'date',
-            		array('label' => 'document.comment_until',
-            			  'required' => FALSE))
+                    array('label' => 'document.comment_until',
+                          'required' => FALSE))
             ->add('groups', null, array('required' => FALSE))
             ->add('file', 'file',
                     array('label' => 'document.file', 'required' => TRUE))
             ->add('file_substantiation', 'file',
                     array('label' => 'document.file_substantiation',
-        				  'required' => FALSE))
+                          'required' => FALSE))
         ;
     }
 

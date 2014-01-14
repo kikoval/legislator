@@ -4,7 +4,6 @@ namespace Legislator\LegislatorBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Response;
 
 use Legislator\LegislatorBundle\Entity\Document;
@@ -14,16 +13,15 @@ use Legislator\LegislatorBundle\Form\DocumentStatusType;
 use Legislator\LegislatorBundle\Form\DocumentNewType;
 use Legislator\LegislatorBundle\Form\DocumentNewVersionType;
 use Legislator\LegislatorBundle\Form\CommentType;
-use Legislator\LegislatorBundle\Form\ContentSectionType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class DocumentController extends Controller {
-
+class DocumentController extends Controller
+{
     /**
      * View a document
      *
-     * @param int $id Document ID
-     * @param Request $request
+     * @param  int      $id      Document ID
+     * @param  Request  $request
      * @return Response
      */
     public function viewAction($id, Request $request)
@@ -35,10 +33,10 @@ class DocumentController extends Controller {
         }
 
         if (!$this->get('security.context')->isGranted('ROLE_ADMIN')) {
-	        // check for group permission
-	        if (!$document->canBeAccessed($this->getUser())) {
-	        	throw new AccessDeniedException();
-	        }
+            // check for group permission
+            if (!$document->canBeAccessed($this->getUser())) {
+                throw new AccessDeniedException();
+            }
         }
 
         // TODO limit comments
@@ -66,13 +64,13 @@ class DocumentController extends Controller {
         }
 
         $comment_form = $this->createForm(new CommentType(), $comment,
-        		array('method' => 'post',
-                	  'action' => $action));
+                array('method' => 'post',
+                      'action' => $action));
 
         $document_form = $this->createForm(new DocumentStatusType(), $document,
-        		array('action' => $this->generateUrl('legislator_document_update',
-        				array('id' => $document->getId())),
-        			  'method' => 'post')
+                array('action' => $this->generateUrl('legislator_document_update',
+                        array('id' => $document->getId())),
+                      'method' => 'post')
         );
 
         // check privileges
@@ -80,9 +78,9 @@ class DocumentController extends Controller {
 
         $can_take_comment_actions = $document->isStatusCommenting();
         $can_reply = $is_document_owner
-        		&& $document->isStatusProcessingComments();
+                && $document->isStatusProcessingComments();
         $show_comment_actions = $document->isStatusCommenting()
-        		|| ($is_document_owner && $document->isStatusProcessingComments());
+                || ($is_document_owner && $document->isStatusProcessingComments());
         $show_add_comment = $document->getCanBeCommented();
 
         return $this->render('LegislatorBundle:Document:view.html.twig',
@@ -100,8 +98,8 @@ class DocumentController extends Controller {
     /**
      * Process delete action.
      *
-     * @param int $id Document ID
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @param  int              $id Document ID
+     * @return RedirectResponse
      */
     public function deleteAction($id)
     {
@@ -131,7 +129,7 @@ class DocumentController extends Controller {
     /**
      * Process form for adding a document.
      *
-     * @param Request $request
+     * @param  Request                   $request
      * @return RedirectResponse|Response
      */
     public function newAction(Request $request)
@@ -181,7 +179,7 @@ class DocumentController extends Controller {
 
         // check ownership
         if (!$prev_document->isOwner($this->getUser())) {
-        	throw new AccessDeniedException();
+            throw new AccessDeniedException();
         }
 
         // create form
@@ -218,7 +216,7 @@ class DocumentController extends Controller {
     /**
      * Process edit action.
      *
-     * @param Request $request
+     * @param  Request          $request
      * @return RedirectResponse
      */
     public function editAction(Request $request)
@@ -233,12 +231,12 @@ class DocumentController extends Controller {
 
         // check ownership
         if (!$document->isOwner($this->getUser())) {
-        	throw new AccessDeniedException();
+            throw new AccessDeniedException();
         }
 
         $form = $this->createForm(new DocumentType(), $document, array(
             'action' => $this->generateUrl('legislator_document_update',
-            		array('id' => $document->getId()))
+                    array('id' => $document->getId()))
         ));
 
         // display form
@@ -249,8 +247,8 @@ class DocumentController extends Controller {
     /**
      * Process actions' form.
      *
-     * @param int $id
-     * @param Request $request
+     * @param  int              $id
+     * @param  Request          $request
      * @return RedirectResponse
      */
     public function processFormAction($id, Request $request)
@@ -270,9 +268,9 @@ class DocumentController extends Controller {
         }
 
         if ($request->get('submit_edit')) {
-        	$form = $this->createForm(new DocumentType(), $document);
+            $form = $this->createForm(new DocumentType(), $document);
         } else {
-        	$form = $this->createForm(new DocumentStatusType(), $document);
+            $form = $this->createForm(new DocumentStatusType(), $document);
         }
         $form->handleRequest($request);
 
@@ -287,16 +285,16 @@ class DocumentController extends Controller {
         }
 
         if ($request->get('submit_edit')) {
-        	return $this->editAction($request);
+            return $this->editAction($request);
         } else {
-        	return $this->viewAction($id, $request);
+            return $this->viewAction($id, $request);
         }
     }
 
     /**
      * Start the phase of processing of comments.
      *
-     * @param int $id Document ID
+     * @param  int              $id Document ID
      * @return RedirectResponse
      */
     public function processCommentsAction($id)
@@ -320,7 +318,7 @@ class DocumentController extends Controller {
     /**
      * Start the phase of processing of comments.
      *
-     * @param int $id Document ID
+     * @param  int              $id Document ID
      * @return RedirectResponse
      */
     // TODO check if all comments have a reply
@@ -341,48 +339,48 @@ class DocumentController extends Controller {
 
         // TODO notify users that commented that the commenting the document
         // is finished
-
         return $this->redirect($this->generateUrl('legislator_document_view', array('id' => $id)));
     }
 
     /**
      * Download file attached to the document.
      *
-     * @param int $id
+     * @param int    $id
      * @param string $file
      */
     public function downloadAction($id, $file='main')
     {
-    	function sanitize($filename)
-    	{
-    		$filename = strtolower($filename);
-    		$filename = str_replace(' ', '_', $filename);
-    		return $filename;
-    	}
+        function sanitize($filename)
+        {
+            $filename = strtolower($filename);
+            $filename = str_replace(' ', '_', $filename);
 
-    	$document = $this->getDoctrine()
-    			->getRepository('LegislatorBundle:Document')->find($id);
-    	if (!$document) {
-    		throw $this->createNotFoundException('No document found for id!');
-    	}
+            return $filename;
+        }
 
-    	$options['absolute_path'] = FALSE;
-    	$options['serve_filename'] = sanitize($document->getName());
+        $document = $this->getDoctrine()
+                ->getRepository('LegislatorBundle:Document')->find($id);
+        if (!$document) {
+            throw $this->createNotFoundException('No document found for id!');
+        }
 
-    	$finfo = finfo_open(FILEINFO_MIME);
-    	if (!$finfo) {
-    		return $this->createNotFoundException('File not found');
-    	}
+        $options['absolute_path'] = FALSE;
+        $options['serve_filename'] = sanitize($document->getName());
 
-    	if ($file == 'main') {
-    		$path = $document->getWebPath();
-    		$mimetype = finfo_file($finfo, $path);
-    	} else {
-    		$path = $document->getWebPathSubstantiation();
-    		$mimetype = finfo_file($finfo, $path);
-    		$options['serve_filename'] .= '_substantiation';
-    	}
+        $finfo = finfo_open(FILEINFO_MIME);
+        if (!$finfo) {
+            return $this->createNotFoundException('File not found');
+        }
 
-    	return $this->get('igorw_file_serve.response_factory')->create($path, $mimetype, $options);
+        if ($file == 'main') {
+            $path = $document->getWebPath();
+            $mimetype = finfo_file($finfo, $path);
+        } else {
+            $path = $document->getWebPathSubstantiation();
+            $mimetype = finfo_file($finfo, $path);
+            $options['serve_filename'] .= '_substantiation';
+        }
+
+        return $this->get('igorw_file_serve.response_factory')->create($path, $mimetype, $options);
     }
 }

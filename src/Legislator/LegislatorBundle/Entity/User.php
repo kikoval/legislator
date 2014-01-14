@@ -45,7 +45,6 @@ class User extends BaseUser
      */
     private $surname;
 
-
     /**
      * Get id
      *
@@ -59,7 +58,7 @@ class User extends BaseUser
     /**
      * Set firstName
      *
-     * @param string $firstName
+     * @param  string $firstName
      * @return User
      */
     public function setFirstName($firstName)
@@ -82,7 +81,7 @@ class User extends BaseUser
     /**
      * Set surname
      *
-     * @param string $surname
+     * @param  string $surname
      * @return User
      */
     public function setSurname($surname)

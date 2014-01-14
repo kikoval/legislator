@@ -11,7 +11,7 @@ services:
         arguments: ["%fos_user.model.user.class%"]
         tags:
             - { name: form.type, alias: legislator_user_registration }
-            
+
     legislator_user.profile.form.type:
         class: Legislator\LegislatorBundle\Form\ProfileFormType
         arguments: ["%fos_user.model.user.class%"]
@@ -25,7 +25,7 @@ services:
     legislator.user_search:
         class: Legislator\LegislatorBundle\Integration\LDAPUserSearch
         arguments: ["@legislator.ldap_retriever", "%org_unit%"]
-        
+
     twig.extension.text:
       class: Twig_Extensions_Extension_Text
       tags:

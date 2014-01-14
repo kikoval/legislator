@@ -13,8 +13,8 @@
 
 namespace Legislator\LegislatorBundle\Integration;
 
-class LDAPRetriever {
-
+class LDAPRetriever
+{
     private $linkId;
     private $serverUrl;
     private $baseDN;
@@ -22,7 +22,7 @@ class LDAPRetriever {
     public function __construct($serverUrl, $baseDN)
     {
         if (!extension_loaded('ldap')) {
-        	throw new \Exception('ldap extension is not enabled');
+            throw new \Exception('ldap extension is not enabled');
         }
         $this->serverUrl = $serverUrl;
         $this->baseDN = $baseDN;
@@ -76,6 +76,7 @@ class LDAPRetriever {
         while (($attr = ldap_next_attribute($this->linkId, $entry)) !== false) {
             $attrs[] = $attr;
         }
+
         return $attrs;
     }
 
@@ -95,6 +96,7 @@ class LDAPRetriever {
                 $data[$attribute][] = $ldapValues[$i];
             }
         }
+
         return $data;
     }
 
@@ -112,6 +114,7 @@ class LDAPRetriever {
         if ($entry === false) {
             $this->throwException();
         }
+
         return $entry;
     }
 
@@ -121,6 +124,7 @@ class LDAPRetriever {
         if ($entry === false) {
             $this->throwException();
         }
+
         return $entry;
     }
 
@@ -130,6 +134,7 @@ class LDAPRetriever {
         if ($count === false) {
             $this->throwException();
         }
+
         return $count;
     }
 
@@ -139,6 +144,7 @@ class LDAPRetriever {
         if ($result === false) {
             $this->throwException();
         }
+
         return $result;
     }
 
@@ -167,8 +173,8 @@ class LDAPRetriever {
     /**
      * Contrary to the fuction name doesn't resturn all matching records.
      * Result size is limited by server. Uniba doesn't return more than 5.
-     * @param string $filter
-     * @param array of string $attributes
+     * @param  string          $filter
+     * @param  array of string $attributes
      * @return array
      */
     public function searchAll($filter, array $attributes)
@@ -201,7 +207,7 @@ class LDAPRetriever {
     /**
      * Escape LDAP filter value
      * @see http://www.ietf.org/rfc/rfc2254.txt
-     * @param string $str
+     * @param  string $str
      * @return strign the escaped string
      */
     public function escape($str)
@@ -219,11 +225,11 @@ class LDAPRetriever {
             if ($needs_escape) {
                 $esc .= '\\';
                 $esc .= substr('00'.dechex(ord($char)), -2);
-            }
-            else {
+            } else {
                 $esc .= $char;
             }
         }
+
         return $esc;
     }
 

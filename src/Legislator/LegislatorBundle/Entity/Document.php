@@ -188,60 +188,61 @@ class Document implements GroupableInterface
      */
     public function getGroups()
     {
-    	return $this->groups ?: $this->groups = new ArrayCollection();
+        return $this->groups ?: $this->groups = new ArrayCollection();
     }
 
     public function getGroupNames()
     {
-    	$names = array();
-    	foreach ($this->getGroups() as $group) {
-    		$names[] = $group->getName();
-    	}
+        $names = array();
+        foreach ($this->getGroups() as $group) {
+            $names[] = $group->getName();
+        }
 
-    	return $names;
+        return $names;
     }
 
     public function hasGroup($name)
     {
-    	return in_array($name, $this->getGroupNames());
+        return in_array($name, $this->getGroupNames());
     }
 
     public function addGroup(GroupInterface $group)
     {
-    	if (!$this->getGroups()->contains($group)) {
-    		$this->getGroups()->add($group);
-    	}
+        if (!$this->getGroups()->contains($group)) {
+            $this->getGroups()->add($group);
+        }
 
-    	return $this;
+        return $this;
     }
 
     public function removeGroup(GroupInterface $group)
     {
-    	if ($this->getGroups()->contains($group)) {
-    		$this->getGroups()->removeElement($group);
-    	}
+        if ($this->getGroups()->contains($group)) {
+            $this->getGroups()->removeElement($group);
+        }
 
-    	return $this;
+        return $this;
     }
 
     public function canBeAccessed(User $user)
     {
-    	if ($user === null) return FALSE;
+        if ($user === null) return FALSE;
 
-    	$groups = $this->getGroups();
-    	if (count($groups) == 0) return TRUE;
+        $groups = $this->getGroups();
+        if (count($groups) == 0) return TRUE;
 
-    	$has_access = FALSE;
-    	foreach ($groups as $group) {
-    		$has_access |= $user->hasGroup($group);
-    	}
-    	return $has_access;
+        $has_access = FALSE;
+        foreach ($groups as $group) {
+            $has_access |= $user->hasGroup($group);
+        }
+
+        return $has_access;
     }
 
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string   $name
      * @return Document
      */
     public function setName($name)
@@ -264,7 +265,7 @@ class Document implements GroupableInterface
     /**
      * Set description
      *
-     * @param string $description
+     * @param  string   $description
      * @return Document
      */
     public function setDescription($description)
@@ -287,7 +288,7 @@ class Document implements GroupableInterface
     /**
      * Set version
      *
-     * @param integer $version
+     * @param  integer  $version
      * @return Document
      */
     public function setVersion($version)
@@ -310,7 +311,7 @@ class Document implements GroupableInterface
     /**
      * Set createdOn
      *
-     * @param \DateTime $createdOn
+     * @param  \DateTime $createdOn
      * @return Document
      */
     public function setCreatedOn($createdOn)
@@ -333,7 +334,7 @@ class Document implements GroupableInterface
     /**
      * Set createdBy
      *
-     * @param User $createdBy
+     * @param  User     $createdBy
      * @return Document
      */
     public function setCreatedBy($createdBy)
@@ -356,7 +357,7 @@ class Document implements GroupableInterface
     /**
      * Set modifiedOn
      *
-     * @param \DateTime $modifiedOn
+     * @param  \DateTime $modifiedOn
      * @return Document
      */
     public function setModifiedOn($modifiedOn)
@@ -379,7 +380,7 @@ class Document implements GroupableInterface
     /**
      * Set status
      *
-     * @param integer $status
+     * @param  integer  $status
      * @return Document
      */
     public function setStatus($status)
@@ -556,39 +557,39 @@ class Document implements GroupableInterface
         // the file property can be empty if the field is not required
         if (null !== $this->getFile()) {
             // if there is an error when moving the file, an exception will
-	        // be automatically thrown by move(). This will properly prevent
-	        // the entity from being persisted to the database on error
-	        $this->getFile()->move($this->getUploadRootDir(), $this->path);
+            // be automatically thrown by move(). This will properly prevent
+            // the entity from being persisted to the database on error
+            $this->getFile()->move($this->getUploadRootDir(), $this->path);
 
-	        // check if we have an old file
-	        if (isset($this->temp_path)) {
-	        	// delete the old image
-	        	unlink($this->getUploadRootDir().'/'.$this->temp_path);
-	        	// clear the temp image path
-	        	$this->temp_path = null;
-	        }
+            // check if we have an old file
+            if (isset($this->temp_path)) {
+                // delete the old image
+                unlink($this->getUploadRootDir().'/'.$this->temp_path);
+                // clear the temp image path
+                $this->temp_path = null;
+            }
 
-	        $this->file = null;
+            $this->file = null;
 
-	        // making sure we have correct permissions
-	        chmod($this->getAbsolutePath(), 0644);
+            // making sure we have correct permissions
+            chmod($this->getAbsolutePath(), 0644);
         }
 
         if (null !== $this->getFileSubstantiation()) {
-        	$this->getFileSubstantiation()->move($this->getUploadRootDir(), $this->path_substantiation);
+            $this->getFileSubstantiation()->move($this->getUploadRootDir(), $this->path_substantiation);
 
-        	// check if we have an old file
-        	if (isset($this->temp_path_substantiation)) {
-        		// delete the old image
-        		unlink($this->getUploadRootDir().'/'.$this->temp_path_substantiation);
-        		// clear the temp image path
-        		$this->temp_path_substantiation = null;
-        	}
+            // check if we have an old file
+            if (isset($this->temp_path_substantiation)) {
+                // delete the old image
+                unlink($this->getUploadRootDir().'/'.$this->temp_path_substantiation);
+                // clear the temp image path
+                $this->temp_path_substantiation = null;
+            }
 
-        	$this->file_substantiation = null;
+            $this->file_substantiation = null;
 
-        	// making sure we have correct permissions
-        	chmod($this->getAbsolutePathSubstantiation(), 0644);
+            // making sure we have correct permissions
+            chmod($this->getAbsolutePathSubstantiation(), 0644);
         }
     }
 
@@ -615,13 +616,13 @@ class Document implements GroupableInterface
     public function getCanBeCommented()
     {
         return $this->getStatus() == self::STATUS_COMMENTING
-        		&& !$this->getIsFinalVersion();
+                && !$this->getIsFinalVersion();
     }
 
     /**
      * Set canBeCommented
      *
-     * @param unknown $value
+     * @param  unknown  $value
      * @return Document
      */
     public function setCanBeCommented($value = self::STATUS_COMMENTING)
@@ -648,7 +649,6 @@ class Document implements GroupableInterface
         return $this->getStatus() == self::STATUS_FINISHED;
     }
 
-
     public function isStatusNew()
     {
         return $this->getStatus() == self::STATUS_NEW;
@@ -667,7 +667,7 @@ class Document implements GroupableInterface
     /**
      * Set previous version of the document
      *
-     * @param Document $document
+     * @param  Document $document
      * @return Document
      */
     public function setPreviousVersion(Document $document)
@@ -685,20 +685,20 @@ class Document implements GroupableInterface
      */
     public function getNextVersion()
     {
-    	return $this->next_version;
+        return $this->next_version;
     }
 
     /**
      * Set next version of the document
      *
-     * @param Document $document
+     * @param  Document $document
      * @return Document
      */
     public function setNextVersion(Document $document)
     {
-    	$this->next_version = $document;
+        $this->next_version = $document;
 
-    	return $this;
+        return $this;
     }
 
     /**
@@ -714,7 +714,7 @@ class Document implements GroupableInterface
     /**
      * Set is final version
      *
-     * @param bool $is_final_version
+     * @param  bool     $is_final_version
      * @return Document
      */
     public function setIsFinalVersion($is_final_version)
@@ -727,16 +727,16 @@ class Document implements GroupableInterface
     /**
      * Check if a user is the owner of the document
      *
-     * @param User $user
+     * @param  User    $user
      * @return boolean
      */
     public function isOwner($user)
     {
-    	if (!$user) {
-    		return FALSE;
-    	} else {
-    		return $user->getID() == $this->getCreatedBy()->getID();
-    	}
+        if (!$user) {
+            return FALSE;
+        } else {
+            return $user->getID() == $this->getCreatedBy()->getID();
+        }
     }
 
     public function mapFromStatusCode($code)
@@ -757,20 +757,21 @@ class Document implements GroupableInterface
     public function setIsArchived($is_archived)
     {
         $this->is_archived = $is_archived;
+
         return $this;
     }
 
     /**
      * Set comment_until datetime.
      *
-     * @param \DateTime $createdOn
+     * @param  \DateTime $createdOn
      * @return Document
      */
     public function setCommentUntil($comment_until)
     {
-    	$this->comment_until = $comment_until;
+        $this->comment_until = $comment_until;
 
-    	return $this;
+        return $this;
     }
 
     /**
@@ -780,6 +781,6 @@ class Document implements GroupableInterface
      */
     public function getCommentUntil()
     {
-    	return $this->comment_until;
+        return $this->comment_until;
     }
 }

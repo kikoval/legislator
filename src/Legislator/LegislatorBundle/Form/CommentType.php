@@ -15,8 +15,8 @@ class CommentType extends AbstractType
             ->add('content', 'textarea', array('label' => 'comment.content'))
             ->add('substantiation', 'textarea', array('label' => 'comment.substantiation'))
             ->add('type', 'choice',
-            		array('label' => 'comment.type',
-            			  'choices' => Comment::getTypes()))
+                    array('label' => 'comment.type',
+                          'choices' => Comment::getTypes()))
         ;
     }
 

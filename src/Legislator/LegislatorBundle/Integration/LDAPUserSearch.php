@@ -7,8 +7,8 @@ use Legislator\LegislatorBundle\Integration\LDAPRetriever;
  * Searches LDAP for any users (teachers or students).
  *
  */
-class LDAPUserSearch {
-
+class LDAPUserSearch
+{
     private $ldap;
     private $orgUnit;
     const GROUP_REGEXP = '@^pouzivatelia_(?P<orgUnits>[a-zA-Z]+)(?<!interni|externi)$@';
@@ -30,16 +30,16 @@ class LDAPUserSearch {
      * In addition, users must be either teachers on any faculty or PhD students
      * on faculty provided in class constructor.
      *
-     * @param string $login full login
-     * @return array @see executeSeachAndProcessData for docs
+     * @param  string $login full login
+     * @return array  @see executeSeachAndProcessData for docs
      */
     public function byLogin($login, $only_from_orgunit=TRUE)
     {
         $safeLogin = $this->ldap->escape($login);
         $filter_org = '';
         if ($only_from_orgunit) {
-        	$safeOrgUnit = $this->ldap->escape($this->orgUnit);
-        	$filter_org = '_'.$safeOrgUnit;
+            $safeOrgUnit = $this->ldap->escape($this->orgUnit);
+            $filter_org = '_'.$safeOrgUnit;
         }
         $filter = '(&(uid='.$safeLogin.')(group=pouzivatelia'.$filter_org.'))';
 
@@ -71,7 +71,7 @@ class LDAPUserSearch {
      *    ...
      *  }
      *
-     * @param string $filter
+     * @param  string $filter
      * @return array
      */
     private function executeSeachAndProcessData($filter)
@@ -93,9 +93,8 @@ class LDAPUserSearch {
             }
             $users[$record['uid'][0]]['orgUnits'] = $orgUnits;
         }
+
         return $users;
     }
 
 }
-
-?>
