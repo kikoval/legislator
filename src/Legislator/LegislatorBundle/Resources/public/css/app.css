@@ -20,6 +20,7 @@ dl.document-data dt:after {content: ":";}
 dl.document-data dd {margin-bottom: 0.4em;}
 
 a:hover {text-decoration: underline;}
+a.button:hover {text-decoration: none;}
 
 #org-unit {font-weight: normal;}
 
