@@ -50,6 +50,52 @@ class DocumentControllerTest extends MyWebTestCase
         $this->assertCount(1, $crawler->filter('h1.header:contains("test document for comments")'));
     }
 
+    public function testChangeName()
+    {
+    	// go the edit form for the first document
+    	$crawler = $this->client->request('GET', $this->getUrl('legislator_homepage'));
+    	$this->assertTrue($this->client->getResponse()->isSuccessful());
+    	$link = $crawler->filter('a.edit.button')->eq(0)->link();
+    	$crawler = $this->client->click($link);
+    	$this->assertTrue($this->client->getResponse()->isSuccessful());
+
+    	// edit
+    	$form = $crawler->filter('input[type=submit]')->eq(0)->form();
+    	$new_name = 'edited test document';
+    	$form['legislator_document[name]'] = $new_name;
+    	$this->client->submit($form);
+    	$crawler = $this->client->followRedirect();
+    	$this->assertTrue($this->client->getResponse()->isSuccessful());
+
+    	// check the change
+    	$this->assertCount(1, $crawler->filter('h1:contains('.$new_name.')'));
+    }
+
+    public function testCommentUntilDate()
+    {
+    	// go the edit form for the first document
+    	$crawler = $this->client->request('GET', $this->getUrl('legislator_homepage'));
+    	$this->assertTrue($this->client->getResponse()->isSuccessful());
+    	$link = $crawler->filter('a.edit.button')->eq(0)->link();
+    	$crawler = $this->client->click($link);
+    	$this->assertTrue($this->client->getResponse()->isSuccessful());
+
+    	// change the due date to 15. 01. 2014
+    	$form = $crawler->filter('input[type=submit]')->eq(0)->form();
+    	$form['legislator_document[comment_until][year]'] = '2014';
+    	$form['legislator_document[comment_until][month]'] = '1';
+    	$form['legislator_document[comment_until][day]'] = '15';
+    	$this->client->submit($form);
+    	$crawler = $this->client->followRedirect();
+    	$this->assertTrue($this->client->getResponse()->isSuccessful());
+
+    	// check the change
+    	$this->assertTrue($crawler->filterXPath('//body/div[3]/div/h2/time')->text() == "15. 01. 2014");
+    	$crawler = $this->client->request('GET', $this->getUrl('legislator_homepage'));
+    	$this->assertTrue($this->client->getResponse()->isSuccessful());
+    	$this->assertTrue($crawler->filterXPath('//body/div[1]/div/table/tbody/tr[1]/td[8]/time')->text() == "15. 01. 2014");
+    }
+
     public function testDelete()
     {
         $crawler = $this->client->request('GET', $this->getUrl('legislator_homepage'));
