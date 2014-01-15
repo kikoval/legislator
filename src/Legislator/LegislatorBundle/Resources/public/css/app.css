@@ -27,7 +27,11 @@ a.button:hover {text-decoration: none;}
 #comments {width: 100%;}
 #comments form, #comments .button {margin: 0;}
 #comments .button {margin-right: 1em;}
-#comments th:last-child, #comments td:last-child {width: 17%; text-align: center;}
+#comments th {text-align: center;}
+#comments th:first-child {width: 35%;}
+#comments th:first-child + th, #comments th:last-child {width: 25%;}
+#comments tbody tr {border-bottom: thin dashed #555;}
+#comments tbody tr:last-child {border-bottom: none;}
 
 table tr.comment.principal td:first-child {border-left: solid red medium ;}
 table tr.comment.technical td:first-child {border-left: solid blue medium ;}

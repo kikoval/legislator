@@ -82,10 +82,9 @@
 <table id="comments">
 	<thead>
 		<tr>
-			<th width="40%">{% trans %}comment.content{% endtrans %}</th>
+			<th>{% trans %}comment.content{% endtrans %}</th>
 			<th>{% trans %}comment.substantiation{% endtrans %}</th>
-			<th>{% trans %}comment.created_by{% endtrans %}</th>
-			<th>{% trans %}common.modified_on{% endtrans %}</th>
+			<th>{% trans %}comment.created_by{% endtrans %} ({% trans %}common.modified_on{% endtrans %})</th>
 			{% if document.isStatusFinishedProcessingComments %}
 			<th>{% trans %}comment.reply{% endtrans %}</th>
 			{% endif %}
@@ -99,8 +98,7 @@
 	<tr class="comment{% if comment.isPrincipal() %} principal{% endif %}{% if comment.isTechnical() %} technical{% endif %}{% if comment.isAccepted %} accepted{% endif %}{% if comment.isPartlyAccepted %} partly-accepted {% endif %}{% if comment.isRejected %} rejected{% endif %}">
 		<td>{{ comment.content }}</td>
 		<td>{{ comment.substantiation }}</td>
-		<td>{{ comment.createdBy }}</td>
-		<td>{{ macros.datetime(comment.modifiedOn) }}</td>
+		<td>{{ comment.createdBy }} ({{ macros.datetime(comment.modifiedOn) }})</td>
 		{% if document.isStatusFinishedProcessingComments %}
 		<td>{{ comment.reply }}</td>
 		{% endif %}
