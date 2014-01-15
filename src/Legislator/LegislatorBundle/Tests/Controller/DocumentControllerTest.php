@@ -60,7 +60,6 @@ class DocumentControllerTest extends MyWebTestCase
 
         // there is only one document left
         $this->assertCount(1, $crawler->filter('tbody tr'));
-
     }
 
     public function testNewVersion()
@@ -106,6 +105,33 @@ class DocumentControllerTest extends MyWebTestCase
         $this->assertTrue($this->client->getResponse()->isSuccessful());
         $this->assertCount($num_documents + 1, $crawler->filter('tbody tr'));
         $this->assertCount(1, $crawler->filter('td:contains("++new version++")'));
+    }
 
+    public function testArchive()
+    {
+    	// go to archive to make sure there is no document
+    	$crawler = $this->client->request('GET', $this->getUrl('legislator_document_archive'));
+    	$this->assertTrue($this->client->getResponse()->isSuccessful());
+    	$this->assertCount(0, $crawler->filter('tbody tr'));
+
+    	// go to homepage
+    	$crawler = $this->client->request('GET', $this->getUrl('legislator_homepage'));
+    	$this->assertTrue($this->client->getResponse()->isSuccessful());
+
+    	// edit the first document
+    	$link = $crawler->filter('a.edit.button')->eq(0)->link();
+    	$crawler = $this->client->click($link);
+    	$this->assertTrue($this->client->getResponse()->isSuccessful());
+
+    	// archive the document
+    	$form = $crawler->filter('input[type=submit]')->eq(0)->form();
+    	$form['legislator_document[is_archived]']->tick();
+    	$this->client->submit($form);
+    	$crawler = $this->client->followRedirect();
+
+    	// go to archive to make sure there is ONE document
+    	$crawler = $this->client->request('GET', $this->getUrl('legislator_document_archive'));
+    	$this->assertTrue($this->client->getResponse()->isSuccessful());
+    	$this->assertCount(1, $crawler->filter('tbody tr'));
     }
 }
