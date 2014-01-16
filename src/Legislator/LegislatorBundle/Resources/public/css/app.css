@@ -11,6 +11,8 @@ form input[type="text"], input[type="email"], form input[type="password"], texta
 form input[type="text"], form input[type="password"], textarea {min-width: 30em;}
 option[selected] {background-color: greenyellow;}
 label:first-letter {text-transform: uppercase;}
+label.required:before {content: "*"; padding-right: 0.2em; color: red;}
+label.required {font-weight: bold;}
 
 .delete.button {background-color: #FF4B2F; border-color: #DD432B;}
 .delete.button:hover {background-color: #DD432B;}
