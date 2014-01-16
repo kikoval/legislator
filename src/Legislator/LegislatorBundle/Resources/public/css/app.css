@@ -26,20 +26,24 @@ a.button:hover {text-decoration: none;}
 
 #org-unit {font-weight: normal;}
 
+table tr.comment.principal td:first-child {border-left: solid red medium ;}
+table tr.comment.technical td:first-child {border-left: solid blue medium ;}
+table tr.comment.accepted {background-color: YellowGreen}
+table tr.comment.partly-accepted {background-color: orange;}
+table tr.comment.rejected {background-color: Tomato;}
+
 #comments {width: 100%;}
 #comments form, #comments .button {margin: 0;}
 #comments .button {margin-right: 1em;}
 #comments th {text-align: center;}
 #comments th:first-child {width: 35%;}
 #comments th:first-child + th, #comments th:last-child {width: 25%;}
-#comments tbody tr {border-bottom: thin dashed #555;}
+#my-comments tbody tr, #comments tbody tr {border-bottom: thin dashed #555;}
 #comments tbody tr:last-child {border-bottom: none;}
 
-table tr.comment.principal td:first-child {border-left: solid red medium ;}
-table tr.comment.technical td:first-child {border-left: solid blue medium ;}
-table tr.comment.accepted {background-color: YellowGreen}
-table tr.comment.partly-accepted {background-color: orange;}
-table tr.comment.rejected {background-color: Tomato;}
+#my-comments th:first-child {width: 15%;}
+#my-comments th:nth-of-type(2), #my-comments th:nth-of-type(3) {width: 25%;}
+#my-comments tr td:first-child {background-color: white;'}
 
 .button-group form, form.action, form.action input {margin: 0}
 select {width: inherit;}

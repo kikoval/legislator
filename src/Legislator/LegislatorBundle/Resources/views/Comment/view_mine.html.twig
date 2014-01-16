@@ -9,14 +9,13 @@
 
 <h1>{% trans %}menu.my_comments{% endtrans %}</h1>
 {% if comments %}
-<table id="comments">
+<table id="my-comments">
 	<thead>
 		<tr>
 		    <th>Dokument</th>
-			<th width="40%">{% trans %}comment.content{% endtrans %}</th>
+			<th>{% trans %}comment.content{% endtrans %}</th>
 			<th>{% trans %}comment.substantiation{% endtrans %}</th>
-			<th>Reply</th>
-			<th>{% trans %}common.created_on{% endtrans %}</th>
+			<th>{% trans %}comment.reply{% endtrans %}</th>
 			<th>{% trans %}common.modified_on{% endtrans %}</th>
 		</tr>
 	</thead>
@@ -27,7 +26,6 @@
 	    <td>{{ comment.content }}</td>
 		<td>{{ comment.substantiation }}</td>
 		<td>{{ comment.reply }}</td>
-		<td>{{ macros.datetime(comment.createdOn) }}</td>
 		<td>{{ macros.datetime(comment.modifiedOn) }}</td>
 	</tr>
 	{% endfor %}
