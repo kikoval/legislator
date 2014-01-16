@@ -29,6 +29,7 @@ document:
   final_version: final version
   is_archived: Archived
   comment_until: Comments enabled until
+  groups: Allow access only for groups
   statuses:
     new: New
     commenting: Commenting

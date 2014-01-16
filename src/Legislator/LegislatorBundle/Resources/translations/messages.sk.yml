@@ -29,6 +29,7 @@ document:
   final_version: Konečná verzia
   is_archived: Archivovaný
   comment_until: Pripomienky posielať do
+  groups: Povoliť prístup iba pre skupiny
   statuses:
     new: Nový
     commenting: Pripomienkovanie

@@ -17,7 +17,10 @@ class DocumentNewType extends AbstractType
             ->add('comment_until', 'date',
                     array('label' => 'document.comment_until',
                           'required' => FALSE))
-            ->add('groups', null, array('required' => FALSE))
+            ->add('groups', null,
+                    array('label' => 'document.groups',
+                          'required' => FALSE,
+                          'expanded' => TRUE))
             ->add('file', 'file',
                     array('label' => 'document.file', 'required' => TRUE))
             ->add('file_substantiation', 'file',

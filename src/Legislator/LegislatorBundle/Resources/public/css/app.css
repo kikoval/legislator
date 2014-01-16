@@ -48,6 +48,20 @@ select {width: inherit;}
 label[for="legislator_comment_reply_isAccepted_0"] {border-bottom: solid medium green;}
 label[for="legislator_comment_reply_isAccepted_1"] {border-bottom: solid medium red;}
 
+#legislator_document_groups:before {
+	content: " ";
+	display: block;
+	margin-top: 0.375em;
+}
+#legislator_document_groups input {
+    float: left;
+    clear: left;
+    margin-bottom: 0.1875em;
+    margin-right: 1em;
+}
+#legislator_document_groups input:last-of-type {margin-bottom: 1em;}
+#legislator_document_groups:after {content: " "; display: table; clear: both;}
+
 .full-width {
     width: 100% !important;
     margin-left: 0 !important;

@@ -27,7 +27,10 @@ class DocumentType extends AbstractType
             ->add('is_archived', 'checkbox',
                     array('label' => 'document.is_archived',
                           'required' => FALSE))
-            ->add('groups', null, array('required' => FALSE))
+            ->add('groups', null,
+                    array('label' => 'document.groups',
+                          'required' => FALSE,
+                          'expanded' => TRUE))
             ->add('file', 'file',
                     array('required' => FALSE, 'label' => 'document.file'))
             ->add('file_substantiation', 'file',
