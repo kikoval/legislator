@@ -90,10 +90,10 @@ class DocumentControllerTest extends MyWebTestCase
     	$this->assertTrue($this->client->getResponse()->isSuccessful());
 
     	// check the change
-    	$this->assertTrue($crawler->filterXPath('//body/div[3]/div/h2/time')->text() == "15. 01. 2014");
+    	$this->assertTrue($crawler->filterXPath('//body/*[@id="main"]/div[3]/div/h2/time')->text() == "15. 01. 2014");
     	$crawler = $this->client->request('GET', $this->getUrl('legislator_homepage'));
     	$this->assertTrue($this->client->getResponse()->isSuccessful());
-    	$this->assertTrue($crawler->filterXPath('//body/div[1]/div/table/tbody/tr[1]/td[8]/time')->text() == "15. 01. 2014");
+    	$this->assertTrue($crawler->filterXPath('//body/*[@id="main"]/div[1]/div/table/tbody/tr[1]/td[8]/time')->text() == "15. 01. 2014");
     }
 
     public function testDelete()

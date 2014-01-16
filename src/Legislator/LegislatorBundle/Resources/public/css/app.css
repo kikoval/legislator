@@ -21,8 +21,9 @@ dl.document-data dt {float: left; clear: left; min-width: 7em;}
 dl.document-data dt:after {content: ":";}
 dl.document-data dd {margin-bottom: 0.4em;}
 
-a:hover {text-decoration: underline;}
-a.button:hover {text-decoration: none;}
+#main a:link {text-decoration: underline;}
+#main a:hover {text-decoration: none;}
+#main a.button {text-decoration: none;}
 
 #org-unit {font-weight: normal;}
 
