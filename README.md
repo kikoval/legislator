@@ -21,22 +21,22 @@ The application is by default accessible only to authorized users.
 
 ### Requirements ###
 
-* [Symfony 2.3 requirements](http://symfony.com/doc/current/reference/requirements.html)
+* [Symfony 2.4 requirements](http://symfony.com/doc/2.4/reference/requirements.html)
 * [Composer](http://getcomposer.org/) for package management
 * [Git](http://git-scm.com/) for cloning the repository
 
 
 ### Installation steps ###
 
-1. grab the code, there are essentially two options for this:
+1. Grab the code, there are essentially two options for this:
   * get the `.zip` or `.tgz` archive and extract it or
   * clone (`git clone <repo_url>`) the repository into a directory and `cd` to it
-2. get the vendor dependencies using [Composer](http://getcomposer.org/) `php composer.phar install`
+2. Get the vendor dependencies using [Composer](http://getcomposer.org/) `php composer.phar install`
   * during the process, you'll be prompted to edit the parameters (database, etc.), you can edit them afterwards in `app/config/parameters.yml`
-3. initialize the database `php app/console doctrine:schema:create`
-4. install assets `php app/console assetic:dump --env=prod --no-debug`
-5. import default admin user `php app/console doctrine:fixtures:load`
-  * login credentials: `admin:test`, don't forget to **change the password**
+3. Initialize the database `php app/console doctrine:schema:create`
+4. Install assets `php app/console assetic:dump`. For production add `--env=prod --no-debug` parameters.
+5. iImport default admin user `php app/console doctrine:fixtures:load`
+  * login credentials: `admin:test` (don't forget to **change the password**)
   * the admin user can assign admin role to other users
 
 To run the application in a dev web server execute `php app/console server:run`.
