@@ -1,4 +1,4 @@
-@CHARSET "UTF-8";
+@charset "UTF-8";
 
 h1.header {font-size: 230% !important;}
 h2 {font-size: 160% !important;}
@@ -44,7 +44,7 @@ table tr.comment.rejected {background-color: Tomato;}
 
 #my-comments th:first-child {width: 15%;}
 #my-comments th:nth-of-type(2), #my-comments th:nth-of-type(3) {width: 25%;}
-#my-comments tr td:first-child {background-color: white;'}
+#my-comments tr td:first-child {background-color: white;}
 
 .button-group form, form.action, form.action input {margin: 0}
 select {width: inherit;}
