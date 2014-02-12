@@ -28,14 +28,15 @@ class LegislatorUserProvider implements UserProviderInterface
         $user = $this->findUser($username);
 
         if ($this->cosign_login_enabled) {
+            $org_unit = $this->container->getParameter('org_unit');
+            $restrict_by_org_unit = $org_unit !== NULL;
+
             $ldapSearch = $this->container->get('legislator.user_search');
-            $user_info = $ldapSearch->byLogin($username);
+            $user_info = $ldapSearch->byLogin($username, $restrict_by_org_unit);
             if (!array_key_exists($username, $user_info)) {
                 throw new UsernameNotFoundException(sprintf('Username "%s" not found in LDAP.', $username));
             }
             $user_info = $user_info[$username];
-
-            $org_unit = $this->container->getParameter('org_unit');
 
             // checking org unit if set
             if ($org_unit !== null
