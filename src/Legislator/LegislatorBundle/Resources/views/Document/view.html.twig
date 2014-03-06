@@ -1,6 +1,80 @@
 {% extends "::base.html.twig" %}
 {% import "LegislatorBundle::macros.html.twig" as macros %}
 
+{% block stylesheets %}
+{% if is_document_owner %}
+    <style>
+    .dragHandle {
+        cursor: grab;
+        cursor: -moz-grab;
+        cursor: -webkit-grab;
+    }
+    .dragHandle:hover {
+        background-color: #DDD;
+    }
+    .dragHandle:active {
+        cursor: grabbing;
+        cursor: -moz-grabbing;
+        cursor: -webkit-grabbing;
+    }
+    </style>
+{% endif %}
+{% endblock %}
+
+{% block javascripts %}
+{% if is_document_owner %}
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script>
+    $(function() {
+        var fixHelperModified = function(e, tr) {
+            var $originals = tr.children();
+            var $helper = tr.clone();
+            $helper.children().each(function(index) {
+                $(this).width($originals.eq(index).width())
+            });
+            return $helper;
+        },
+
+        updateIndex = function(e, ui) {
+            var order = $(this).find('tr').map(function(index, obj) {
+                var tr = $(obj);
+                tr.val(index + 1);
+                return tr.attr('data-id');
+            }).get();
+            $.ajax({
+                url: "{{ path('legislator_comments_position', {'document_id': document.id}) }}",
+                type: "post",
+                data: "order=" + order,
+                error: function() {
+                    console.log('database error');
+                }
+            });
+        };
+
+        $("#draggable_toggler").click(function(e) {
+            if ($(this).is(":checked")) {
+                $("#comments tbody tr").each(function() {
+                    $(this).addClass('dragHandle');
+                });
+
+                $("#comments tbody").sortable({
+                    helper: fixHelperModified,
+                    stop: updateIndex,
+                }).disableSelection();
+                $("#comments tbody").sortable( "enable" );
+            } else {
+                $("#comments tbody tr").each(function() {
+                    $(this).removeClass('dragHandle');
+                });
+                $("#comments tbody").sortable("disable").enableSelection();
+            }
+        });
+
+    });
+    </script>
+{% endif %}
+{% endblock %}
+
 {% block title %}{{ document.name }}{% endblock %}
 
 {% block body %}
@@ -79,6 +153,9 @@
     ({% trans %}common.until{% endtrans %} {{ macros.datetime(document.commentUntil) }})
 </h2>
 {% if comments %}
+{% if is_document_owner %}
+<div><label><input type="checkbox" name="draggable" id="draggable_toggler" /> zmena poradia</label></div>
+{% endif %}
 <table id="comments">
 	<thead>
 		<tr>
@@ -95,7 +172,7 @@
 	</thead>
 	<tbody>
 	{% for comment in comments %}
-	<tr class="comment{% if comment.isPrincipal() %} principal{% endif %}{% if comment.isTechnical() %} technical{% endif %}{% if comment.isAccepted %} accepted{% endif %}{% if comment.isPartlyAccepted %} partly-accepted {% endif %}{% if comment.isRejected %} rejected{% endif %}">
+        <tr data-position="{{ comment.position }}" data-id="{{ comment.id }}" class="comment{% if comment.isPrincipal() %} principal{% endif %}{% if comment.isTechnical() %} technical{% endif %}{% if comment.isAccepted %} accepted{% endif %}{% if comment.isPartlyAccepted %} partly-accepted {% endif %}{% if comment.isRejected %} rejected{% endif %}">
 		<td>{{ comment.content }}</td>
 		<td>{{ comment.substantiation }}</td>
 		<td>{{ comment.createdBy }} ({{ macros.datetime(comment.modifiedOn) }})</td>

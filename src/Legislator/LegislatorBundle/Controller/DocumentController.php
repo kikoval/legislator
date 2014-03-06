@@ -43,7 +43,10 @@ class DocumentController extends Controller
         // TODO handle multiple versions
         $comments = $this->getDoctrine()
                 ->getRepository('LegislatorBundle:Comment')
-                ->findBy(array('document' => $document));
+                ->findBy(
+                    array('document' => $document),
+                    array('position' => 'ASC')
+                );
 
         // add form to add or edit a comment
         $comment_id = $request->get('comment_id');

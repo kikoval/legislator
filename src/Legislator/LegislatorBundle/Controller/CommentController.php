@@ -8,6 +8,7 @@ use Legislator\LegislatorBundle\Form\CommentType;
 use Legislator\LegislatorBundle\Form\CommentReplyType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CommentController extends Controller
@@ -85,6 +86,10 @@ class CommentController extends Controller
             $comment->setCreatedBy($this->getUser());
 
             $em = $this->getDoctrine()->getManager();
+            $max_position = $em->getRepository('LegislatorBundle:Comment')
+                    ->findMaxPosition($document);
+            $comment->setPosition($max_position + 1);
+
             $em->persist($comment);
             $em->flush();
         }
@@ -124,6 +129,7 @@ class CommentController extends Controller
             $em->persist($comment);
             $em->flush();
         }
+
         // TODO show validation errors to the user
         return $this->redirect($this->generateUrl('legislator_document_view',
                 array('id' => $comment->getDocument()->getId())));
@@ -203,4 +209,55 @@ class CommentController extends Controller
         return $this->render('LegislatorBundle:Comment:reply.html.twig',
                 array('form' => $form->createView(), 'comment' => $comment));
     }
+
+    /**
+     * Handle AJAX call to update position of comments for a document
+     *
+     * @param  int     $document_id id of Document
+     * @param  Request $request
+     * @return Response
+     */
+    public function updatePositionsAction($document_id, Request $request)
+    {
+        $document = $this->getDoctrine()
+                ->getRepository('LegislatorBundle:Document')->find($document_id);
+        if (!$document) {
+            throw $this->createNotFoundException('No document found for id!');
+        }
+        // checking ownership
+        if (!$document->isOwner($this->getUser())) {
+            throw new AccessDeniedException();
+        }
+
+        // get ordered is list of comment ids
+        $order = $request->get('order');
+        if (!empty($order)) {
+            $order = explode(',', $order);
+
+            if (count($order) > 1) {
+                $new_position = 1;
+                foreach ($order as $id) {
+                    $id = intval($id);
+                    $comment = $this->getDoctrine()
+                        ->getRepository('LegislatorBundle:Comment')->find($id);
+
+                    if ($comment !== NULL) {
+                        $comment->setPosition($new_position);
+
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($comment);
+                        $em->flush();
+                    } else {
+                        return new Response('Error', 400);
+                    }
+                    $new_position += 1;
+                }
+            }
+
+            return new Response();
+        }
+
+        return new Response('Error', 400);
+    }
 }
+

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Comment
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Legislator\LegislatorBundle\Entity\CommentRepository")
  */
 class Comment
 {
@@ -114,6 +114,13 @@ class Comment
      * @ORM\Column(nullable=true)
      */
     private $repliedBy;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $position = 0;
 
     /**
      * Get id
@@ -412,5 +419,17 @@ class Comment
     public static function getResultChoices()
     {
         return self::$results;
+    }
+
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
     }
 }

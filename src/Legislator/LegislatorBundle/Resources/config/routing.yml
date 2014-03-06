@@ -97,6 +97,13 @@ legislator_comment_reply:
         document_id: \d+
         id: \d+
 
+legislator_comments_position:
+    pattern: /document/{document_id}/comments-position
+    defaults: { _controller: LegislatorBundle:Comment:updatePositions }
+    methods: [POST]
+    requirements:
+        document_id: \d+
+
 # user
 legislator_user_list:
     pattern: /admin/user/list
